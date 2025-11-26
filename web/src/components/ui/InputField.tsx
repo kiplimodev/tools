@@ -5,6 +5,7 @@ interface InputFieldProps {
   type?: "text" | "number";
   placeholder?: string;
   value?: number | string;
+  id?: string;
   onChange?: (value: string) => void;
 }
 
@@ -13,15 +14,19 @@ export function InputField({
   type = "number",
   placeholder,
   value,
+  id,
   onChange,
 }: InputFieldProps) {
   return (
     <div className="flex flex-col space-y-1">
-      <label className="text-sm text-neutral-700">{label}</label>
+      <label className="text-sm text-neutral-700" htmlFor={id}>
+        {label}
+      </label>
       <input
         type={type}
         value={value}
         placeholder={placeholder}
+        id={id}
         onChange={(e) => onChange?.(e.target.value)}
         className="border border-neutral-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/10 transition text-sm"
       />
