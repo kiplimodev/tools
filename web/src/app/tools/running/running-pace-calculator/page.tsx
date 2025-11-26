@@ -5,47 +5,29 @@ export const metadata = {
   description: "Calculate pace per km, per mile, and running speed.",
 };
 
-type ParamValue = string | string[] | null | undefined;
+type ParamValue = string | string[] | undefined;
 
 interface PaceSearchParams {
   distance?: ParamValue;
   time?: ParamValue;
 }
 
-type PaceSearchParamsInput = PaceSearchParams | URLSearchParams | Promise<PaceSearchParams> | undefined;
+export default function Page({ searchParams }: { searchParams?: PaceSearchParams }) {
+  const getParam = (value?: ParamValue) => (Array.isArray(value) ? value[0] : value);
 
-const toSingleValue = (value: ParamValue): string | null => {
-  if (Array.isArray(value)) return value[0] ?? null;
-  if (typeof value === "string") return value;
-  return value ?? null;
-};
+  const distanceParam = getParam(searchParams?.distance);
+  const timeParam = getParam(searchParams?.time);
 
-const parsePositiveNumber = (value: string | null): number | null => {
-  if (!value) return null;
-  const numericValue = Number(value);
-  if (!Number.isFinite(numericValue) || numericValue <= 0) return null;
-  return numericValue;
-};
+  const distance = distanceParam ? Number(distanceParam) : null;
+  const time = timeParam ? Number(timeParam) : null;
 
-async function normalizeSearchParams(input: PaceSearchParamsInput): Promise<PaceSearchParams> {
-  if (!input) return {};
-  if (input instanceof Promise) return input;
-  if (input instanceof URLSearchParams) {
-    return {
-      distance: input.get("distance"),
-      time: input.get("time"),
-    };
-  }
-  return input;
-}
-
-export default async function Page({ searchParams }: { searchParams?: PaceSearchParamsInput }) {
-  const params = await normalizeSearchParams(searchParams);
-
-  const distance = parsePositiveNumber(toSingleValue(params.distance));
-  const time = parsePositiveNumber(toSingleValue(params.time));
-
-  const hasValues = distance !== null && time !== null;
+  const hasValues =
+    distance !== null &&
+    time !== null &&
+    Number.isFinite(distance) &&
+    Number.isFinite(time) &&
+    distance > 0 &&
+    time > 0;
 
   const result = hasValues ? calculateRunningPace(distance, time) : null;
 
