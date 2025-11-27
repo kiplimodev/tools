@@ -41,6 +41,7 @@ export default function Page({ searchParams }: { searchParams?: TdeeSearchParams
     weightValue > 0 &&
     heightValue > 0 &&
     ageValue > 0;
+
   const activity = activityLevels.find((level) => level.key === activityLevel);
 
   const result =
@@ -55,49 +56,67 @@ export default function Page({ searchParams }: { searchParams?: TdeeSearchParams
       : null;
 
   return (
-    <main className="mx-auto max-w-3xl space-y-8">
+    <main className="space-y-10">
       <div className="space-y-3">
-        <div className="inline-flex rounded-full bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-700">
+        <div className="inline-flex rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-700 ring-1 ring-emerald-200 dark:text-emerald-200 dark:ring-emerald-500/40">
           Nutrition
         </div>
-        <h1 className="text-4xl font-semibold tracking-tight">TDEE Calculator</h1>
-        <p className="text-lg text-zinc-600">
+
+        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
+          TDEE Calculator
+        </h1>
+
+        <p className="text-lg text-zinc-600 dark:text-zinc-300">
           Estimate your total daily energy expenditure using the Mifflin-St Jeor equation.
           Results update instantly when you submit the form.
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <form className="space-y-5 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm" method="GET">
+      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+        {/* FORM */}
+        <form
+          className="space-y-5 rounded-2xl border border-white/40 bg-white/70 p-6 shadow-lg backdrop-blur 
+                     dark:border-zinc-800 dark:bg-zinc-950/60"
+          method="GET"
+        >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* SEX */}
             <label className="space-y-2">
-              <span className="text-sm font-medium text-zinc-800">Sex</span>
+              <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Sex</span>
               <select
                 name="sex"
                 defaultValue={sex}
-                className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-200"
+                className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner
+                           focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300
+                           dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50
+                           dark:focus:border-emerald-400 dark:focus:ring-emerald-500/40"
               >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
             </label>
 
+            {/* AGE */}
             <label className="space-y-2">
-              <span className="text-sm font-medium text-zinc-800">Age</span>
+              <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Age</span>
               <input
                 type="number"
                 name="age"
+                defaultValue={age ?? ""}
                 min="10"
                 max="100"
-                defaultValue={age ?? ""}
                 placeholder="30"
                 required
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-200"
+                className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner 
+                           focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300
+                           dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50
+                           dark:focus:border-emerald-400 dark:focus:ring-emerald-500/40"
               />
             </label>
 
+            {/* WEIGHT */}
             <label className="space-y-2">
-              <span className="text-sm font-medium text-zinc-800">Weight (kg)</span>
+              <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Weight (kg)</span>
               <input
                 type="number"
                 name="weight"
@@ -107,12 +126,16 @@ export default function Page({ searchParams }: { searchParams?: TdeeSearchParams
                 defaultValue={weight ?? ""}
                 placeholder="70"
                 required
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-200"
+                className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner
+                           focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300
+                           dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50
+                           dark:focus:border-emerald-400 dark:focus:ring-emerald-500/40"
               />
             </label>
 
+            {/* HEIGHT */}
             <label className="space-y-2">
-              <span className="text-sm font-medium text-zinc-800">Height (cm)</span>
+              <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Height (cm)</span>
               <input
                 type="number"
                 name="height"
@@ -122,17 +145,24 @@ export default function Page({ searchParams }: { searchParams?: TdeeSearchParams
                 defaultValue={height ?? ""}
                 placeholder="175"
                 required
-                className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-200"
+                className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner
+                           focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300
+                           dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50
+                           dark:focus:border-emerald-400 dark:focus:ring-emerald-500/40"
               />
             </label>
           </div>
 
+          {/* ACTIVITY */}
           <label className="space-y-2">
-            <span className="text-sm font-medium text-zinc-800">Activity level</span>
+            <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Activity level</span>
             <select
               name="activity"
               defaultValue={activityLevel}
-              className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-200"
+              className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner
+                         focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300
+                         dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-50
+                         dark:focus:border-emerald-400 dark:focus:ring-emerald-500/40"
             >
               {activityLevels.map((level) => (
                 <option key={level.key} value={level.key}>
@@ -140,58 +170,92 @@ export default function Page({ searchParams }: { searchParams?: TdeeSearchParams
                 </option>
               ))}
             </select>
-            <p className="text-sm text-zinc-500">
+
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               {activity?.description ?? "Pick the option that matches your weekly training volume."}
             </p>
           </label>
 
+          {/* SUBMIT */}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+            className="inline-flex w-full items-center justify-center rounded-lg bg-black px-4 py-2.5 text-sm 
+                       font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-zinc-800
+                       focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2
+                       dark:bg-white dark:text-black dark:hover:bg-zinc-200"
           >
             Calculate TDEE
           </button>
-          <p className="text-sm text-zinc-500">
-            Need imperial units? Convert lbs to kg by dividing by 2.205 and inches to cm by multiplying by 2.54.
+
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            Need imperial units? Divide lbs by 2.205 and multiply inches by 2.54.
           </p>
         </form>
 
-        <div className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-zinc-900">Results</h2>
-          <div className="space-y-3 text-sm text-zinc-600">
-            <p>
-              Your basal metabolic rate (BMR) is the calories you burn at rest before any activity.
-            </p>
+        {/* RESULTS */}
+        <div className="space-y-4 rounded-2xl border border-white/40 bg-white/70 p-6 shadow-lg backdrop-blur 
+                        dark:border-zinc-800 dark:bg-zinc-950/60">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">Results</h2>
+            <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] 
+                             text-emerald-700 ring-1 ring-emerald-200 dark:text-emerald-200 dark:ring-emerald-500/40">
+              Live
+            </span>
+          </div>
+
+          <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
+            <p>Your basal metabolic rate (BMR) is the calories you burn at rest.</p>
+
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-zinc-100 bg-zinc-50 p-4">
-                <p className="text-xs uppercase tracking-wide text-zinc-500">Basal metabolic rate</p>
-                <p className="text-2xl font-semibold text-zinc-900">
+              <div className="rounded-xl border border-zinc-200/70 bg-white/80 p-4 shadow-inner 
+                              dark:border-zinc-800 dark:bg-zinc-900/60">
+                <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  Basal metabolic rate
+                </p>
+                <p className="text-2xl font-semibold text-zinc-900 dark:text-white">
                   {result ? `${result.bmr.toLocaleString()} kcal` : "—"}
                 </p>
               </div>
-              <div className="rounded-xl border border-zinc-100 bg-zinc-50 p-4">
-                <p className="text-xs uppercase tracking-wide text-zinc-500">Total daily energy expenditure</p>
-                <p className="text-2xl font-semibold text-zinc-900">
+
+              <div className="rounded-xl border border-zinc-200/70 bg-white/80 p-4 shadow-inner 
+                              dark:border-zinc-800 dark:bg-zinc-900/60">
+                <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  Total daily energy expenditure
+                </p>
+                <p className="text-2xl font-semibold text-zinc-900 dark:text-white">
                   {result ? `${result.tdee.toLocaleString()} kcal` : "—"}
                 </p>
               </div>
             </div>
+
             {!result && (
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">
                 Enter your details and submit to estimate your daily maintenance calories.
               </p>
             )}
-            <p className="text-xs text-zinc-500">
-              Calculation uses the Mifflin-St Jeor equation multiplied by your activity factor.
+
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Calculation uses Mifflin-St Jeor multiplied by your activity factor.
             </p>
           </div>
-          <div className="rounded-xl bg-zinc-50 p-4 text-sm text-zinc-600">
-            <p className="font-semibold text-zinc-800">Next steps</p>
+
+          {/* NEXT STEPS */}
+          <div className="rounded-xl border border-zinc-200/70 bg-zinc-50/80 p-4 text-sm text-zinc-600 shadow-inner 
+                          dark:border-zinc-800 dark:bg-zinc-950/70 dark:text-zinc-400">
+            <p className="font-semibold text-zinc-800 dark:text-zinc-100">Next steps</p>
+
             <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>Use TDEE to set calorie targets for fat loss, maintenance, or muscle gain.</li>
+              <li>Set calorie targets for fat loss, maintenance, or muscle gain.</li>
               <li>Pair with a macro calculator to split calories across protein, carbs, and fats.</li>
               <li>
-                Explore more tools on the <Link href="/tools/running/running-pace-calculator" className="font-medium text-zinc-900 underline">Running Pace Calculator</Link> to plan cardio sessions.
+                Explore more tools on the{" "}
+                <Link
+                  href="/tools/running/running-pace-calculator"
+                  className="font-medium text-zinc-900 underline dark:text-emerald-300"
+                >
+                  Running Pace Calculator
+                </Link>{" "}
+                to plan cardio sessions.
               </li>
             </ul>
           </div>
