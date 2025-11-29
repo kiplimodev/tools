@@ -1,0 +1,26 @@
+{
+  "interest_score": 10,
+  "virality_score": 9,
+  "uniqueness_score": 7,
+
+  "verified_facts": "Aug 28, 1963: the March on Washington for Jobs and Freedom filled the National Mall; estimates place attendance above 200,000; Martin Luther King Jr. delivered his \"I Have a Dream\" address from the Lincoln Memorial; the peaceful protest is widely credited with boosting momentum for federal civil-rights legislation in the mid-1960s.",
+  "potential_hallucination_risks": "Exact crowd size varies by source (often ~250,000). Influence on the Civil Rights Act and Voting Rights Act is indirect and interpretive. No source text provided here to reconfirm details.",
+
+  "tweet": "🔥 Aug 28, 1963: well over 200,000 people filled the National Mall as MLK delivered his \"I Have a Dream\" address at the March on Washington. #OnThisDay",
+  "thread": [
+    "🔥 Aug 28, 1963: the March on Washington for Jobs and Freedom packed the National Mall—well over 200k people demanding civil rights and economic justice.",
+    "Leaders from across the movement spoke, and King closed the day by delivering the \"I Have a Dream\" section of his address from the Lincoln Memorial, broadcast nationwide.",
+    "Images of an interracial, peaceful mass under Lincoln’s gaze added national pressure during ongoing civil-rights debates in Congress.",
+    "Legacy: the march’s unity helped build momentum for landmark federal civil-rights protections in the mid-1960s—and a model of nonviolent protest still studied today.",
+    "Its legacy still echoes in today’s struggles for civil rights."
+  ],
+
+  "image_suggestions": {
+      "historical_photo_query": "1963 March on Washington crowd Lincoln Memorial Martin Luther King I Have a Dream",
+      "ai_image_prompt": "Vintage 1960s photo style, wide-angle view from behind crowd facing Lincoln Memorial, Martin Luther King Jr. at podium, signs reading Jobs and Freedom, warm summer daylight, film grain"
+  },
+
+  "posting_time_suggestion": "Morning",
+
+  "confidence": 0.78
+}
