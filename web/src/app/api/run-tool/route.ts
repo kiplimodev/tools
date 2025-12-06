@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
-import { getTool } from "@/registry/getTool";
+import { NextRequest, NextResponse } from "next/server";
+import { getTool } from "@registry/getTool";
 
 export type RunToolRequest = {
   id: string;
   inputs?: unknown;
 };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as RunToolRequest | null;
 
   if (!body || typeof body.id !== "string" || !body.id.trim()) {
