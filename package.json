@@ -1,0 +1,6 @@
+{
+  "name": "tools-monorepo",
+  "private": true,
+  "workspaces": ["web"],
+  "packageManager": "npm@10"
+}
