@@ -26,7 +26,13 @@ export function calculateRunningPace(distanceKm: number, timeMinutes: number): P
 }
 
 function formatPace(minutes: number): string {
-  const whole = Math.floor(minutes);
-  const seconds = Math.round((minutes - whole) * 60);
+  let whole = Math.floor(minutes);
+  let seconds = Math.round((minutes - whole) * 60);
+
+  if (seconds === 60) {
+    whole += 1;
+    seconds = 0;
+  }
+
   return `${whole}:${seconds.toString().padStart(2, "0")} min`;
 }
