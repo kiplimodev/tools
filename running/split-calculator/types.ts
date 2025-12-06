@@ -1,12 +1,19 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  totalDistance: number;
+  unit: "km" | "mi";
+  time: string;
+  splitDistance: number;
+  splitUnit?: "km" | "mi";
+}
+
+export interface SplitDetail {
+  splitNumber: number;
+  splitDistance: number;
+  cumulativeDistance: number;
+  splitTime: string;
+  cumulativeTime: string;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  splits: SplitDetail[];
 }
