@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getTool } from "@tools/registry/getTool";
+import { getTool } from "@/registry/getTool";
 
 export type RunToolRequest = {
   id: string;
