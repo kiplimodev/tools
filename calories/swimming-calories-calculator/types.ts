@@ -1,12 +1,11 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  durationMinutes: number;
+  stroke: "freestyle" | "breaststroke" | "butterfly" | "backstroke";
+  intensity: "light" | "moderate" | "vigorous";
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  caloriesBurned: number;
+  metValue: number;
 }
