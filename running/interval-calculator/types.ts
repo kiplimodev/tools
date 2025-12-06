@@ -1,12 +1,24 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  intervalDistance: number;
+  intervalUnit: "km" | "mi";
+  numIntervals: number;
+  paceTime: string;
+  paceUnit: "km" | "mi";
+  restTime: string;
+  warmupTime?: string;
+  cooldownTime?: string;
+}
+
+export interface IntervalBreakdown {
+  intervalNumber: number;
+  intervalTime: string;
+  restTime: string;
+  cumulativeTime: string;
+  cumulativeDistance: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  totalDistance: number;
+  totalTime: string;
+  workoutBreakdown: IntervalBreakdown[];
 }
