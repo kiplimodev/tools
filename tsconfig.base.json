@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["web/src/*"],
+      "@/registry/*": ["registry/*"],
+      "@registry/*": ["registry/*"],
+      "@tools/*": ["registry/*"]
+    }
+  }
+}
