@@ -4,9 +4,11 @@
  */
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  durationMinutes: number;
+  met: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  caloriesBurned: number;
 }

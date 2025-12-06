@@ -4,9 +4,10 @@
  */
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  heightM: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  bmi: number;
 }
