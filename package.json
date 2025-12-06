@@ -2,5 +2,11 @@
   "name": "tools-monorepo",
   "private": true,
   "workspaces": ["web"],
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^1.6.0"
+  },
   "packageManager": "npm@10"
 }
