@@ -4,6 +4,20 @@
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "allowJs": true,
-    "strict": true
-  }
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/registry/*": ["../registry/*"],
+      "@registry/*": ["../registry/*"],
+      "@tools/*": ["../registry/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }
