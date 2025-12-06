@@ -1,12 +1,12 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  distance: number;
+  unit: "km" | "mi";
+  time: string; // "hh:mm:ss"
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  pacePerKm: string;
+  pacePerMile: string;
+  speedKmh: number;
+  speedMph: number;
 }
