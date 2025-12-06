@@ -1,12 +1,10 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  durationMinutes: number;
+  intensity: "leisure" | "moderate" | "vigorous" | "very-vigorous" | "race";
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  caloriesBurned: number;
+  metValue: number;
 }
