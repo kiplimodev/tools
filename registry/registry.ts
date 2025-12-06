@@ -1,28 +1,27 @@
+import type { BmiInput } from "./tools/bmi";
 import { calculateBmi } from "./tools/bmi";
 
-export type ToolRun = (input: unknown) => unknown;
+export type ToolRunner = (inputs: unknown) => unknown | Promise<unknown>;
 
-export type ToolDefinition = {
+export type RegisteredTool = {
+  id: string;
   name: string;
-  run: ToolRun;
+  run: ToolRunner;
 };
 
-const registry: Record<string, ToolDefinition> = {
-  bmi: {
+export const registeredTools: RegisteredTool[] = [
+  {
+    id: "bmi",
     name: "BMI Calculator",
-    run: (input) => calculateBmi(input as Parameters<typeof calculateBmi>[0]),
+    run: (inputs) => calculateBmi(inputs as Partial<BmiInput>),
   },
-};
+];
 
-function normalizeKey(key: string): string {
-  return key.trim().toLowerCase();
+function normalizeId(id: string): string {
+  return id.trim().toLowerCase();
 }
 
-export function getRegistry() {
-  return registry;
-}
-
-export function findTool(key: string): ToolDefinition | null {
-  const normalized = normalizeKey(key);
-  return registry[normalized] ?? null;
+export function findTool(id: string): RegisteredTool | null {
+  const normalized = normalizeId(id);
+  return registeredTools.find((tool) => tool.id === normalized) ?? null;
 }

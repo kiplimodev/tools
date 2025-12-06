@@ -1,20 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tools/*": ["./*"]
+      "@tools/*": ["registry/*"]
     }
-  },
-  "exclude": ["node_modules"]
+  }
 }
