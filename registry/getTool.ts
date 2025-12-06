@@ -1,17 +1,15 @@
-import { findTool, registeredTools, type RegisteredTool } from "./registry";
+import * as BMI from "../body-composition/bmi-calculator";
+import * as RunningPaceCalculator from "../running/running-pace-calculator";
 
-export { registeredTools };
+/**
+ * Tool registry – maps tool IDs to their modules.
+ */
+export const tools: Record<string, any> = {
+  bmi: BMI,
+  "running-pace-calculator": RunningPaceCalculator,
+};
 
-export function getTool(id: string): RegisteredTool {
-  if (!id || typeof id !== "string" || !id.trim()) {
-    throw new Error("Tool id must be a non-empty string");
-  }
-
-  const tool = findTool(id);
-
-  if (!tool) {
-    throw new Error(`Tool '${id}' not found`);
-  }
-
-  return tool;
+/** Returns a tool module by ID. */
+export function getTool(id: string) {
+  return tools[id] || null;
 }
