@@ -1,14 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "allowJs": true,
-    "strict": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/registry/*": ["../registry/*"],
       "@registry/*": ["../registry/*"],
       "@tools/*": ["../registry/*"]
     }

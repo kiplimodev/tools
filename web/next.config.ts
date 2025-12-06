@@ -1,11 +1,12 @@
 import path from "path";
 import type { NextConfig } from "next";
 
+const monorepoRoot = path.resolve(__dirname, "..");
+
 const aliasPaths = {
   "@": path.resolve(__dirname, "src"),
-  "@/registry": path.resolve(__dirname, "..", "registry"),
-  "@registry": path.resolve(__dirname, "..", "registry"),
-  "@tools": path.resolve(__dirname, "..", "registry"),
+  "@registry": path.resolve(monorepoRoot, "registry"),
+  "@tools": path.resolve(monorepoRoot, "registry"),
 };
 
 const nextConfig: NextConfig = {
@@ -16,14 +17,16 @@ const nextConfig: NextConfig = {
     },
   },
   turbopack: {
-    root: "..",
+    root: monorepoRoot,
   },
+  transpilePackages: [],
   webpack: (config) => {
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       ...aliasPaths,
     };
+
     return config;
   },
 };
