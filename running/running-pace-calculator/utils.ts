@@ -9,21 +9,16 @@ function parseTimeToSeconds(time: string): number {
   if (trimmed.includes(":")) {
     const parts = trimmed.split(":").map(Number);
 
+    if (parts.length !== 3) {
+      throw new Error("Time must be in hh:mm:ss format.");
+    }
+
     if (parts.some((part) => Number.isNaN(part) || part < 0)) {
       throw new Error("Time values must be non-negative numbers.");
     }
 
-    if (parts.length === 3) {
-      const [hours, minutes, seconds] = parts;
-      return hours * 3600 + minutes * 60 + seconds;
-    }
-
-    if (parts.length === 2) {
-      const [minutes, seconds] = parts;
-      return minutes * 60 + seconds;
-    }
-
-    throw new Error("Time must be in hh:mm:ss or mm:ss format.");
+    const [hours, minutes, seconds] = parts;
+    return hours * 3600 + minutes * 60 + seconds;
   }
 
   const numericSeconds = Number(trimmed);
@@ -71,12 +66,12 @@ export function calculateCore(input: CalculatorInput): CalculatorOutput {
 
   if (unit === "km") {
     pacePerKmSeconds = paceSeconds;
-    pacePerMileSeconds = paceSeconds * KM_PER_MILE;
+    pacePerMileSeconds = paceSeconds / MILES_PER_KM;
     speedKmh = distance / totalHours;
     speedMph = speedKmh * MILES_PER_KM;
   } else {
     pacePerMileSeconds = paceSeconds;
-    pacePerKmSeconds = paceSeconds * MILES_PER_KM;
+    pacePerKmSeconds = paceSeconds / KM_PER_MILE;
     speedMph = distance / totalHours;
     speedKmh = speedMph * KM_PER_MILE;
   }

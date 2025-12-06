@@ -1,12 +1,12 @@
 # Running Pace Calculator
 
 ## Description
-Calculate running pace per kilometer and mile along with speed in km/h and mph from a given distance and finish time. Handles input distances in kilometers or miles and converts paces to the alternate unit.
+Calculate running pace per kilometer and per mile plus speed in km/h and mph from a given distance and finish time. Accepts distances in kilometers or miles and always returns paces for both units.
 
 ## Inputs
 - `distance` (number): Total distance covered.
 - `unit` ("km" | "mi"): Unit for the provided distance.
-- `time` (string): Duration in `hh:mm:ss`, `mm:ss`, or total seconds.
+- `time` (string): Duration in `hh:mm:ss` or total seconds.
 
 ## Outputs
 - `pacePerKm` (string): Pace per kilometer formatted as `mm:ss`.
