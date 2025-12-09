@@ -1,12 +1,13 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  age: number;
+  goal: "health" | "weight-loss" | "fitness";
+  weightKg?: number;
+  currentSteps?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  recommendedSteps: number;
+  category: string;
+  estimatedCalories?: number;
+  deltaFromCurrent?: number;
 }
