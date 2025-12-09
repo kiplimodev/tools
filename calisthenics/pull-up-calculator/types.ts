@@ -1,12 +1,17 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  bodyWeightKg: number;
+  maxPullups: number;
+  addedWeightKg?: number;
+  goalReps?: number;
+  grip?: "standard" | "wide" | "chinup";
+  tempo?: "normal" | "slow" | "fast";
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  effectiveLoadKg: number;
+  estimated1RM: number;
+  strengthScore: number;
+  predictedMaxReps?: number;
+  caloriesBurned: number;
+  progressionTier: string;
 }
