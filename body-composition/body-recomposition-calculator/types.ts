@@ -1,12 +1,21 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  currentWeightKg: number;
+  currentBodyFatPercent: number;
+  goalWeightKg?: number;
+  goalBodyFatPercent?: number;
+  weeklyFatChangeKg?: number;
+  weeklyLeanChangeKg?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  currentFatMassKg: number;
+  currentLeanMassKg: number;
+  goalFatMassKg?: number;
+  goalLeanMassKg?: number;
+  fatChangeKg?: number;
+  leanChangeKg?: number;
+  weeklyFatChangeKg?: number;
+  weeklyLeanChangeKg?: number;
+  estimatedWeeksToGoal?: number;
+  classification: string;
 }
