@@ -1,27 +1,291 @@
-import type { BmiInput } from "./tools/bmi";
-import { calculateBmi } from "./tools/bmi";
-
-export type ToolRunner = (inputs: unknown) => unknown | Promise<unknown>;
-
-export type RegisteredTool = {
+export interface ToolDefinition {
   id: string;
   name: string;
-  run: ToolRunner;
-};
+  path: string;
+  calculate: Function;
+}
 
-export const registeredTools: RegisteredTool[] = [
+export const tools: ToolDefinition[] = [
   {
-    id: "bmi",
+    id: "running-pace-calculator",
+    name: "Running Pace Calculator",
+    path: "/tools/running/running-pace-calculator",
+    calculate: require("../running/running-pace-calculator").calculate,
+  },
+  {
+    id: "running-splits-calculator",
+    name: "Running Splits Calculator",
+    path: "/tools/running/running-splits-calculator",
+    calculate: require("../running/running-splits-calculator").calculate,
+  },
+  {
+    id: "split-calculator",
+    name: "Split Calculator",
+    path: "/tools/running/split-calculator",
+    calculate: require("../running/split-calculator").calculate,
+  },
+  {
+    id: "interval-calculator",
+    name: "Interval Calculator",
+    path: "/tools/running/interval-calculator",
+    calculate: require("../running/interval-calculator").calculate,
+  },
+  {
+    id: "vdot-calculator",
+    name: "VDOT Calculator",
+    path: "/tools/running/vdot-calculator",
+    calculate: require("../running/vdot-calculator").calculate,
+  },
+  {
+    id: "rowing-calories-calculator",
+    name: "Rowing Calories Calculator",
+    path: "/tools/calories/rowing-calories-calculator",
+    calculate: require("../calories/rowing-calories-calculator").calculate,
+  },
+  {
+    id: "swimming-calories-calculator",
+    name: "Swimming Calories Calculator",
+    path: "/tools/calories/swimming-calories-calculator",
+    calculate: require("../calories/swimming-calories-calculator").calculate,
+  },
+  {
+    id: "treadmill-calorie-calculator",
+    name: "Treadmill Calorie Calculator",
+    path: "/tools/calories/treadmill-calorie-calculator",
+    calculate: require("../calories/treadmill-calorie-calculator").calculate,
+  },
+  {
+    id: "walking-calorie-calculator",
+    name: "Walking Calorie Calculator",
+    path: "/tools/calories/walking-calorie-calculator",
+    calculate: require("../calories/walking-calorie-calculator").calculate,
+  },
+  {
+    id: "running-calories-burned-calculator",
+    name: "Running Calories Burned Calculator",
+    path: "/tools/calories/running-calories-burned-calculator",
+    calculate: require("../calories/running-calories-burned-calculator").calculate,
+  },
+  {
+    id: "bike-calorie-calculator",
+    name: "Bike Calorie Calculator",
+    path: "/tools/calories/bike-calorie-calculator",
+    calculate: require("../calories/bike-calorie-calculator").calculate,
+  },
+  {
+    id: "steps-to-calories-calculator",
+    name: "Steps to Calories Calculator",
+    path: "/tools/calories/steps-to-calories-calculator",
+    calculate: require("../calories/steps-to-calories-calculator").calculate,
+  },
+  {
+    id: "body-fat-calculator",
+    name: "Body Fat Calculator",
+    path: "/tools/body-composition/body-fat-calculator",
+    calculate: require("../body-composition/body-fat-calculator").calculate,
+  },
+  {
+    id: "lean-body-mass-calculator",
+    name: "Lean Body Mass Calculator",
+    path: "/tools/body-composition/lean-body-mass-calculator",
+    calculate: require("../body-composition/lean-body-mass-calculator").calculate,
+  },
+  {
+    id: "bmi-calculator",
     name: "BMI Calculator",
-    run: (inputs) => calculateBmi(inputs as Partial<BmiInput>),
+    path: "/tools/body-composition/bmi-calculator",
+    calculate: require("../body-composition/bmi-calculator").calculate,
+  },
+  {
+    id: "ideal-weight-calculator",
+    name: "Ideal Weight Calculator",
+    path: "/tools/body-composition/ideal-weight-calculator",
+    calculate: require("../body-composition/ideal-weight-calculator").calculate,
+  },
+  {
+    id: "waist-to-height-ratio-calculator",
+    name: "Waist-to-Height Ratio Calculator",
+    path: "/tools/body-composition/waist-to-height-ratio-calculator",
+    calculate: require("../body-composition/waist-to-height-ratio-calculator").calculate,
+  },
+  {
+    id: "waist-to-hip-ratio-calculator",
+    name: "Waist-to-Hip Ratio Calculator",
+    path: "/tools/body-composition/waist-to-hip-ratio-calculator",
+    calculate: require("../body-composition/waist-to-hip-ratio-calculator").calculate,
+  },
+  {
+    id: "body-measurement-calculator",
+    name: "Body Measurement Calculator",
+    path: "/tools/body-composition/body-measurement-calculator",
+    calculate: require("../body-composition/body-measurement-calculator").calculate,
+  },
+  {
+    id: "body-recomposition-calculator",
+    name: "Body Recomposition Calculator",
+    path: "/tools/body-composition/body-recomposition-calculator",
+    calculate: require("../body-composition/body-recomposition-calculator").calculate,
+  },
+  {
+    id: "steps-per-day-calculator",
+    name: "Steps Per Day Calculator",
+    path: "/tools/activity/steps-per-day-calculator",
+    calculate: require("../activity/steps-per-day-calculator").calculate,
+  },
+  {
+    id: "move-goal-calculator",
+    name: "Move Goal Calculator",
+    path: "/tools/activity/move-goal-calculator",
+    calculate: require("../activity/move-goal-calculator").calculate,
+  },
+  {
+    id: "barbell-calculator",
+    name: "Barbell Calculator",
+    path: "/tools/strength/barbell-calculator",
+    calculate: require("../strength/barbell-calculator").calculate,
+  },
+  {
+    id: "plate-weight-calculator",
+    name: "Plate Weight Calculator",
+    path: "/tools/strength/plate-weight-calculator",
+    calculate: require("../strength/plate-weight-calculator").calculate,
+  },
+  {
+    id: "powerlifting-calculator",
+    name: "Powerlifting Calculator",
+    path: "/tools/strength/powerlifting-calculator",
+    calculate: require("../strength/powerlifting-calculator").calculate,
+  },
+  {
+    id: "1-rep-max-calculator",
+    name: "1 Rep Max Calculator",
+    path: "/tools/strength/1-rep-max-calculator",
+    calculate: require("../strength/1-rep-max-calculator").calculate,
+  },
+  {
+    id: "training-volume-calculator",
+    name: "Training Volume Calculator",
+    path: "/tools/strength/training-volume-calculator",
+    calculate: require("../strength/training-volume-calculator").calculate,
+  },
+  {
+    id: "strength-ratio-calculators",
+    name: "Strength Ratio Calculators",
+    path: "/tools/strength/strength-ratio-calculators",
+    calculate: require("../strength/strength-ratio-calculators").calculate,
+  },
+  {
+    id: "rpe-calculator",
+    name: "RPE Calculator",
+    path: "/tools/strength/rpe-calculator",
+    calculate: require("../strength/rpe-calculator").calculate,
+  },
+  {
+    id: "one-rep-max-calculator",
+    name: "One Rep Max Calculator",
+    path: "/tools/strength/one-rep-max-calculator",
+    calculate: require("../strength/one-rep-max-calculator").calculate,
+  },
+  {
+    id: "push-up-calculator",
+    name: "Push-Up Calculator",
+    path: "/tools/calisthenics/push-up-calculator",
+    calculate: require("../calisthenics/push-up-calculator").calculate,
+  },
+  {
+    id: "pull-up-calculator",
+    name: "Pull-Up Calculator",
+    path: "/tools/calisthenics/pull-up-calculator",
+    calculate: require("../calisthenics/pull-up-calculator").calculate,
+  },
+  {
+    id: "home-workout-generator",
+    name: "Home Workout Generator",
+    path: "/tools/calisthenics/home-workout-generator",
+    calculate: require("../calisthenics/home-workout-generator").calculate,
+  },
+  {
+    id: "fat-intake-calculator",
+    name: "Fat Intake Calculator",
+    path: "/tools/nutrition/fat-intake-calculator",
+    calculate: require("../nutrition/fat-intake-calculator").calculate,
+  },
+  {
+    id: "creatine-calculator",
+    name: "Creatine Calculator",
+    path: "/tools/nutrition/creatine-calculator",
+    calculate: require("../nutrition/creatine-calculator").calculate,
+  },
+  {
+    id: "protein-powder-calculator",
+    name: "Protein Powder Calculator",
+    path: "/tools/nutrition/protein-powder-calculator",
+    calculate: require("../nutrition/protein-powder-calculator").calculate,
+  },
+  {
+    id: "bulk-calculator",
+    name: "Bulk Calculator",
+    path: "/tools/nutrition/bulk-calculator",
+    calculate: require("../nutrition/bulk-calculator").calculate,
+  },
+  {
+    id: "lean-bulk-calculator",
+    name: "Lean Bulk Calculator",
+    path: "/tools/nutrition/lean-bulk-calculator",
+    calculate: require("../nutrition/lean-bulk-calculator").calculate,
+  },
+  {
+    id: "intermittent-fasting-calculator",
+    name: "Intermittent Fasting Calculator",
+    path: "/tools/nutrition/intermittent-fasting-calculator",
+    calculate: require("../nutrition/intermittent-fasting-calculator").calculate,
+  },
+  {
+    id: "tdee-calculator",
+    name: "TDEE Calculator",
+    path: "/tools/nutrition/tdee-calculator",
+    calculate: require("../nutrition/tdee-calculator").calculate,
+  },
+  {
+    id: "starbucks-macro-calculator",
+    name: "Starbucks Macro Calculator",
+    path: "/tools/nutrition/starbucks-macro-calculator",
+    calculate: require("../nutrition/starbucks-macro-calculator").calculate,
+  },
+  {
+    id: "carnivore-macro-calculator",
+    name: "Carnivore Macro Calculator",
+    path: "/tools/nutrition/carnivore-macro-calculator",
+    calculate: require("../nutrition/carnivore-macro-calculator").calculate,
+  },
+  {
+    id: "subway-macro-calculator",
+    name: "Subway Macro Calculator",
+    path: "/tools/nutrition/subway-macro-calculator",
+    calculate: require("../nutrition/subway-macro-calculator").calculate,
+  },
+  {
+    id: "meal-plan-generator",
+    name: "Meal Plan Generator",
+    path: "/tools/planners/meal-plan-generator",
+    calculate: require("../planners/meal-plan-generator").calculate,
+  },
+  {
+    id: "workout-generator",
+    name: "Workout Generator",
+    path: "/tools/planners/workout-generator",
+    calculate: require("../planners/workout-generator").calculate,
+  },
+  {
+    id: "weight-tracker",
+    name: "Weight Tracker",
+    path: "/tools/trackers/weight-tracker",
+    calculate: require("../trackers/weight-tracker").calculate,
+  },
+  {
+    id: "dumbbell-weight-calculator",
+    name: "Dumbbell Weight Calculator",
+    path: "/tools/equipment/dumbbell-weight-calculator",
+    calculate: require("../equipment/dumbbell-weight-calculator").calculate,
   },
 ];
-
-function normalizeId(id: string): string {
-  return id.trim().toLowerCase();
-}
-
-export function findTool(id: string): RegisteredTool | null {
-  const normalized = normalizeId(id);
-  return registeredTools.find((tool) => tool.id === normalized) ?? null;
-}
