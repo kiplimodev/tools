@@ -1,12 +1,22 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  bodyWeightKg: number;
+  benchKg: number;
+  squatKg: number;
+  deadliftKg: number;
+  ohpKg?: number;
+  rowKg?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  benchToBody: number;
+  squatToBody: number;
+  deadliftToBody: number;
+  pushPullRatio?: number;
+  squatDeadliftRatio: number;
+  upperLowerBalance: string;
+  proportions: {
+    benchPercent: number;
+    squatPercent: number;
+    deadliftPercent: number;
+  };
 }
