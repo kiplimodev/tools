@@ -1,12 +1,11 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  barWeightKg: number;
+  targetWeightKg: number;
+  availablePlatesKg?: number[];
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  perSideWeight: number;
+  platesPerSide: number[];
+  missingWeight?: number;
 }
