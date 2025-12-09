@@ -1,12 +1,10 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  gender: "male" | "female";
+  waistCm: number;
+  hipCm: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  ratio: number;
+  category: string;
 }
