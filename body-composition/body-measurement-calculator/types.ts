@@ -1,12 +1,19 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  neckCm?: number;
+  chestCm?: number;
+  waistCm?: number;
+  hipCm?: number;
+  thighCm?: number;
+  calfCm?: number;
+  bicepCm?: number;
+  forearmCm?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  measurementsCount: number;
+  totalCm: number;
+  averageCm: number;
+  minCm: number;
+  maxCm: number;
+  measurements: Record<string, number>;
 }
