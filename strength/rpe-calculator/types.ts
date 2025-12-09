@@ -1,12 +1,22 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  // Mode A: estimate 1RM from performed set
+  weightKg?: number;
+  reps?: number;
+  rpe?: number;
+
+  // Mode B: predict weight for a target RPE and reps given an estimated 1RM
+  targetReps?: number;
+  targetRpe?: number;
+  estimated1RM?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  // Mode A outputs
+  estimated1RM?: number;
+  percent1RM?: number;
+  rir?: number;
+  recommendedTrainingMax?: number;
+
+  // Mode B outputs
+  predictedWeight?: number;
 }
