@@ -1,12 +1,30 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
+export interface SingleExerciseInput {
+  sets: number;
+  reps: number;
+  weightKg: number;
+}
+
+export interface ExerciseInput {
+  name: string;
+  sets: number;
+  reps: number;
+  weightKg: number;
+}
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  sets?: number;
+  reps?: number;
+  weightKg?: number;
+  exercises?: ExerciseInput[];
+}
+
+export interface ExerciseVolume {
+  name: string;
+  volume: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  totalVolume: number;
+  volumePerSet?: number;
+  exerciseVolumes?: ExerciseVolume[];
 }
