@@ -1,12 +1,15 @@
 /**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
+ * Input and output types for the ideal weight calculator using multiple formulas.
  */
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  gender: "male" | "female";
+  heightCm: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  devine: number;
+  hamwi: number;
+  robinson: number;
+  miller: number;
 }
