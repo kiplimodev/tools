@@ -1,12 +1,14 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  gender: "male" | "female";
+  bodyWeightKg: number;
+  squatKg: number;
+  benchKg: number;
+  deadliftKg: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  totalKg: number;
+  dots: number;
+  wilks: number;
+  ipfGL: number;
 }
