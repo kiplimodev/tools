@@ -1,12 +1,19 @@
 /**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
+ * Move Goal Calculator input definition.
  */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  tdee: number;
+  goal: "health" | "weight-loss" | "fitness";
+  weeklyCalorieDeficit?: number;
+  weeklyCalorieSurplus?: number;
 }
 
+/**
+ * Move Goal Calculator output definition.
+ */
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  dailyMoveCalories: number;
+  recommendedRange: [number, number];
+  goalClassification: string;
 }
