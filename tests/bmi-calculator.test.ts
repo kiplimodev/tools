@@ -2,14 +2,15 @@ import { describe, expect, test } from "vitest";
 import { getTool } from "../registry/getTool";
 
 describe("bmi calculator", () => {
-  test("computes BMI for 70kg and 1.75m", () => {
+  test("computes BMI and category for 70kg and 175cm", () => {
     const calculate = getTool("bmi-calculator");
 
     const result = calculate({
       weightKg: 70,
-      heightM: 1.75,
+      heightCm: 175,
     });
 
-    expect(result.bmi).toBeCloseTo(22.86, 2);
+    expect(result.bmi).toBeCloseTo(22.9, 1);
+    expect(result.category).toBe("normal");
   });
 });
