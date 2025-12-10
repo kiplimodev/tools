@@ -1,12 +1,27 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
+export interface FoodItemInput {
+  id: string;
+  grams: number;
+  quantity?: number;
+}
+
+export interface ItemMacroResult {
+  id: string;
+  calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+  grams: number;
+  quantity: number;
+}
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  items: FoodItemInput[];
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  totalCalories: number;
+  totalProtein: number;
+  totalFat: number;
+  totalCarbs: number;
+  items: ItemMacroResult[];
 }
