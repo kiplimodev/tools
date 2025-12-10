@@ -1,12 +1,33 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
+export interface MacroSplit {
+  proteinPercent: number;
+  fatPercent: number;
+  carbPercent: number;
+}
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  startTime: string; // "HH:MM" in 24h format
+  fastingHours: number;
+  eatingHours?: number;
+  dailyCalories: number;
+  meals?: number;
+  macroSplit?: MacroSplit;
+}
+
+export interface WindowDetails {
+  start: string;
+  end: string;
+  durationHours: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  fastingWindow: WindowDetails;
+  eatingWindow: WindowDetails;
+  meals: number;
+  caloriesPerMeal: number;
+  proteinGrams?: number;
+  fatGrams?: number;
+  carbGrams?: number;
+  proteinPerMeal?: number;
+  fatPerMeal?: number;
+  carbPerMeal?: number;
 }
