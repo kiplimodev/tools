@@ -1,12 +1,39 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
+export type DrinkSize = "tall" | "grande" | "venti" | "trenta";
+
+export type MilkOption =
+  | "whole"
+  | "two_percent"
+  | "nonfat"
+  | "almond"
+  | "oat"
+  | "soy";
+
+export interface OrderItemInput {
+  id: string;
+  size: DrinkSize;
+  milk?: MilkOption;
+  customPumps?: number;
+  quantity?: number;
+}
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  items: OrderItemInput[];
+}
+
+export interface CalculatedItem {
+  id: string;
+  size: DrinkSize;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  quantity: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  totalCalories: number;
+  totalProtein: number;
+  totalCarbs: number;
+  totalFat: number;
+  items: CalculatedItem[];
 }
