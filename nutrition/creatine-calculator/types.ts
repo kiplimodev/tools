@@ -1,12 +1,15 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  useLoadingPhase?: boolean;
+  loadingDays?: number;
+  scoopsPerServing?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  loadingDosePerDay?: number;
+  maintenanceDosePerDay: number;
+  totalCreatineForLoading?: number;
+  totalCreatinePerWeek: number;
+  servingsPerDay: number;
+  estimatedSaturationDays: number;
 }
