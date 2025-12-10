@@ -1,12 +1,18 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  weightKg: number;
+  caloriesPerDay: number;
+  goal?: "cut" | "maintain" | "bulk";
+}
+
+export interface Range {
+  min: number;
+  max: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  minimumFatGrams: number;
+  recommendedRange: Range;
+  percentageRange: Range;
+  healthMinimum: number;
+  goalAdjustedRange?: Range;
 }
