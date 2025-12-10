@@ -1,12 +1,28 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
 export interface CalculatorInput {
-  // TODO: Define inputs
+  gender: "male" | "female";
+  age: number;
+  weightKg: number;
+  heightCm: number;
+  activityLevel:
+    | "sedentary"
+    | "light"
+    | "moderate"
+    | "active"
+    | "very_active"
+    | "athlete";
+  goal?: "maintain" | "cut" | "bulk";
+  bodyFatPercent?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  bmr: number;
+  tdee: number;
+  activityMultiplier: number;
+  methodUsed: "mifflin" | "katch-mcardle";
+  maintenanceCalories: number;
+  cutCalories?: number;
+  bulkCalories?: number;
+  proteinGrams: number;
+  fatGrams: number;
+  carbGrams: number;
 }
