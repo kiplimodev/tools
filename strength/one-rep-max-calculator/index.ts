@@ -1,9 +1,9 @@
-export const meta = {
-  id: "one-rep-max-calculator",
-  name: "One Rep Max Calculator",
-  category: "strength",
-};
+import { CalculatorInput, CalculatorOutput } from "./types";
+import { calculateCore } from "./utils";
 
-export function run(inputs: any) {
-  return { message: "Tool logic not yet implemented" };
+/**
+ * Entry point for this calculator.
+ */
+export function calculate(input: CalculatorInput): CalculatorOutput {
+  return calculateCore(input);
 }
