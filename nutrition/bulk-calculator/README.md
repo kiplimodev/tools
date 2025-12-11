@@ -1,51 +1,47 @@
 # Bulk Calculator
 
 ## Description
-Calculate daily bulking calories and macronutrient targets based on TDEE, desired surplus, and body composition. The calculator estimates weekly weight gain, classifies the gain rate, and optionally partitions expected lean vs fat gain when body fat percentage is provided.
+Calculates daily bulking calorie targets, macronutrient distribution, and projected weight gain based on a chosen daily surplus and protein intake per kilogram. The calculator also estimates how weekly gain may partition into lean mass versus fat mass.
 
 ## Inputs
-- `weightKg`: Current body weight in kilograms (required)
-- `bodyFatPercent`: Optional body fat percentage to refine lean/fat gain estimates
-- `tdee`: Total daily energy expenditure (required)
-- `surplusCalories`: Optional daily calorie surplus (default: 300 kcal)
-- `proteinPerKg`: Optional protein multiplier per kg bodyweight (default: 1.8 g/kg)
-- `fatPercent`: Optional fat calorie percentage as a decimal (default: 0.25)
+- `tdee`: Total daily energy expenditure
+- `surplusCalories`: Daily calorie surplus to apply
+- `weightKg`: Current body weight in kilograms
+- `proteinPerKg`: Protein multiplier per kilogram (recommended 1.6–2.2 g/kg)
+- `fatPercentage` (optional): Percentage of calories from fat (default 25%)
 
 ## Outputs
-- `dailyCalories`: Total daily calories including surplus
+- `dailyCalories`: Total daily calorie target (TDEE + surplus)
 - `proteinGrams`: Daily protein target in grams
 - `fatGrams`: Daily fat target in grams
 - `carbGrams`: Daily carbohydrate target in grams
-- `weeklyCaloricSurplus`: Total surplus calories per week
-- `projectedWeeklyWeightGainKg`: Expected weekly weight gain from the surplus
-- `rateClassification`: Gain rate classification (slow/optimal/aggressive)
-- `leanMassGainEstimate`: Optional lean mass gain estimate (if bodyFatPercent provided)
-- `fatMassGainEstimate`: Optional fat mass gain estimate (if bodyFatPercent provided)
+- `weeklyGainKg`: Estimated weekly weight gain from the surplus
+- `monthlyGainKg`: Estimated monthly weight gain
+- `leanMassGainKg`: Estimated lean mass gain (weekly)
+- `fatMassGainKg`: Estimated fat mass gain (weekly)
 
 ## Formulas
-- Surplus: `surplus = surplusCalories ?? 300`
-- Daily calories: `dailyCalories = tdee + surplus`
-- Protein: `protein = weightKg * (proteinPerKg ?? 1.8)`
-- Fat: `fatCalories = dailyCalories * (fatPercent ?? 0.25)` → `fatGrams = fatCalories / 9`
-- Carbs: `carbGrams = max(0, dailyCalories - protein*4 - fatGrams*9) / 4`
-- Weekly surplus: `weeklyCaloricSurplus = surplus * 7`
-- Projected gain: `projectedWeeklyWeightGainKg = weeklyCaloricSurplus / 7700`
-- Rate classification: `<0.15 kg/wk → slow`, `0.15–0.4 → optimal`, `>0.4 → aggressive`
-- Partition (if bodyFatPercent provided):
-  - BF < 12% → 70% lean / 30% fat
-  - BF 12–20% → 50% lean / 50% fat
-  - BF > 20% → 30% lean / 70% fat
+- Daily calories: `dailyCalories = tdee + surplusCalories`
+- Protein: `proteinGrams = weightKg * proteinPerKg`
+- Fat: `fatGrams = (dailyCalories * fatPercentage) / 9`
+- Carbs: `carbGrams = (dailyCalories - proteinGrams*4 - fatGrams*9) / 4` (floored at 0 if negative)
+- Weight gain conversion: `7700 kcal ≈ 1 kg`
+  - `weeklyGainKg = (surplusCalories * 7) / 7700`
+  - `monthlyGainKg = (surplusCalories * 30) / 7700`
+- Lean vs fat estimate: `leanMassGainKg = weeklyGainKg * 0.6`, `fatMassGainKg = weeklyGainKg * 0.4`
+
+All values are rounded to two decimal places.
 
 ## Example
-```
-Weight: 80 kg
-TDEE: 2600 kcal
-Surplus: 300 kcal
+For a 75 kg lifter with a TDEE of 2600 kcal, a 250 kcal surplus, protein at 2.0 g/kg, and default 25% fat calories:
 
-Daily calories = 2600 + 300 = 2900 kcal
-Protein = 80 * 1.8 = 144 g
-Fat = 2900 * 0.25 / 9 ≈ 80.6 g
-Carbs = (2900 - 144*4 - 80.6*9) / 4 ≈ 339.4 g
-Weekly surplus = 300 * 7 = 2100 kcal
-Projected weekly gain = 2100 / 7700 ≈ 0.27 kg → classification: optimal
-```
+- `dailyCalories = 2600 + 250 = 2850 kcal`
+- `proteinGrams = 75 * 2.0 = 150 g`
+- `fatGrams = 2850 * 0.25 / 9 ≈ 79.17 g`
+- `carbGrams = (2850 - 150*4 - 79.17*9) / 4 ≈ 316.88 g`
+- `weeklyGainKg = (250 * 7) / 7700 ≈ 0.23 kg`
+- `monthlyGainKg = (250 * 30) / 7700 ≈ 0.97 kg`
+- `leanMassGainKg ≈ 0.23 * 0.6 = 0.14 kg`
+- `fatMassGainKg ≈ 0.23 * 0.4 = 0.09 kg`
+
+This plan supplies a moderate surplus with balanced macros and a realistic weekly gain expectation.

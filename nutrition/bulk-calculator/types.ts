@@ -1,20 +1,18 @@
-export interface CalculatorInput {
-  weightKg: number;
-  bodyFatPercent?: number;
+export interface BulkCalculatorInput {
   tdee: number;
-  surplusCalories?: number;
-  proteinPerKg?: number;
-  fatPercent?: number;
+  surplusCalories: number;
+  weightKg: number;
+  proteinPerKg: number;
+  fatPercentage?: number;
 }
 
-export interface CalculatorOutput {
+export interface BulkCalculatorOutput {
   dailyCalories: number;
   proteinGrams: number;
   fatGrams: number;
   carbGrams: number;
-  weeklyCaloricSurplus: number;
-  projectedWeeklyWeightGainKg: number;
-  rateClassification: string;
-  leanMassGainEstimate?: number;
-  fatMassGainEstimate?: number;
+  weeklyGainKg: number;
+  monthlyGainKg: number;
+  leanMassGainKg: number;
+  fatMassGainKg: number;
 }

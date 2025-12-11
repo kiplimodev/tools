@@ -1,133 +1,82 @@
-import { CalculatorInput, CalculatorOutput } from "./types";
+import { BulkCalculatorInput, BulkCalculatorOutput } from "./types";
 
-function roundToOneDecimal(value: number): number {
-  return Math.round(value * 10) / 10;
+function roundToTwoDecimals(value: number): number {
+  return Math.round(value * 100) / 100;
 }
 
-function validateInputs(input: CalculatorInput): void {
-  if (input.weightKg <= 0) {
-    throw new Error("Weight must be greater than 0");
-  }
-  if (input.tdee <= 0) {
+function validateInputs(input: BulkCalculatorInput): void {
+  const { tdee, surplusCalories, weightKg, proteinPerKg, fatPercentage } = input;
+  if (tdee <= 0) {
     throw new Error("TDEE must be greater than 0");
   }
-  if (input.bodyFatPercent !== undefined) {
-    if (input.bodyFatPercent <= 0 || input.bodyFatPercent > 100) {
-      throw new Error("Body fat percent must be between 0 and 100");
-    }
+  if (surplusCalories <= 0) {
+    throw new Error("Surplus calories must be greater than 0");
   }
-  if (input.surplusCalories !== undefined && input.surplusCalories < 0) {
-    throw new Error("Surplus calories cannot be negative");
+  if (weightKg <= 0) {
+    throw new Error("Weight must be greater than 0");
   }
-  if (input.proteinPerKg !== undefined && input.proteinPerKg <= 0) {
+  if (proteinPerKg <= 0) {
     throw new Error("Protein per kg must be greater than 0");
   }
-  if (input.fatPercent !== undefined) {
-    if (input.fatPercent <= 0 || input.fatPercent >= 1) {
-      throw new Error("Fat percent must be a decimal between 0 and 1");
-    }
+  if (fatPercentage !== undefined && (fatPercentage <= 0 || fatPercentage >= 1)) {
+    throw new Error("Fat percentage must be a decimal between 0 and 1");
   }
 }
 
-function computeDailyCalories(tdee: number, surplusCalories?: number): number {
-  const surplus = surplusCalories ?? 300;
+function calculateDailyCalories(tdee: number, surplus: number): number {
   return tdee + surplus;
 }
 
-function computeProtein(weightKg: number, proteinPerKg?: number): number {
-  const proteinTarget = weightKg * (proteinPerKg ?? 1.8);
-  return roundToOneDecimal(proteinTarget);
+function calculateProteinGrams(weightKg: number, proteinPerKg: number): number {
+  return roundToTwoDecimals(weightKg * proteinPerKg);
 }
 
-function computeFat(dailyCalories: number, fatPercent?: number): number {
-  const percent = fatPercent ?? 0.25;
-  const fatCalories = dailyCalories * percent;
-  const fatGrams = fatCalories / 9;
-  return roundToOneDecimal(fatGrams);
+function calculateFatGrams(totalCalories: number, fatPercentage: number): number {
+  const fatCalories = totalCalories * fatPercentage;
+  return roundToTwoDecimals(fatCalories / 9);
 }
 
-function computeCarbs(dailyCalories: number, proteinGrams: number, fatGrams: number): number {
+function calculateCarbGrams(totalCalories: number, proteinGrams: number, fatGrams: number): number {
   const caloriesFromProtein = proteinGrams * 4;
   const caloriesFromFat = fatGrams * 9;
-  const remainingCalories = Math.max(0, dailyCalories - caloriesFromProtein - caloriesFromFat);
-  const carbGrams = remainingCalories / 4;
-  return roundToOneDecimal(carbGrams);
+  const remainingCalories = Math.max(0, totalCalories - caloriesFromProtein - caloriesFromFat);
+  return roundToTwoDecimals(remainingCalories / 4);
 }
 
-function computeWeeklySurplus(surplusCalories?: number): number {
-  const surplus = surplusCalories ?? 300;
-  return roundToOneDecimal(surplus * 7);
+function estimateWeightGain(surplusCalories: number): { weeklyGain: number; monthlyGain: number } {
+  const weeklyGain = (surplusCalories * 7) / 7700;
+  const monthlyGain = (surplusCalories * 30) / 7700;
+  return { weeklyGain: roundToTwoDecimals(weeklyGain), monthlyGain: roundToTwoDecimals(monthlyGain) };
 }
 
-function computeProjectedGain(weeklyCaloricSurplus: number): number {
-  const gain = weeklyCaloricSurplus / 7700;
-  return roundToOneDecimal(gain);
+function estimateLeanVsFat(weeklyGainKg: number): { lean: number; fat: number } {
+  const lean = weeklyGainKg * 0.6;
+  const fat = weeklyGainKg * 0.4;
+  return { lean: roundToTwoDecimals(lean), fat: roundToTwoDecimals(fat) };
 }
 
-function classifyRate(projectedGainKg: number): string {
-  if (projectedGainKg < 0.15) {
-    return "slow";
-  }
-  if (projectedGainKg <= 0.4) {
-    return "optimal";
-  }
-  return "aggressive";
-}
-
-function partitionGain(projectedGainKg: number, bodyFatPercent?: number): { lean?: number; fat?: number } {
-  if (bodyFatPercent === undefined) {
-    return {};
-  }
-
-  let leanRatio = 0.5;
-  let fatRatio = 0.5;
-
-  if (bodyFatPercent < 12) {
-    leanRatio = 0.7;
-    fatRatio = 0.3;
-  } else if (bodyFatPercent <= 20) {
-    leanRatio = 0.5;
-    fatRatio = 0.5;
-  } else {
-    leanRatio = 0.3;
-    fatRatio = 0.7;
-  }
-
-  return {
-    lean: roundToOneDecimal(projectedGainKg * leanRatio),
-    fat: roundToOneDecimal(projectedGainKg * fatRatio),
-  };
-}
-
-export function calculateCore(input: CalculatorInput): CalculatorOutput {
+export function calculateCore(input: BulkCalculatorInput): BulkCalculatorOutput {
   validateInputs(input);
 
-  const dailyCalories = computeDailyCalories(input.tdee, input.surplusCalories);
-  const proteinGrams = computeProtein(input.weightKg, input.proteinPerKg);
-  const fatGrams = computeFat(dailyCalories, input.fatPercent);
-  const carbGrams = computeCarbs(dailyCalories, proteinGrams, fatGrams);
+  const fatPercentage = input.fatPercentage ?? 0.25;
+  const proteinPerKg = input.proteinPerKg ?? 2.0;
 
-  const weeklyCaloricSurplus = computeWeeklySurplus(input.surplusCalories);
-  const projectedWeeklyWeightGainKg = computeProjectedGain(weeklyCaloricSurplus);
-  const rateClassification = classifyRate(projectedWeeklyWeightGainKg);
-  const partitionedGain = partitionGain(projectedWeeklyWeightGainKg, input.bodyFatPercent);
+  const dailyCalories = calculateDailyCalories(input.tdee, input.surplusCalories);
+  const proteinGrams = calculateProteinGrams(input.weightKg, proteinPerKg);
+  const fatGrams = calculateFatGrams(dailyCalories, fatPercentage);
+  const carbGrams = calculateCarbGrams(dailyCalories, proteinGrams, fatGrams);
 
-  const output: CalculatorOutput = {
-    dailyCalories: roundToOneDecimal(dailyCalories),
+  const { weeklyGain, monthlyGain } = estimateWeightGain(input.surplusCalories);
+  const { lean, fat } = estimateLeanVsFat(weeklyGain);
+
+  return {
+    dailyCalories: roundToTwoDecimals(dailyCalories),
     proteinGrams,
     fatGrams,
     carbGrams,
-    weeklyCaloricSurplus,
-    projectedWeeklyWeightGainKg,
-    rateClassification,
+    weeklyGainKg: weeklyGain,
+    monthlyGainKg: monthlyGain,
+    leanMassGainKg: lean,
+    fatMassGainKg: fat,
   };
-
-  if (partitionedGain.lean !== undefined) {
-    output.leanMassGainEstimate = partitionedGain.lean;
-  }
-  if (partitionedGain.fat !== undefined) {
-    output.fatMassGainEstimate = partitionedGain.fat;
-  }
-
-  return output;
 }
