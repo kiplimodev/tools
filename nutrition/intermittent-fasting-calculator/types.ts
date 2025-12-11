@@ -1,33 +1,18 @@
-export interface MacroSplit {
-  proteinPercent: number;
-  fatPercent: number;
-  carbPercent: number;
-}
-
-export interface CalculatorInput {
-  startTime: string; // "HH:MM" in 24h format
-  fastingHours: number;
+export interface IntermittentFastingCalculatorInput {
+  protocol: "16:8" | "18:6" | "20:4" | "23:1" | "custom";
+  fastingHours?: number;
   eatingHours?: number;
-  dailyCalories: number;
+  dailyCalories?: number;
   meals?: number;
-  macroSplit?: MacroSplit;
+  startTime?: string;
 }
 
-export interface WindowDetails {
-  start: string;
-  end: string;
-  durationHours: number;
-}
-
-export interface CalculatorOutput {
-  fastingWindow: WindowDetails;
-  eatingWindow: WindowDetails;
-  meals: number;
-  caloriesPerMeal: number;
-  proteinGrams?: number;
-  fatGrams?: number;
-  carbGrams?: number;
-  proteinPerMeal?: number;
-  fatPerMeal?: number;
-  carbPerMeal?: number;
+export interface IntermittentFastingCalculatorOutput {
+  fastingHours: number;
+  eatingHours: number;
+  eatingWindowStart?: string;
+  eatingWindowEnd?: string;
+  mealTimes?: string[];
+  caloriesPerMeal?: number;
+  weeklyFastingHours: number;
 }

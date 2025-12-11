@@ -1,9 +1,11 @@
-import { CalculatorInput, CalculatorOutput } from "./types";
+import {
+  IntermittentFastingCalculatorInput,
+  IntermittentFastingCalculatorOutput,
+} from "./types";
 import { calculateCore } from "./utils";
 
-/**
- * Entry point for this calculator.
- */
-export function calculate(input: CalculatorInput): CalculatorOutput {
+export function calculate(
+  input: IntermittentFastingCalculatorInput
+): IntermittentFastingCalculatorOutput {
   return calculateCore(input);
 }
