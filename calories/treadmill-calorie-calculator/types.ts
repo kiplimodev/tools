@@ -1,12 +1,14 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
-
-export interface CalculatorInput {
-  // TODO: Define inputs
+export interface TreadmillCalorieCalculatorInput {
+  weightKg: number; // user weight in kilograms
+  durationMinutes: number; // workout duration
+  speed: number; // treadmill speed
+  unit: "kmh" | "mph"; // input speed unit
+  inclinePercent?: number; // optional incline
 }
 
-export interface CalculatorOutput {
-  // TODO: Define outputs
+export interface TreadmillCalorieCalculatorOutput {
+  calories: number; // rounded kcal burned
+  met: number; // MET intensity used
+  speedKmh: number; // normalized km/h
+  inclinePercent: number;
 }
