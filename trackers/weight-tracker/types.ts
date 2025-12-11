@@ -1,12 +1,18 @@
-/**
- * Define the input and output types for this calculator.
- * Replace fields later when implementing logic.
- */
+export interface WeightEntry {
+  date: string; // YYYY-MM-DD
+  weightKg: number;
+}
 
 export interface CalculatorInput {
-  // TODO: Define inputs
+  entries: WeightEntry[];
+  goalWeightKg?: number;
 }
 
 export interface CalculatorOutput {
-  // TODO: Define outputs
+  sortedEntries: WeightEntry[];
+  dailyChange?: number;
+  weeklyAverage?: number;
+  rateKgPerWeek?: number;
+  projectedDateToGoal?: string;
+  trendDirection: "up" | "down" | "stable";
 }
