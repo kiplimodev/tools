@@ -1,160 +1,310 @@
-import { CalculatorInput, CalculatorOutput, SubwayItemInput, VegetableKey, SauceKey } from "./types";
+import {
+  SubwayItemMacro,
+  SubwayItemSelection,
+  SubwayMacroCalculatorInput,
+  SubwayMacroCalculatorOutput,
+} from "./types";
 
 type MacroProfile = {
   calories: number;
   protein: number;
   carbs: number;
   fat: number;
+  sugar: number;
 };
 
-const BREAD: Record<SubwayItemInput["bread"], MacroProfile> = {
-  none: { calories: 0, protein: 0, carbs: 0, fat: 0 },
-  white: { calories: 200, protein: 7, carbs: 38, fat: 2 },
-  wheat: { calories: 210, protein: 8, carbs: 40, fat: 2 },
-  italian: { calories: 230, protein: 8, carbs: 44, fat: 2 },
-  multigrain: { calories: 240, protein: 9, carbs: 43, fat: 3 },
-  flatbread: { calories: 220, protein: 7, carbs: 37, fat: 4 },
+type SizeKey = "6-inch" | "footlong";
+
+type SizedMacros = Record<SizeKey, MacroProfile>;
+
+type BaseItem = {
+  name: string;
+  sizes: SizedMacros;
+  defaultSize?: SizeKey;
 };
 
-const PROTEIN: Record<SubwayItemInput["protein"], MacroProfile> = {
-  chicken: { calories: 110, protein: 20, carbs: 1, fat: 2 },
-  steak: { calories: 130, protein: 21, carbs: 2, fat: 3 },
-  turkey: { calories: 90, protein: 17, carbs: 2, fat: 1 },
-  ham: { calories: 60, protein: 10, carbs: 2, fat: 1 },
-  meatball: { calories: 260, protein: 15, carbs: 14, fat: 15 },
-  tuna: { calories: 250, protein: 15, carbs: 5, fat: 20 },
+const SUBWAY_BASE: Record<string, BaseItem> = {
+  turkey: {
+    name: "Turkey Breast",
+    defaultSize: "6-inch",
+    sizes: {
+      "6-inch": { calories: 120, protein: 18, carbs: 4, fat: 2, sugar: 1 },
+      footlong: { calories: 240, protein: 36, carbs: 8, fat: 4, sugar: 2 },
+    },
+  },
+  tuna: {
+    name: "Tuna",
+    defaultSize: "6-inch",
+    sizes: {
+      "6-inch": { calories: 220, protein: 16, carbs: 6, fat: 16, sugar: 1 },
+      footlong: { calories: 440, protein: 32, carbs: 12, fat: 32, sugar: 2 },
+    },
+  },
+  "meatball-marinara": {
+    name: "Meatball Marinara",
+    defaultSize: "6-inch",
+    sizes: {
+      "6-inch": { calories: 230, protein: 15, carbs: 14, fat: 12, sugar: 4 },
+      footlong: { calories: 460, protein: 30, carbs: 28, fat: 24, sugar: 8 },
+    },
+  },
+  "chicken-teriyaki": {
+    name: "Sweet Onion Chicken Teriyaki",
+    defaultSize: "6-inch",
+    sizes: {
+      "6-inch": { calories: 200, protein: 22, carbs: 18, fat: 3, sugar: 8 },
+      footlong: { calories: 400, protein: 44, carbs: 36, fat: 6, sugar: 16 },
+    },
+  },
+  "steak-cheese": {
+    name: "Steak & Cheese",
+    defaultSize: "6-inch",
+    sizes: {
+      "6-inch": { calories: 210, protein: 20, carbs: 10, fat: 9, sugar: 2 },
+      footlong: { calories: 420, protein: 40, carbs: 20, fat: 18, sugar: 4 },
+    },
+  },
+  "veggie-delite": {
+    name: "Veggie Delite",
+    defaultSize: "6-inch",
+    sizes: {
+      "6-inch": { calories: 80, protein: 5, carbs: 12, fat: 1, sugar: 3 },
+      footlong: { calories: 160, protein: 10, carbs: 24, fat: 2, sugar: 6 },
+    },
+  },
 };
 
-const CHEESE: Record<NonNullable<SubwayItemInput["cheese"]>, MacroProfile> = {
-  none: { calories: 0, protein: 0, carbs: 0, fat: 0 },
-  american: { calories: 40, protein: 2, carbs: 1, fat: 3 },
-  cheddar: { calories: 60, protein: 4, carbs: 1, fat: 5 },
-  swiss: { calories: 50, protein: 4, carbs: 1, fat: 3 },
-  provolone: { calories: 50, protein: 4, carbs: 1, fat: 4 },
+const BREAD: Record<string, SizedMacros> = {
+  Italian: {
+    "6-inch": { calories: 180, protein: 7, carbs: 35, fat: 2, sugar: 3 },
+    footlong: { calories: 360, protein: 14, carbs: 70, fat: 4, sugar: 6 },
+  },
+  Wheat: {
+    "6-inch": { calories: 190, protein: 8, carbs: 36, fat: 2, sugar: 4 },
+    footlong: { calories: 380, protein: 16, carbs: 72, fat: 4, sugar: 8 },
+  },
+  Multigrain: {
+    "6-inch": { calories: 200, protein: 8, carbs: 38, fat: 3, sugar: 4 },
+    footlong: { calories: 400, protein: 16, carbs: 76, fat: 6, sugar: 8 },
+  },
+  Flatbread: {
+    "6-inch": { calories: 220, protein: 8, carbs: 39, fat: 4, sugar: 3 },
+    footlong: { calories: 440, protein: 16, carbs: 78, fat: 8, sugar: 6 },
+  },
+  "Wrap (no bread)": {
+    "6-inch": { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 },
+    footlong: { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 },
+  },
 };
 
-const VEGGIES: Record<VegetableKey, MacroProfile> = {
-  lettuce: { calories: 5, protein: 0, carbs: 1, fat: 0 },
-  tomato: { calories: 5, protein: 0, carbs: 1, fat: 0 },
-  olives: { calories: 25, protein: 0, carbs: 1, fat: 2 },
-  onion: { calories: 5, protein: 0, carbs: 1, fat: 0 },
-  cucumber: { calories: 3, protein: 0, carbs: 1, fat: 0 },
-  jalapeno: { calories: 4, protein: 0, carbs: 1, fat: 0 },
-  pickles: { calories: 3, protein: 0, carbs: 1, fat: 0 },
+const CHEESE: Record<string, MacroProfile> = {
+  American: { calories: 40, protein: 2, carbs: 1, fat: 3, sugar: 0 },
+  Cheddar: { calories: 60, protein: 4, carbs: 1, fat: 5, sugar: 0 },
+  Swiss: { calories: 50, protein: 4, carbs: 1, fat: 3, sugar: 0 },
+  Provolone: { calories: 50, protein: 4, carbs: 1, fat: 4, sugar: 0 },
+  None: { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 },
 };
 
-const SAUCES: Record<SauceKey, MacroProfile> = {
-  mayo: { calories: 100, protein: 0, carbs: 0, fat: 11 },
-  chipotle: { calories: 70, protein: 0, carbs: 1, fat: 7 },
-  mustard: { calories: 10, protein: 0, carbs: 1, fat: 0 },
-  sweetOnion: { calories: 40, protein: 0, carbs: 9, fat: 0 },
+const SAUCES: Record<string, MacroProfile> = {
+  Mayo: { calories: 100, protein: 0, carbs: 0, fat: 11, sugar: 0 },
+  "Chipotle Southwest": { calories: 70, protein: 0, carbs: 1, fat: 7, sugar: 1 },
+  "Sweet Onion": { calories: 40, protein: 0, carbs: 9, fat: 0, sugar: 8 },
+  "Honey Mustard": { calories: 30, protein: 0, carbs: 7, fat: 0, sugar: 6 },
+  Oil: { calories: 45, protein: 0, carbs: 0, fat: 5, sugar: 0 },
+  Vinegar: { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 },
 };
 
-export function calculateCore(input: CalculatorInput): CalculatorOutput {
+const ADD_ONS: Record<string, MacroProfile> = {
+  Bacon: { calories: 90, protein: 6, carbs: 0, fat: 7, sugar: 0 },
+  Pepperoni: { calories: 80, protein: 4, carbs: 1, fat: 7, sugar: 0 },
+  Avocado: { calories: 70, protein: 1, carbs: 3, fat: 6, sugar: 0 },
+  "Extra Meat": { calories: 110, protein: 20, carbs: 2, fat: 3, sugar: 1 },
+};
+
+export function calculateCore(
+  input: SubwayMacroCalculatorInput
+): SubwayMacroCalculatorOutput {
   validateInput(input);
 
-  const totals: MacroProfile = { calories: 0, protein: 0, carbs: 0, fat: 0 };
-  const items = input.items.map((item) => {
-    const itemMacros = calculateItemMacros(item);
-    totals.calories += itemMacros.calories;
-    totals.protein += itemMacros.protein;
-    totals.carbs += itemMacros.carbs;
-    totals.fat += itemMacros.fat;
-    return {
-      calories: round1(itemMacros.calories),
-      protein: round1(itemMacros.protein),
-      carbs: round1(itemMacros.carbs),
-      fat: round1(itemMacros.fat),
-      quantity: item.quantity ?? 1,
-    };
-  });
+  const items: SubwayItemMacro[] = input.items.map((selection) =>
+    calculateItemMacro(selection)
+  );
+
+  const totals = calculateTotals(items);
+
+  return { items, totals };
+}
+
+function calculateItemMacro(selection: SubwayItemSelection): SubwayItemMacro {
+  const base = getBaseItem(selection.itemId);
+  const size: SizeKey = selection.size ?? base.defaultSize ?? "6-inch";
+  const baseMacros = getSizeMacro(base, size);
+
+  const breadName = selection.bread ?? "Italian";
+  const breadMacro = getBreadMacro(breadName, size);
+
+  const cheeseName = selection.cheese ?? "None";
+  const cheeseMacro = getCheeseMacro(cheeseName);
+
+  const sauceList = selection.sauces ?? [];
+  const saucesMacro = combineMacros(sauceList.map((sauce) => getSauceMacro(sauce)));
+
+  const addOnList = selection.addOns ?? [];
+  const addOnsMacro = combineMacros(addOnList.map((addOn) => getAddOnMacro(addOn)));
+
+  const combined = combineMacros([baseMacros, breadMacro, cheeseMacro, saucesMacro, addOnsMacro]);
+  const quantity = selection.quantity ?? 1;
+  const scaled = multiplyMacros(combined, quantity);
 
   return {
-    totalCalories: round1(totals.calories),
-    totalProtein: round1(totals.protein),
-    totalCarbs: round1(totals.carbs),
-    totalFat: round1(totals.fat),
-    items,
+    itemId: selection.itemId,
+    name: base.name,
+    size,
+    bread: breadName,
+    cheese: cheeseName,
+    sauces: sauceList,
+    addOns: addOnList,
+    quantity,
+    calories: round1(scaled.calories),
+    protein: round1(scaled.protein),
+    carbs: round1(scaled.carbs),
+    fat: round1(scaled.fat),
+    sugar: round1(scaled.sugar),
   };
 }
 
-function calculateItemMacros(item: SubwayItemInput): MacroProfile {
-  const quantity = item.quantity ?? 1;
-  const cheese = item.cheese ?? "none";
+function calculateTotals(items: SubwayItemMacro[]): SubwayMacroCalculatorOutput["totals"] {
+  return items.reduce(
+    (acc, item) => ({
+      calories: round1(acc.calories + item.calories),
+      protein: round1(acc.protein + item.protein),
+      carbs: round1(acc.carbs + item.carbs),
+      fat: round1(acc.fat + item.fat),
+      sugar: round1(acc.sugar + item.sugar),
+    }),
+    { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 }
+  );
+}
 
-  const base: MacroProfile = combineMacros([
-    BREAD[item.bread],
-    PROTEIN[item.protein],
-    CHEESE[cheese],
-  ]);
+function getBaseItem(itemId: string): BaseItem {
+  const item = SUBWAY_BASE[itemId];
+  if (!item) {
+    throw new Error(`Unknown Subway item: ${itemId}`);
+  }
+  return item;
+}
 
-  const veggiesMacros = item.veggies
-    ? combineMacros(
-        (Object.keys(item.veggies) as VegetableKey[])
-          .filter((veg) => item.veggies?.[veg])
-          .map((veg) => VEGGIES[veg])
-      )
-    : { calories: 0, protein: 0, carbs: 0, fat: 0 };
+function getSizeMacro(item: BaseItem, size: SizeKey): MacroProfile {
+  const profile = item.sizes[size];
+  if (!profile) {
+    throw new Error(`Size '${size}' not available for item '${item.name}'.`);
+  }
+  return profile;
+}
 
-  const saucesMacros = item.sauces
-    ? combineMacros(
-        (Object.keys(item.sauces) as SauceKey[]).map((sauce) =>
-          scaleMacros(SAUCES[sauce], item.sauces?.[sauce] ?? 0)
-        )
-      )
-    : { calories: 0, protein: 0, carbs: 0, fat: 0 };
+function getBreadMacro(bread: string, size: SizeKey): MacroProfile {
+  const profile = BREAD[bread];
+  if (!profile) {
+    throw new Error(`Unknown bread type: ${bread}`);
+  }
+  const sized = profile[size];
+  if (!sized) {
+    throw new Error(`Size '${size}' not available for bread '${bread}'.`);
+  }
+  return sized;
+}
 
-  const combined = combineMacros([base, veggiesMacros, saucesMacros]);
-  return scaleMacros(combined, quantity);
+function getCheeseMacro(cheese: string): MacroProfile {
+  const profile = CHEESE[cheese];
+  if (!profile) {
+    throw new Error(`Unknown cheese option: ${cheese}`);
+  }
+  return profile;
+}
+
+function getSauceMacro(sauce: string): MacroProfile {
+  const profile = SAUCES[sauce];
+  if (!profile) {
+    throw new Error(`Unknown sauce option: ${sauce}`);
+  }
+  return profile;
+}
+
+function getAddOnMacro(addOn: string): MacroProfile {
+  const profile = ADD_ONS[addOn];
+  if (!profile) {
+    throw new Error(`Unknown add-on: ${addOn}`);
+  }
+  return profile;
+}
+
+function addMacros(a: MacroProfile, b: MacroProfile): MacroProfile {
+  return {
+    calories: a.calories + b.calories,
+    protein: a.protein + b.protein,
+    carbs: a.carbs + b.carbs,
+    fat: a.fat + b.fat,
+    sugar: a.sugar + b.sugar,
+  };
 }
 
 function combineMacros(profiles: MacroProfile[]): MacroProfile {
   return profiles.reduce(
-    (acc, profile) => ({
-      calories: acc.calories + (profile?.calories ?? 0),
-      protein: acc.protein + (profile?.protein ?? 0),
-      carbs: acc.carbs + (profile?.carbs ?? 0),
-      fat: acc.fat + (profile?.fat ?? 0),
-    }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    (acc, profile) => addMacros(acc, profile),
+    { calories: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 }
   );
 }
 
-function scaleMacros(profile: MacroProfile, multiplier: number): MacroProfile {
+function multiplyMacros(profile: MacroProfile, quantity: number): MacroProfile {
   return {
-    calories: profile.calories * multiplier,
-    protein: profile.protein * multiplier,
-    carbs: profile.carbs * multiplier,
-    fat: profile.fat * multiplier,
+    calories: profile.calories * quantity,
+    protein: profile.protein * quantity,
+    carbs: profile.carbs * quantity,
+    fat: profile.fat * quantity,
+    sugar: profile.sugar * quantity,
   };
 }
 
-function validateInput(input: CalculatorInput): void {
+function validateInput(input: SubwayMacroCalculatorInput): void {
   if (!input.items || input.items.length === 0) {
-    throw new Error("At least one sandwich item must be provided.");
+    throw new Error("At least one item must be provided.");
   }
 
   input.items.forEach((item, index) => {
-    const prefix = `Item ${index + 1}:`;
-    if (!BREAD[item.bread]) {
-      throw new Error(`${prefix} Invalid bread option.`);
+    const base = SUBWAY_BASE[item.itemId];
+    if (!base) {
+      throw new Error(`Item ${index + 1}: unknown base item '${item.itemId}'.`);
     }
-    if (!PROTEIN[item.protein]) {
-      throw new Error(`${prefix} Invalid protein option.`);
+
+    const size: SizeKey = item.size ?? base.defaultSize ?? "6-inch";
+    if (!base.sizes[size]) {
+      throw new Error(`Item ${index + 1}: size '${size}' not available for '${base.name}'.`);
     }
-    if (item.cheese && !CHEESE[item.cheese]) {
-      throw new Error(`${prefix} Invalid cheese option.`);
+
+    const bread = item.bread ?? "Italian";
+    if (!BREAD[bread]) {
+      throw new Error(`Item ${index + 1}: bread option '${bread}' not supported.`);
     }
+
+    const cheese = item.cheese ?? "None";
+    if (!CHEESE[cheese]) {
+      throw new Error(`Item ${index + 1}: cheese option '${cheese}' not supported.`);
+    }
+
+    (item.sauces ?? []).forEach((sauce) => {
+      if (!SAUCES[sauce]) {
+        throw new Error(`Item ${index + 1}: sauce option '${sauce}' not supported.`);
+      }
+    });
+
+    (item.addOns ?? []).forEach((addOn) => {
+      if (!ADD_ONS[addOn]) {
+        throw new Error(`Item ${index + 1}: add-on option '${addOn}' not supported.`);
+      }
+    });
+
     if (item.quantity !== undefined && item.quantity <= 0) {
-      throw new Error(`${prefix} Quantity must be greater than 0.`);
-    }
-    if (item.sauces) {
-      (Object.keys(item.sauces) as SauceKey[]).forEach((key) => {
-        const servings = item.sauces?.[key];
-        if (servings !== undefined && servings < 0) {
-          throw new Error(`${prefix} Sauce servings must be non-negative.`);
-        }
-      });
+      throw new Error(`Item ${index + 1}: quantity must be greater than 0.`);
     }
   });
 }
