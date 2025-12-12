@@ -1,11 +1,19 @@
-import { tools } from "./registry";
+import path from "path";
 
-export function getTool(id: string) {
-  const tool = tools.find(t => t.id === id);
+const SRC_ROOT = path.join(process.cwd(), "src");
 
-  if (!tool) {
-    throw new Error(`Tool '${id}' not found in registry.`);
+export async function getTool(absPath: string): Promise<any> {
+  // Convert absolute filesystem path to a module specifier Next can resolve.
+  let moduleSpecifier = absPath;
+
+  if (absPath.startsWith(SRC_ROOT)) {
+    const relative = absPath
+      .slice(SRC_ROOT.length + 1)
+      .replace(/\\/g, "/")
+      .replace(/\.(ts|tsx)$/, "");
+    moduleSpecifier = `@/${relative}`;
   }
 
-  return tool.calculate;
+  const module = await import(moduleSpecifier);
+  return module.default ?? module.calculate;
 }

@@ -2,11 +2,15 @@
 
 import { useState } from "react";
 import SidebarToolLink from "./SidebarToolLink";
-import { getToolsByCategory } from "@/lib/registry-client";
 
-export default function SidebarCategory({ category }: { category: string }) {
+export default function SidebarCategory({
+  category,
+  tools,
+}: {
+  category: string;
+  tools: { id: string; name: string }[];
+}) {
   const [open, setOpen] = useState(false);
-  const tools = getToolsByCategory(category);
 
   return (
     <div style={{ marginBottom: "10px" }}>
