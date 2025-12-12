@@ -1,6 +1,19 @@
-import { pathToFileURL } from "url";
+import path from "path";
 
-export function getTool(absPath: string): any {
-  const fileUrl = pathToFileURL(absPath).href;
-  return import(fileUrl).then((module) => module.default);
+const SRC_ROOT = path.join(process.cwd(), "src");
+
+export async function getTool(absPath: string): Promise<any> {
+  // Convert absolute filesystem path to a module specifier Next can resolve.
+  let moduleSpecifier = absPath;
+
+  if (absPath.startsWith(SRC_ROOT)) {
+    const relative = absPath
+      .slice(SRC_ROOT.length + 1)
+      .replace(/\\/g, "/")
+      .replace(/\.(ts|tsx)$/, "");
+    moduleSpecifier = `@/${relative}`;
+  }
+
+  const module = await import(moduleSpecifier);
+  return module.default ?? module.calculate;
 }

@@ -5,9 +5,9 @@ import { ComponentType } from "react";
 export default async function ToolPage({
   params,
 }: {
-  params: Promise<{ category: string; toolid: string }>;
+  params: { category: string; toolid: string };
 }) {
-  const { category, toolid } = await params;
+  const { category, toolid } = params;
 
   // Lookup tool metadata
   const def = getToolDefinition(category, toolid);
