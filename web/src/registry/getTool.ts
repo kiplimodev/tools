@@ -1,11 +1,12 @@
-import { tools } from "./registry";
+import { getToolDefinitionById } from "@/lib/registry-client";
 
-export function getTool(id: string) {
-  const tool = tools.find(t => t.id === id);
+export async function getTool(id: string): Promise<any> {
+  const def = getToolDefinitionById(id);
 
-  if (!tool) {
-    throw new Error(`Tool '${id}' not found in registry.`);
+  if (!def) {
+    throw new Error(`Tool '${id}' not found.`);
   }
 
-  return tool.calculate;
+  const module = await import(def.importPath);
+  return module.default ?? module.calculate;
 }
