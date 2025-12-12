@@ -3,16 +3,17 @@ import path from "path";
 const SRC_ROOT = path.join(process.cwd(), "src");
 
 export async function getTool(absPath: string): Promise<any> {
-  // Convert absolute filesystem path to a module specifier Next can resolve.
-  let moduleSpecifier = absPath;
+  // Normalize to an alias-based module specifier Next can resolve.
+  let moduleSpecifier = absPath.replace(/\\/g, "/");
 
-  if (absPath.startsWith(SRC_ROOT)) {
-    const relative = absPath
-      .slice(SRC_ROOT.length + 1)
-      .replace(/\\/g, "/")
-      .replace(/\.(ts|tsx)$/, "");
+  if (moduleSpecifier.startsWith(SRC_ROOT.replace(/\\/g, "/"))) {
+    const relative = moduleSpecifier.slice(SRC_ROOT.length + 1);
     moduleSpecifier = `@/${relative}`;
   }
+
+  moduleSpecifier = moduleSpecifier
+    .replace(/\.(ts|tsx|js|jsx)$/, "")
+    .replace(/\/?index$/, "");
 
   const module = await import(moduleSpecifier);
   return module.default ?? module.calculate;

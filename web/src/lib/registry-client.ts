@@ -68,9 +68,9 @@ export function getToolDefinition(
   category: string,
   toolid: string
 ): ToolDefinition | undefined {
-  const indexPath = path.join(SRC_ROOT, category, toolid, "index.ts");
+  const absoluteIndexPath = path.join(SRC_ROOT, category, toolid, "index.ts");
 
-  if (!fs.existsSync(indexPath)) {
+  if (!fs.existsSync(absoluteIndexPath)) {
     return undefined;
   }
 
@@ -78,6 +78,6 @@ export function getToolDefinition(
     id: toolid,
     name: formatName(toolid),
     category,
-    indexPath,
+    indexPath: `@/${category}/${toolid}`,
   };
 }
