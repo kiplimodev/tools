@@ -1,11 +1,20 @@
-import { tools } from "./registry";
+import path from "path";
 
-export function getTool(id: string) {
-  const tool = tools.find(t => t.id === id);
+const SRC_ROOT = path.join(process.cwd(), "src");
 
-  if (!tool) {
-    throw new Error(`Tool '${id}' not found in registry.`);
+export async function getTool(absPath: string): Promise<any> {
+  // Normalize to an alias-based module specifier Next can resolve.
+  let moduleSpecifier = absPath.replace(/\\/g, "/");
+
+  if (moduleSpecifier.startsWith(SRC_ROOT.replace(/\\/g, "/"))) {
+    const relative = moduleSpecifier.slice(SRC_ROOT.length + 1);
+    moduleSpecifier = `@/${relative}`;
   }
 
-  return tool.calculate;
+  moduleSpecifier = moduleSpecifier
+    .replace(/\.(ts|tsx|js|jsx)$/, "")
+    .replace(/\/?index$/, "");
+
+  const module = await import(moduleSpecifier);
+  return module.default ?? module.calculate;
 }
