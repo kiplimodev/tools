@@ -21,7 +21,7 @@ export default async function ToolPage({
 
   // 🔥 Load the tool's calculate() function
   try {
-    await getTool(tool.indexPath);
+    await getTool(tool.id);
   } catch {
     return <div className="text-red-600">Error loading tool.</div>;
   }

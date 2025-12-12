@@ -12,6 +12,7 @@ export interface ToolDefinition {
   id: string;
   name: string;
   category: string;
+  importPath: string;
   indexPath: string;
 }
 
@@ -78,6 +79,27 @@ export function getToolDefinition(
     id: toolid,
     name: formatName(toolid),
     category,
-    indexPath: `@/${category}/${toolid}`,
+    importPath: `@/${category}/${toolid}`,
+    indexPath: absoluteIndexPath,
   };
+}
+
+export function getToolDefinitionById(id: string): ToolDefinition | undefined {
+  if (id.includes("/")) {
+    const [category, toolid] = id.split("/");
+
+    if (category && toolid) {
+      return getToolDefinition(category, toolid);
+    }
+  }
+
+  for (const category of getCategories()) {
+    const def = getToolDefinition(category, id);
+
+    if (def) {
+      return def;
+    }
+  }
+
+  return undefined;
 }

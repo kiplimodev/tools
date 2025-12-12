@@ -18,7 +18,7 @@ export default async function ToolPage({
 
   // Load the actual tool component dynamically
   const ToolComponent: ComponentType | undefined =
-    (await getTool(def.indexPath)) ?? (() => <div>Tool component not found.</div>);
+    (await getTool(def.id)) ?? (() => <div>Tool component not found.</div>);
 
   if (!ToolComponent) {
     return <div>Tool component not found.</div>;

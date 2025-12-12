@@ -1,20 +1,12 @@
-import path from "path";
+import { getToolDefinitionById } from "@/lib/registry-client";
 
-const SRC_ROOT = path.join(process.cwd(), "src");
+export async function getTool(id: string): Promise<any> {
+  const def = getToolDefinitionById(id);
 
-export async function getTool(absPath: string): Promise<any> {
-  // Normalize to an alias-based module specifier Next can resolve.
-  let moduleSpecifier = absPath.replace(/\\/g, "/");
-
-  if (moduleSpecifier.startsWith(SRC_ROOT.replace(/\\/g, "/"))) {
-    const relative = moduleSpecifier.slice(SRC_ROOT.length + 1);
-    moduleSpecifier = `@/${relative}`;
+  if (!def) {
+    throw new Error(`Tool '${id}' not found.`);
   }
 
-  moduleSpecifier = moduleSpecifier
-    .replace(/\.(ts|tsx|js|jsx)$/, "")
-    .replace(/\/?index$/, "");
-
-  const module = await import(moduleSpecifier);
+  const module = await import(def.importPath);
   return module.default ?? module.calculate;
 }
