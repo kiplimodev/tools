@@ -12,11 +12,16 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+
     "baseUrl": ".",
+
     "paths": {
-      "@/*": ["web/src/*"],
-      "@registry/*": ["registry/*"],
-      "@tools/*": ["registry/*"]
+      "@/lib/*": ["web/src/lib/*"],
+      "@/components/*": ["web/src/components/*"],
+      "@/app/*": ["web/src/app/*"],
+      "@/registry/*": ["registry/*"],
+      "@tools/*": ["registry/*"],
+      "@/*": ["web/src/*"]
     }
   }
 }
