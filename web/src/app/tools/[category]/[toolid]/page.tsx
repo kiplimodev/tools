@@ -1,15 +1,13 @@
 import { getToolDefinition } from "@/lib/registry-client";
 import { getTool } from "@/registry/getTool";
+import { ComponentType } from "react";
 
-interface ToolPageProps {
-  params: Promise<{
-    category: string;
-    toolid: string;
-  }>;
-}
-
-export default async function ToolPage({ params }: ToolPageProps) {
-  const { category, toolid } = await params; // ⭐ Required fix for Next.js
+export default async function ToolPage({
+  params,
+}: {
+  params: { category: string; toolid: string };
+}) {
+  const { category, toolid } = params;
 
   // Lookup tool metadata
   const def = getToolDefinition(category, toolid);
@@ -19,7 +17,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
   }
 
   // Load the actual tool component dynamically
-  const ToolComponent = await getTool(def.path);
+  const ToolComponent: ComponentType | undefined =
+    (await getTool(def.indexPath)) ?? (() => <div>Tool component not found.</div>);
 
   if (!ToolComponent) {
     return <div>Tool component not found.</div>;
