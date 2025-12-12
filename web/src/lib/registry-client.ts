@@ -1,4 +1,5 @@
-import { tools } from "@/registry/registry";
+import fs from "fs";
+import path from "path";
 
 export interface ToolSummary {
   id: string;
@@ -7,32 +8,76 @@ export interface ToolSummary {
   category: string;
 }
 
-function extractCategory(path: string): string {
-  // path example: "/tools/body-composition/bmi-calculator"
-  const parts = path.split("/");
-  return parts[2];
+export interface ToolDefinition {
+  id: string;
+  name: string;
+  category: string;
+  indexPath: string;
 }
 
-export function getAllTools(): ToolSummary[] {
-  return tools.map((tool) => ({
-    id: tool.id,
-    name: tool.name,
-    path: tool.path,
-    category: extractCategory(tool.path),
-  }));
+const SRC_ROOT = path.join(process.cwd(), "src");
+const EXCLUDED_DIRS = new Set(["app", "components", "lib", "registry"]);
+
+function isDirectory(dirPath: string) {
+  try {
+    return fs.statSync(dirPath).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function formatName(segment: string) {
+  return segment
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 export function getCategories(): string[] {
-  const categories = getAllTools().map((t) => t.category);
-  return Array.from(new Set(categories)).sort();
+  return fs
+    .readdirSync(SRC_ROOT)
+    .filter((entry) => !EXCLUDED_DIRS.has(entry))
+    .filter((entry) => isDirectory(path.join(SRC_ROOT, entry)))
+    .sort();
 }
 
 export function getToolsByCategory(category: string): ToolSummary[] {
-  return getAllTools().filter((t) => t.category === category);
+  const categoryPath = path.join(SRC_ROOT, category);
+
+  if (!isDirectory(categoryPath)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(categoryPath)
+    .filter((entry) => isDirectory(path.join(categoryPath, entry)))
+    .map((toolId) => ({
+      id: toolId,
+      name: formatName(toolId),
+      path: `/tools/${category}/${toolId}`,
+      category,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-export function getToolDefinition(category: string, toolid: string) {
-  return getAllTools().find(
-    (t) => t.category === category && t.id === toolid
-  );
+export function getAllTools(): ToolSummary[] {
+  return getCategories().flatMap((category) => getToolsByCategory(category));
+}
+
+export function getToolDefinition(
+  category: string,
+  toolid: string
+): ToolDefinition | undefined {
+  const indexPath = path.join(SRC_ROOT, category, toolid, "index.ts");
+
+  if (!fs.existsSync(indexPath)) {
+    return undefined;
+  }
+
+  return {
+    id: toolid,
+    name: formatName(toolid),
+    category,
+    indexPath,
+  };
 }

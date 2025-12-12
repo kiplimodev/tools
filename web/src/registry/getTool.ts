@@ -1,11 +1,6 @@
-import { tools } from "./registry";
+import { pathToFileURL } from "url";
 
-export function getTool(id: string) {
-  const tool = tools.find(t => t.id === id);
-
-  if (!tool) {
-    throw new Error(`Tool '${id}' not found in registry.`);
-  }
-
-  return tool.calculate;
+export function getTool(absPath: string): any {
+  const fileUrl = pathToFileURL(absPath).href;
+  return import(fileUrl).then((module) => module.default);
 }
