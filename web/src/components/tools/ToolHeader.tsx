@@ -13,3 +13,7 @@ export function ToolHeader({ title, subtitle }: ToolHeaderProps) {
     </div>
   );
 }
+
+export function ToolDescription({ description }: { description: string }) {
+  return <p className="text-neutral-700 text-sm leading-relaxed">{description}</p>;
+}
