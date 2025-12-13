@@ -4,10 +4,9 @@ import { getTool } from "@/registry/getTool";
 export default async function ToolPage({
   params,
 }: {
-  params: Promise<{ category: string; toolId: string }>;
+  params: { category: string; toolId: string };
 }) {
-  // 🔥 FIX: unwrap the params Promise
-  const { category, toolId } = await params;
+  const { category, toolId } = params;
 
   // 🔥 Find metadata for the tool
   const tool = getToolDefinition(category, toolId);
@@ -21,9 +20,8 @@ export default async function ToolPage({
   }
 
   // 🔥 Load the tool's calculate() function
-  let calculateFn: Function;
   try {
-    calculateFn = getTool(tool.id);
+    await getTool(tool.id);
   } catch {
     return <div className="text-red-600">Error loading tool.</div>;
   }
