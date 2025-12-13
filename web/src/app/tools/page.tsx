@@ -1,37 +1,33 @@
-import { getCategories, getToolsByCategory } from "@/lib/registry-client";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { getCategories } from "@/lib/registry-client";
 import Link from "next/link";
 
 export default function ToolsIndexPage() {
   const categories = getCategories();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">All Fitness Tools</h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold">Fitness Tools</h1>
+        <p className="text-neutral-600">Browse calculators and generators by category.</p>
+      </div>
 
-      {categories.map((category) => {
-        const tools = getToolsByCategory(category);
-
-        return (
-          <section key={category} className="mb-6">
-            <h2 className="text-xl font-semibold mb-2 capitalize">
-              {category.replace(/-/g, " ")}
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {tools.map((tool) => (
-                <Link
-                  key={tool.id}
-                  href={tool.path}
-                  className="p-3 bg-white border rounded shadow-sm hover:bg-gray-100"
-                >
-                  <div className="font-semibold">{tool.name}</div>
-                  <p className="text-sm text-neutral-600">{tool.description}</p>
-                </Link>
-              ))}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {categories.map((category) => (
+          <Card key={category.id} className="flex h-full flex-col justify-between">
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold">{category.label}</h2>
+              <p className="text-sm text-neutral-600">{category.description}</p>
             </div>
-          </section>
-        );
-      })}
+            <div className="mt-4">
+              <Button asChild className="w-full">
+                <Link href={`/tools/${category.id}`}>Explore {category.label}</Link>
+              </Button>
+            </div>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

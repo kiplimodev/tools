@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { getToolsByCategory } from "@/lib/registry-client";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { getCategorySummary, getToolsByCategory } from "@/lib/registry-client";
+import { notFound } from "next/navigation";
 
 export default function CategoryToolsPage({
   params,
@@ -7,30 +10,33 @@ export default function CategoryToolsPage({
   params: { category: string };
 }) {
   const { category } = params;
+  const categorySummary = getCategorySummary(category);
   const tools = getToolsByCategory(category);
 
-  if (!tools.length) {
-    return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4 capitalize">{category.replace(/-/g, " ")}</h1>
-        <p>No tools found for this category.</p>
-      </div>
-    );
+  if (!categorySummary || !tools.length) {
+    notFound();
   }
 
   return (
-    <div className="space-y-4 p-6">
-      <h1 className="text-2xl font-bold capitalize">{category.replace(/-/g, " ")}</h1>
-      <div className="grid gap-3 md:grid-cols-2">
+    <div className="space-y-6 p-6">
+      <div>
+        <h1 className="text-2xl font-bold">{categorySummary.label}</h1>
+        <p className="text-neutral-600">{categorySummary.description}</p>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
-          <Link
-            key={tool.id}
-            href={tool.path}
-            className="block rounded-lg border border-neutral-200 bg-white p-4 shadow-sm hover:border-blue-400"
-          >
-            <h2 className="text-lg font-semibold">{tool.name}</h2>
-            <p className="text-sm text-neutral-600 mt-1">{tool.description}</p>
-          </Link>
+          <Card key={tool.id} className="flex flex-col justify-between">
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold">{tool.name}</h2>
+              <p className="text-sm text-neutral-600">{tool.description}</p>
+            </div>
+            <div className="mt-4">
+              <Button asChild className="w-full">
+                <Link href={tool.path}>Open Tool</Link>
+              </Button>
+            </div>
+          </Card>
         ))}
       </div>
     </div>
