@@ -32,6 +32,8 @@ export interface FullToolDefinition {
   calculate: (input: any) => any;
 }
 
+export type ClientToolDefinition = Omit<FullToolDefinition, "calculate">;
+
 function mapCategory(category: ToolCategory): CategorySummary {
   return {
     id: category.id,

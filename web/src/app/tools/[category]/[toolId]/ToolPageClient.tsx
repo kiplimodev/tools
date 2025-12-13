@@ -1,10 +1,10 @@
 "use client";
 
 import { AutoForm } from "@/components/forms/AutoForm";
-import { FullToolDefinition } from "@/lib/registry-client";
+import { ClientToolDefinition } from "@/lib/registry-client";
 
 interface ToolPageClientProps {
-  tool: FullToolDefinition;
+  tool: ClientToolDefinition;
 }
 
 export default function ToolPageClient({ tool }: ToolPageClientProps) {

@@ -14,6 +14,11 @@ export default function CategoryToolsPageClient({
   category,
   tools,
 }: CategoryToolsPageClientProps) {
+  const sanitizedTools = tools.map((t) => {
+    const { calculate, ...safe } = t as any;
+    return safe as ToolSummary;
+  });
+
   return (
     <div className="space-y-6 p-6">
       <div>
@@ -22,7 +27,7 @@ export default function CategoryToolsPageClient({
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {tools.map((tool) => (
+        {sanitizedTools.map((tool) => (
           <Card key={tool.id} className="flex flex-col justify-between">
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">{tool.name}</h2>

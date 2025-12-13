@@ -7,12 +7,12 @@ import { parseFormValues } from "@/lib/form-utils";
 import { getFieldType, getShapeFromSchema } from "@/lib/zod-utils";
 import { ZodObject, ZodRawShape } from "zod";
 import React, { useMemo, useState } from "react";
-import { FullToolDefinition } from "@/lib/registry-client";
+import { ClientToolDefinition } from "@/lib/registry-client";
 import { ResultCard } from "@/components/ui/ResultCard";
 
 interface AutoFormProps<T extends ZodRawShape> {
   schema: ZodObject<T>;
-  tool: FullToolDefinition;
+  tool: ClientToolDefinition;
   submitLabel?: string;
 }
 
