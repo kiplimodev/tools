@@ -3,20 +3,18 @@ import clsx from "clsx";
 
 interface SidebarToolLinkProps {
   name: string;
-  category: string;
-  toolid: string;
+  path: string;
   activePath: string;
   onNavigate?: () => void;
 }
 
 export default function SidebarToolLink({
   name,
-  category,
-  toolid,
+  path,
   activePath,
   onNavigate,
 }: SidebarToolLinkProps) {
-  const href = `/tools/${category}/${toolid}`;
+  const href = path;
   const isActive = activePath === href;
 
   return (

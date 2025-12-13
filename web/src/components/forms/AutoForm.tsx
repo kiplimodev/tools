@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { SubmitButton } from "./SubmitButton";
 import { FieldRenderer } from "./FieldRenderer";
 import { parseFormValues } from "@/lib/form-utils";
+import { getFieldType, getShapeFromSchema } from "@/lib/zod-utils";
 import { ZodObject, ZodRawShape } from "zod";
 import React, { useMemo, useState } from "react";
 
@@ -14,9 +15,13 @@ interface AutoFormProps<T extends ZodRawShape> {
 }
 
 export function AutoForm<T extends ZodRawShape>({ schema, onSubmit, submitLabel }: AutoFormProps<T>) {
-  const shape = schema.shape;
-  const [values, setValues] = useState<Record<string, string>>(() => {
-    return Object.keys(shape).reduce((acc, key) => ({ ...acc, [key]: "" }), {} as Record<string, string>);
+  const shape = getShapeFromSchema(schema) ?? schema.shape;
+  const [values, setValues] = useState<Record<string, string | boolean>>(() => {
+    return Object.entries(shape).reduce((acc, [key, fieldSchema]) => {
+      const type = getFieldType(fieldSchema);
+      const initialValue = type === "boolean" ? false : "";
+      return { ...acc, [key]: initialValue } as Record<string, string | boolean>;
+    }, {} as Record<string, string | boolean>);
   });
   const [error, setError] = useState<string | null>(null);
 

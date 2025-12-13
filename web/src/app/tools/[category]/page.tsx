@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getCategorySummary, getToolsByCategory } from "@/lib/registry-client";
+import { getAllCategories, getToolsForCategory } from "@/lib/registry-client";
 import { notFound } from "next/navigation";
 
 export default function CategoryToolsPage({
@@ -10,8 +10,8 @@ export default function CategoryToolsPage({
   params: { category: string };
 }) {
   const { category } = params;
-  const categorySummary = getCategorySummary(category);
-  const tools = getToolsByCategory(category);
+  const categorySummary = getAllCategories().find((cat) => cat.id === category);
+  const tools = getToolsForCategory(category);
 
   if (!categorySummary || !tools.length) {
     notFound();
@@ -20,7 +20,7 @@ export default function CategoryToolsPage({
   return (
     <div className="space-y-6 p-6">
       <div>
-        <h1 className="text-2xl font-bold">{categorySummary.label}</h1>
+        <h1 className="text-2xl font-bold">{categorySummary.name}</h1>
         <p className="text-neutral-600">{categorySummary.description}</p>
       </div>
 

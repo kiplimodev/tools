@@ -38,7 +38,7 @@ export default function SidebarCategory({
       <CollapsibleTrigger className="flex items-center gap-2 text-sm font-semibold text-neutral-800">
         <span className="flex items-center gap-2">
           {icon}
-          {category.label}
+          {category.name}
         </span>
         <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : "rotate-0"}`} />
       </CollapsibleTrigger>
@@ -47,8 +47,7 @@ export default function SidebarCategory({
           <SidebarToolLink
             key={tool.id}
             name={tool.name}
-            category={tool.category}
-            toolid={tool.id}
+            path={tool.path}
             activePath={activePath}
             onNavigate={onNavigate}
           />

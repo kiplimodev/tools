@@ -1,41 +1,23 @@
-import { getTool } from "@/registry/getTool";
+import { getTool } from "@/registry/registry";
 import { NextResponse } from "next/server";
 
 export async function POST(
-  request: Request,
+  req: Request,
   { params }: { params: { category: string; toolId: string } }
 ) {
   try {
-    const tool = getTool(params.category, params.toolId);
+    const { category, toolId } = params;
+    const tool = getTool(category, toolId);
 
-    let input: unknown;
-    try {
-      const body = await request.json();
-      input = tool.inputSchema.parse(body);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Invalid input";
-      return NextResponse.json(
-        { success: false, error: message },
-        { status: 400 }
-      );
-    }
+    const body = await req.json();
+    const parsedInput = tool.schemas.inputSchema.parse(body);
 
-    try {
-      const result = tool.calculate(input);
-      const data = tool.outputSchema.parse(result);
-      return NextResponse.json({ success: true, data }, { status: 200 });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Calculation failed";
-      return NextResponse.json(
-        { success: false, error: message },
-        { status: 400 }
-      );
-    }
+    const result = tool.calculate(parsedInput);
+    const parsedOutput = tool.schemas.outputSchema.parse(result);
+
+    return NextResponse.json(parsedOutput);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Tool not found";
-    return NextResponse.json(
-      { success: false, error: message },
-      { status: 400 }
-    );
+    const message = error instanceof Error ? error.message : "Invalid input";
+    return NextResponse.json({ success: false, error: message }, { status: 400 });
   }
 }

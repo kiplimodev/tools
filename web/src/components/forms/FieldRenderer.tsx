@@ -9,8 +9,8 @@ import { ZodTypeAny } from "zod";
 interface FieldRendererProps {
   name: string;
   schema: ZodTypeAny;
-  value: string;
-  onChange: (value: string) => void;
+  value: string | boolean;
+  onChange: (value: string | boolean) => void;
 }
 
 export function FieldRenderer({ name, schema, value, onChange }: FieldRendererProps) {
@@ -30,6 +30,22 @@ export function FieldRenderer({ name, schema, value, onChange }: FieldRendererPr
             </option>
           ))}
         </Select>
+      </div>
+    );
+  }
+
+  if (fieldType === "boolean") {
+    return (
+      <div className="flex items-center gap-2">
+        <input
+          id={name}
+          name={name}
+          type="checkbox"
+          checked={Boolean(value)}
+          onChange={(e) => onChange(e.target.checked)}
+          className="h-4 w-4"
+        />
+        <Label htmlFor={name}>{label}</Label>
       </div>
     );
   }

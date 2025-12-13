@@ -1,5 +1,5 @@
 import { ToolDescription } from "@/components/tools/ToolHeader";
-import { getToolDefinition } from "@/lib/registry-client";
+import { getTool } from "@/lib/registry-client";
 import { notFound } from "next/navigation";
 import ToolPageClient from "./ToolPageClient";
 
@@ -9,7 +9,12 @@ export default function ToolPage({
   params: { category: string; toolId: string };
 }) {
   const { category, toolId } = params;
-  const tool = getToolDefinition(category, toolId);
+  let tool;
+  try {
+    tool = getTool(category, toolId);
+  } catch (error) {
+    tool = null;
+  }
 
   if (!tool) {
     notFound();
@@ -21,7 +26,7 @@ export default function ToolPage({
         <h1 className="text-2xl font-bold">{tool.name}</h1>
         <ToolDescription description={tool.description} />
       </div>
-      <ToolPageClient category={category} toolId={toolId} />
+      <ToolPageClient tool={tool} />
     </div>
   );
 }

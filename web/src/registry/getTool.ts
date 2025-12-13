@@ -1,7 +1,7 @@
-import { getToolDefinitionById } from "@/lib/registry-client";
+import { tools } from "@/registry/registry";
 
 export function getTool(id: string) {
-  const def = getToolDefinitionById(id);
+  const def = tools.find((tool) => tool.id === id);
 
   if (!def) {
     throw new Error(`Tool '${id}' not found.`);

@@ -1,7 +1,7 @@
 "use client";
 
 import SidebarCategory from "./SidebarCategory";
-import { getCategories, getToolsByCategory } from "@/lib/registry-client";
+import { getAllCategories, getToolsForCategory } from "@/lib/registry-client";
 import { useMemo, type ComponentType } from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -36,7 +36,7 @@ interface SidebarProps {
 
 export default function Sidebar({ onNavigate }: SidebarProps) {
   const pathname = usePathname();
-  const categories = useMemo(() => getCategories(), []);
+  const categories = useMemo(() => getAllCategories(), []);
 
   return (
     <aside className="h-full w-72 border-r bg-white">
@@ -45,7 +45,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
       </div>
       <div className="space-y-1 px-2 pb-4">
         {categories.map((cat) => {
-          const tools = getToolsByCategory(cat.id);
+          const tools = getToolsForCategory(cat.id);
           const Icon = categoryIcons[cat.id] ?? RunIcon;
 
           return (
@@ -54,7 +54,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
               category={cat}
               tools={tools}
               activePath={pathname}
-              icon={<Icon className="h-4 w-4" />}
+              icon={cat.icon ?? <Icon className="h-4 w-4" />}
               onNavigate={onNavigate}
             />
           );

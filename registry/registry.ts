@@ -245,7 +245,7 @@ import {
   outputSchema as dumbbellWeightOutputSchema,
 } from "../equipment/dumbbell-weight-calculator/schemas";
 
-export interface ToolDefinition {
+type ToolSeed = {
   id: string;
   name: string;
   category: string;
@@ -254,9 +254,33 @@ export interface ToolDefinition {
   inputSchema: ZodSchema<any>;
   outputSchema: ZodSchema<any>;
   calculate: (input: any) => any;
+};
+
+export interface ToolSchemas {
+  inputSchema: ZodSchema<any>;
+  outputSchema: ZodSchema<any>;
 }
 
-export const tools: ToolDefinition[] = [
+export type ToolRunner = (input: any) => any;
+
+export interface ToolMeta {
+  id: string;
+  name: string;
+  category: string;
+  path: string;
+  description: string;
+  schemas: ToolSchemas;
+  calculate: ToolRunner;
+}
+
+export interface ToolCategory {
+  id: string;
+  name: string;
+  description: string;
+  tools: ToolMeta[];
+}
+
+const registryEntries: ToolSeed[] = [
   {
     id: "running-pace-calculator",
     name: "Running Pace Calculator",
@@ -728,3 +752,55 @@ export const tools: ToolDefinition[] = [
     calculate: dumbbellWeightCalculate,
   },
 ];
+
+const categoryDescriptions: Record<string, string> = {
+  running: "Pace, interval, and performance calculators for every run.",
+  calories: "Estimate calorie burn across popular activities and cardio machines.",
+  "body-composition": "Measure and project changes to body metrics and ratios.",
+  activity: "Plan daily movement goals and step targets.",
+  strength: "Barbell, powerlifting, and training volume helpers for strength work.",
+  calisthenics: "Bodyweight progressions, rep calculators, and home workouts.",
+  nutrition: "Macros, fasting windows, supplements, and meal planning support.",
+  planners: "Generate workouts and meal plans tailored to your goals.",
+  trackers: "Track weight trends and progress over time.",
+  equipment: "Utility helpers for gear like dumbbells and plates.",
+};
+
+function formatCategoryLabel(category: string): string {
+  return category
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+export const tools: ToolMeta[] = registryEntries.map(
+  ({ inputSchema, outputSchema, ...rest }): ToolMeta => ({
+    ...rest,
+    schemas: { inputSchema, outputSchema },
+  })
+);
+
+const categoryOrder = Array.from(new Set(registryEntries.map((tool) => tool.category)));
+
+export const categories: ToolCategory[] = categoryOrder.map((category) => ({
+  id: category,
+  name: formatCategoryLabel(category),
+  description:
+    categoryDescriptions[category] ?? `${formatCategoryLabel(category)} tools and calculators.`,
+  tools: tools.filter((tool) => tool.category === category),
+}));
+
+export const registry = categories.reduce<Record<string, ToolCategory>>((acc, category) => {
+  acc[category.id] = category;
+  return acc;
+}, {});
+
+export function getTool(category: string, toolId: string): ToolMeta {
+  const tool = tools.find((entry) => entry.category === category && entry.id === toolId);
+
+  if (!tool) {
+    throw new Error(`Tool '${category}/${toolId}' not found.`);
+  }
+
+  return tool;
+}

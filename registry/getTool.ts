@@ -1,18 +1,14 @@
-import { ToolDefinition, tools } from "./registry";
+import { getTool, tools } from "./registry";
 
-export function getTool(categoryOrId: string, toolId?: string): ToolDefinition {
-  const tool = toolId
-    ? tools.find((t) => t.category === categoryOrId && t.id === toolId)
-    : tools.find((t) => t.id === categoryOrId);
+export { getTool };
+
+export function getCalculator(id: string) {
+  const tool = tools.find((entry) => entry.id === id);
 
   if (!tool) {
     const id = toolId ? `${categoryOrId}/${toolId}` : categoryOrId;
     throw new Error(`Tool '${id}' not found.`);
   }
 
-  return tool;
-}
-
-export function getCalculator(id: string) {
-  return getTool(id).calculate;
+  return tool.calculate;
 }
