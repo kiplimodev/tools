@@ -1,105 +1,105 @@
-import fs from "fs";
-import path from "path";
+import {
+  categories,
+  getTool as getRegistryTool,
+  ToolCategory,
+  ToolMeta,
+} from "@/registry/registry";
+import {
+  ActivityIcon,
+  ArmchairIcon,
+  ChartLineIcon,
+  DumbbellIcon,
+  FlameIcon,
+  FootprintsIcon,
+  NotebookIcon,
+  RunIcon,
+  UtensilsIcon,
+  WeightIcon,
+} from "@/components/icons";
+import { ReactNode } from "react";
+import { ZodSchema } from "zod";
+
+const categoryIcons: Record<string, ReactNode> = {
+  running: <RunIcon className="h-4 w-4" />,
+  calories: <FlameIcon className="h-4 w-4" />,
+  "body-composition": <ActivityIcon className="h-4 w-4" />,
+  activity: <FootprintsIcon className="h-4 w-4" />,
+  strength: <DumbbellIcon className="h-4 w-4" />,
+  calisthenics: <ArmchairIcon className="h-4 w-4" />,
+  nutrition: <UtensilsIcon className="h-4 w-4" />,
+  planners: <NotebookIcon className="h-4 w-4" />,
+  trackers: <ChartLineIcon className="h-4 w-4" />,
+  equipment: <WeightIcon className="h-4 w-4" />,
+};
+
+export interface CategorySummary {
+  id: string;
+  name: string;
+  icon: ReactNode;
+  description: string;
+}
 
 export interface ToolSummary {
   id: string;
   name: string;
   path: string;
-  category: string;
+  description: string;
 }
 
-export interface ToolDefinition {
+export interface FullToolDefinition {
   id: string;
   name: string;
   category: string;
-  importPath: string;
-  indexPath: string;
+  description: string;
+  path: string;
+  schemas: {
+    inputSchema: ZodSchema<any>;
+    outputSchema: ZodSchema<any>;
+  };
+  calculate: (input: any) => any;
 }
 
-const SRC_ROOT = path.join(process.cwd(), "src");
-const EXCLUDED_DIRS = new Set(["app", "components", "lib", "registry"]);
-
-function isDirectory(dirPath: string) {
-  try {
-    return fs.statSync(dirPath).isDirectory();
-  } catch {
-    return false;
-  }
-}
-
-function formatName(segment: string) {
-  return segment
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
-export function getCategories(): string[] {
-  return fs
-    .readdirSync(SRC_ROOT)
-    .filter((entry) => !EXCLUDED_DIRS.has(entry))
-    .filter((entry) => isDirectory(path.join(SRC_ROOT, entry)))
-    .sort();
-}
-
-export function getToolsByCategory(category: string): ToolSummary[] {
-  const categoryPath = path.join(SRC_ROOT, category);
-
-  if (!isDirectory(categoryPath)) {
-    return [];
-  }
-
-  return fs
-    .readdirSync(categoryPath)
-    .filter((entry) => isDirectory(path.join(categoryPath, entry)))
-    .map((toolId) => ({
-      id: toolId,
-      name: formatName(toolId),
-      path: `/tools/${category}/${toolId}`,
-      category,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name));
-}
-
-export function getAllTools(): ToolSummary[] {
-  return getCategories().flatMap((category) => getToolsByCategory(category));
-}
-
-export function getToolDefinition(
-  category: string,
-  toolid: string
-): ToolDefinition | undefined {
-  const absoluteIndexPath = path.join(SRC_ROOT, category, toolid, "index.ts");
-
-  if (!fs.existsSync(absoluteIndexPath)) {
-    return undefined;
-  }
-
+function mapCategory(category: ToolCategory): CategorySummary {
   return {
-    id: toolid,
-    name: formatName(toolid),
-    category,
-    importPath: `@/${category}/${toolid}`,
-    indexPath: absoluteIndexPath,
+    id: category.id,
+    name: category.name,
+    description: category.description,
+    icon: categoryIcons[category.id] ?? <RunIcon className="h-4 w-4" />,
   };
 }
 
-export function getToolDefinitionById(id: string): ToolDefinition | undefined {
-  if (id.includes("/")) {
-    const [category, toolid] = id.split("/");
+function mapTool(tool: ToolMeta): ToolSummary {
+  return {
+    id: tool.id,
+    name: tool.name,
+    path: tool.path,
+    description: tool.description,
+  };
+}
 
-    if (category && toolid) {
-      return getToolDefinition(category, toolid);
-    }
-  }
+export function getAllCategories(): CategorySummary[] {
+  return categories.map(mapCategory);
+}
 
-  for (const category of getCategories()) {
-    const def = getToolDefinition(category, id);
+export function getToolsForCategory(category: string): ToolSummary[] {
+  const categoryEntry = categories.find((entry) => entry.id === category);
+  if (!categoryEntry) return [];
+  return categoryEntry.tools.map(mapTool);
+}
 
-    if (def) {
-      return def;
-    }
-  }
+export function getTool(category: string, toolId: string): FullToolDefinition {
+  const tool = getRegistryTool(category, toolId);
 
-  return undefined;
+  return {
+    id: tool.id,
+    name: tool.name,
+    category: tool.category,
+    description: tool.description,
+    path: tool.path,
+    schemas: {
+      inputSchema: tool.schemas.inputSchema,
+      outputSchema: tool.schemas.outputSchema,
+    },
+    calculate: tool.calculate,
+  };
 }
