@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ComponentType } from "react";
 import SidebarToolLink from "./SidebarToolLink";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { CategorySummary, ToolSummary } from "@/lib/registry-client";
@@ -10,7 +10,7 @@ interface SidebarCategoryProps {
   category: CategorySummary;
   tools: ToolSummary[];
   activePath: string;
-  icon?: ReactNode;
+  icon?: ComponentType<any>;
   onNavigate?: () => void;
 }
 
@@ -33,11 +33,13 @@ export default function SidebarCategory({
     }
   }, [isActiveCategory]);
 
+  const Icon = icon ?? category.icon;
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger className="flex items-center gap-2 text-sm font-semibold text-neutral-800">
         <span className="flex items-center gap-2">
-          {icon}
+          {Icon ? <Icon className="h-4 w-4 text-muted-foreground" /> : null}
           {category.name}
         </span>
         <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : "rotate-0"}`} />

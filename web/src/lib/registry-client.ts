@@ -1,41 +1,14 @@
-import {
-  categories,
-  getTool as getRegistryTool,
-  ToolCategory,
-  ToolMeta,
-} from "@/registry/registry";
-import {
-  ActivityIcon,
-  ArmchairIcon,
-  ChartLineIcon,
-  DumbbellIcon,
-  FlameIcon,
-  FootprintsIcon,
-  NotebookIcon,
-  RunIcon,
-  UtensilsIcon,
-  WeightIcon,
-} from "@/components/icons";
-import { ReactNode } from "react";
+import { categories, getTool as getRegistryTool, ToolCategory, ToolMeta } from "@/registry/registry";
+import { CategoryIcons, RunIcon } from "@/components/icons";
+import type { ComponentType } from "react";
 import { ZodSchema } from "zod";
 
-const categoryIcons: Record<string, ReactNode> = {
-  running: <RunIcon className="h-4 w-4" />,
-  calories: <FlameIcon className="h-4 w-4" />,
-  "body-composition": <ActivityIcon className="h-4 w-4" />,
-  activity: <FootprintsIcon className="h-4 w-4" />,
-  strength: <DumbbellIcon className="h-4 w-4" />,
-  calisthenics: <ArmchairIcon className="h-4 w-4" />,
-  nutrition: <UtensilsIcon className="h-4 w-4" />,
-  planners: <NotebookIcon className="h-4 w-4" />,
-  trackers: <ChartLineIcon className="h-4 w-4" />,
-  equipment: <WeightIcon className="h-4 w-4" />,
-};
+const categoryIcons = CategoryIcons;
 
 export interface CategorySummary {
   id: string;
   name: string;
-  icon: ReactNode;
+  icon: ComponentType<any>;
   description: string;
 }
 
@@ -64,7 +37,7 @@ function mapCategory(category: ToolCategory): CategorySummary {
     id: category.id,
     name: category.name,
     description: category.description,
-    icon: categoryIcons[category.id] ?? <RunIcon className="h-4 w-4" />,
+    icon: categoryIcons[category.id] ?? RunIcon,
   };
 }
 
