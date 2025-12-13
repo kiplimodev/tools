@@ -1,105 +1,51 @@
-import fs from "fs";
-import path from "path";
+import { ToolDefinition, tools } from "@/registry/registry";
 
 export interface ToolSummary {
   id: string;
   name: string;
   path: string;
   category: string;
+  description: string;
 }
 
-export interface ToolDefinition {
-  id: string;
-  name: string;
-  category: string;
-  importPath: string;
-  indexPath: string;
-}
-
-const SRC_ROOT = path.join(process.cwd(), "src");
-const EXCLUDED_DIRS = new Set(["app", "components", "lib", "registry"]);
-
-function isDirectory(dirPath: string) {
-  try {
-    return fs.statSync(dirPath).isDirectory();
-  } catch {
-    return false;
-  }
-}
-
-function formatName(segment: string) {
-  return segment
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
+export { ToolDefinition };
 
 export function getCategories(): string[] {
-  return fs
-    .readdirSync(SRC_ROOT)
-    .filter((entry) => !EXCLUDED_DIRS.has(entry))
-    .filter((entry) => isDirectory(path.join(SRC_ROOT, entry)))
-    .sort();
+  return Array.from(new Set(tools.map((tool) => tool.category))).sort();
 }
 
 export function getToolsByCategory(category: string): ToolSummary[] {
-  const categoryPath = path.join(SRC_ROOT, category);
-
-  if (!isDirectory(categoryPath)) {
-    return [];
-  }
-
-  return fs
-    .readdirSync(categoryPath)
-    .filter((entry) => isDirectory(path.join(categoryPath, entry)))
-    .map((toolId) => ({
-      id: toolId,
-      name: formatName(toolId),
-      path: `/tools/${category}/${toolId}`,
-      category,
+  return tools
+    .filter((tool) => tool.category === category)
+    .map((tool) => ({
+      id: tool.id,
+      name: tool.name,
+      path: tool.path,
+      category: tool.category,
+      description: tool.description,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export function getAllTools(): ToolSummary[] {
-  return getCategories().flatMap((category) => getToolsByCategory(category));
+  return tools
+    .map((tool) => ({
+      id: tool.id,
+      name: tool.name,
+      path: tool.path,
+      category: tool.category,
+      description: tool.description,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export function getToolDefinition(
   category: string,
-  toolid: string
+  toolId: string
 ): ToolDefinition | undefined {
-  const absoluteIndexPath = path.join(SRC_ROOT, category, toolid, "index.ts");
-
-  if (!fs.existsSync(absoluteIndexPath)) {
-    return undefined;
-  }
-
-  return {
-    id: toolid,
-    name: formatName(toolid),
-    category,
-    importPath: `@/${category}/${toolid}`,
-    indexPath: absoluteIndexPath,
-  };
+  return tools.find((tool) => tool.category === category && tool.id === toolId);
 }
 
 export function getToolDefinitionById(id: string): ToolDefinition | undefined {
-  if (id.includes("/")) {
-    const [category, toolid] = id.split("/");
-
-    if (category && toolid) {
-      return getToolDefinition(category, toolid);
-    }
-  }
-
-  for (const category of getCategories()) {
-    const def = getToolDefinition(category, id);
-
-    if (def) {
-      return def;
-    }
-  }
-
-  return undefined;
+  return tools.find((tool) => tool.id === id);
 }

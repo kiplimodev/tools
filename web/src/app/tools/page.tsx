@@ -1,4 +1,4 @@
-import { getAllTools, getCategories, getToolsByCategory } from "@/lib/registry-client";
+import { getCategories, getToolsByCategory } from "@/lib/registry-client";
 import Link from "next/link";
 
 export default function ToolsIndexPage() {
@@ -24,7 +24,8 @@ export default function ToolsIndexPage() {
                   href={tool.path}
                   className="p-3 bg-white border rounded shadow-sm hover:bg-gray-100"
                 >
-                  {tool.name}
+                  <div className="font-semibold">{tool.name}</div>
+                  <p className="text-sm text-neutral-600">{tool.description}</p>
                 </Link>
               ))}
             </div>
