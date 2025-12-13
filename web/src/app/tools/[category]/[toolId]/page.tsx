@@ -3,22 +3,15 @@ import { getTool } from "@/lib/registry-client";
 import { notFound } from "next/navigation";
 import ToolPageClient from "./ToolPageClient";
 
-export default function ToolPage({
+export default async function ToolPage({
   params,
 }: {
-  params: { category: string; toolId: string };
+  params: Promise<{ category: string; toolId: string }>;
 }) {
-  const { category, toolId } = params;
-  let tool;
-  try {
-    tool = getTool(category, toolId);
-  } catch (error) {
-    tool = null;
-  }
+  const { category, toolId } = await params;
+  const tool = getTool(category, toolId);
 
-  if (!tool) {
-    notFound();
-  }
+  if (!tool) notFound();
 
   return (
     <div className="p-6 space-y-4">

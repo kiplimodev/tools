@@ -7,25 +7,53 @@ import { parseFormValues } from "@/lib/form-utils";
 import { getFieldType, getShapeFromSchema } from "@/lib/zod-utils";
 import { ZodObject, ZodRawShape } from "zod";
 import React, { useMemo, useState } from "react";
+import { FullToolDefinition } from "@/lib/registry-client";
+import { ResultCard } from "@/components/ui/ResultCard";
 
 interface AutoFormProps<T extends ZodRawShape> {
   schema: ZodObject<T>;
-  onSubmit: (values: any) => Promise<void> | void;
+  tool: FullToolDefinition;
   submitLabel?: string;
 }
 
-export function AutoForm<T extends ZodRawShape>({ schema, onSubmit, submitLabel }: AutoFormProps<T>) {
+export function AutoForm<T extends ZodRawShape>({ schema, tool, submitLabel }: AutoFormProps<T>) {
   const shape = getShapeFromSchema(schema) ?? schema.shape;
-  const [values, setValues] = useState<Record<string, string | boolean>>(() => {
+  const [values, setValues] = useState<Record<string, string>>(() => {
     return Object.entries(shape).reduce((acc, [key, fieldSchema]) => {
       const type = getFieldType(fieldSchema);
-      const initialValue = type === "boolean" ? false : "";
-      return { ...acc, [key]: initialValue } as Record<string, string | boolean>;
-    }, {} as Record<string, string | boolean>);
+      const initialValue = type === "boolean" ? "false" : "";
+      return { ...acc, [key]: initialValue } as Record<string, string>;
+    }, {} as Record<string, string>);
   });
   const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<Record<string, string | number> | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const fields = useMemo(() => Object.entries(shape), [shape]);
+
+  const onSubmit = async (formData: any) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const parsed = schema.parse(formData);
+
+      const res = await fetch(`/api/tools/${tool.category}/${tool.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(parsed),
+      });
+
+      if (!res.ok) throw new Error("Failed to calculate");
+
+      const output = await res.json();
+      setResult(output);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,8 +81,15 @@ export function AutoForm<T extends ZodRawShape>({ schema, onSubmit, submitLabel 
           />
         ))}
         {error && <p className="text-sm text-red-600">{error}</p>}
-        <SubmitButton>{submitLabel ?? "Calculate"}</SubmitButton>
+        <SubmitButton disabled={loading}>{loading ? "Calculating..." : submitLabel ?? "Calculate"}</SubmitButton>
       </form>
+      {result && (
+        <div className="grid gap-3 md:grid-cols-2">
+          {Object.entries(result).map(([key, value]) => (
+            <ResultCard key={key} title={key} value={value} />
+          ))}
+        </div>
+      )}
     </Card>
   );
 }

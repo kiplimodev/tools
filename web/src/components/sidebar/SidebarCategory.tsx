@@ -5,6 +5,7 @@ import SidebarToolLink from "./SidebarToolLink";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { CategorySummary, ToolSummary } from "@/lib/registry-client";
 import { ChevronDownIcon } from "@/components/icons";
+import Link from "next/link";
 
 interface SidebarCategoryProps {
   category: CategorySummary;
@@ -37,13 +38,19 @@ export default function SidebarCategory({
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger className="flex items-center gap-2 text-sm font-semibold text-neutral-800">
-        <span className="flex items-center gap-2">
+      <div className="flex items-center justify-between text-sm font-semibold text-neutral-800">
+        <Link
+          href={`/tools/${category.id}`}
+          onClick={onNavigate}
+          className="flex items-center gap-2"
+        >
           {Icon ? <Icon className="h-4 w-4 text-muted-foreground" /> : null}
           {category.name}
-        </span>
-        <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : "rotate-0"}`} />
-      </CollapsibleTrigger>
+        </Link>
+        <CollapsibleTrigger className="flex items-center" aria-label="Toggle category tools">
+          <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : "rotate-0"}`} />
+        </CollapsibleTrigger>
+      </div>
       <CollapsibleContent className="mt-1 space-y-1">
         {tools.map((tool) => (
           <SidebarToolLink
