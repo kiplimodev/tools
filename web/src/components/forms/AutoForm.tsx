@@ -47,6 +47,30 @@ export function AutoForm({ fields, tool, submitLabel }: AutoFormProps) {
     }
   };
 
+  const onSubmit = async (formData: any) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const parsed = schema.parse(formData);
+
+      const res = await fetch(`/api/tools/${tool.category}/${tool.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(parsed),
+      });
+
+      if (!res.ok) throw new Error("Failed to calculate");
+
+      const output = await res.json();
+      setResult(output);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
