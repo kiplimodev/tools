@@ -24,8 +24,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const result = await Promise.resolve(tool.run(body.inputs ?? {}));
-    return NextResponse.json({ tool: tool.name, result });
+    const parsedInput = tool.inputSchema.parse(body.inputs ?? {});
+    const result = await Promise.resolve(tool.calculate(parsedInput));
+    const data = tool.outputSchema.parse(result);
+    return NextResponse.json({ tool: tool.name, result: data });
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unable to run tool" },

@@ -1,38 +1,60 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState, type ComponentType } from "react";
 import SidebarToolLink from "./SidebarToolLink";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import type { CategorySummary, ToolSummary } from "@/lib/registry-client";
+import { ChevronDownIcon } from "@/components/icons";
+
+interface SidebarCategoryProps {
+  category: CategorySummary;
+  tools: ToolSummary[];
+  activePath: string;
+  icon?: ComponentType<any>;
+  onNavigate?: () => void;
+}
 
 export default function SidebarCategory({
   category,
   tools,
-}: {
-  category: string;
-  tools: { id: string; name: string }[];
-}) {
-  const [open, setOpen] = useState(false);
+  activePath,
+  icon,
+  onNavigate,
+}: SidebarCategoryProps) {
+  const isActiveCategory = useMemo(
+    () => activePath.startsWith(`/tools/${category.id}`),
+    [activePath, category.id]
+  );
+  const [open, setOpen] = useState(isActiveCategory);
+
+  useEffect(() => {
+    if (isActiveCategory) {
+      setOpen(true);
+    }
+  }, [isActiveCategory]);
+
+  const Icon = icon ?? category.icon;
 
   return (
-    <div style={{ marginBottom: "10px" }}>
-      <div
-        onClick={() => setOpen(!open)}
-        style={{ cursor: "pointer", fontWeight: "bold" }}
-      >
-        {category}
-      </div>
-
-      {open && (
-        <div style={{ marginLeft: "10px", marginTop: "5px" }}>
-          {tools.map((t) => (
-            <SidebarToolLink
-              key={t.id}
-              name={t.name}
-              category={category}
-              toolid={t.id}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger className="flex items-center gap-2 text-sm font-semibold text-neutral-800">
+        <span className="flex items-center gap-2">
+          {Icon ? <Icon className="h-4 w-4 text-muted-foreground" /> : null}
+          {category.name}
+        </span>
+        <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : "rotate-0"}`} />
+      </CollapsibleTrigger>
+      <CollapsibleContent className="mt-1 space-y-1">
+        {tools.map((tool) => (
+          <SidebarToolLink
+            key={tool.id}
+            name={tool.name}
+            path={tool.path}
+            activePath={activePath}
+            onNavigate={onNavigate}
+          />
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
   );
 }

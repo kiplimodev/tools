@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { getTool } from "../registry/getTool";
+import { getCalculator } from "../registry/getTool";
 
 describe("bmi calculator", () => {
   test("computes BMI and category for 70kg and 175cm", () => {
-    const calculate = getTool("bmi-calculator");
+    const calculate = getCalculator("bmi-calculator");
 
     const result = calculate({
       weightKg: 70,
