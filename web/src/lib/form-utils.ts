@@ -18,7 +18,11 @@ export function parseFormValues<T extends ZodRawShape>(schema: ZodObject<T>, val
       const numeric = rawValue === "" ? NaN : Number(rawValue);
       parsedInput[key] = numeric;
     } else if (fieldType === "boolean") {
-      parsedInput[key] = Boolean(rawValue);
+      if (typeof rawValue === "string") {
+        parsedInput[key] = rawValue === "true";
+      } else {
+        parsedInput[key] = Boolean(rawValue);
+      }
     } else {
       parsedInput[key] = rawValue;
     }

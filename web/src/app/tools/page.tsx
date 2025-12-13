@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/lib/registry-client";
 import Link from "next/link";
 
-export default function ToolsIndexPage() {
+export default async function ToolsIndexPage() {
   const categories = getAllCategories();
 
   return (

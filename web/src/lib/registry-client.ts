@@ -32,6 +32,8 @@ export interface FullToolDefinition {
   calculate: (input: any) => any;
 }
 
+export type ClientToolDefinition = Omit<FullToolDefinition, "calculate">;
+
 function mapCategory(category: ToolCategory): CategorySummary {
   return {
     id: category.id,
@@ -45,7 +47,7 @@ function mapTool(tool: ToolMeta): ToolSummary {
   return {
     id: tool.id,
     name: tool.name,
-    path: tool.path,
+    path: `/tools/${tool.category}/${tool.id}`,
     description: tool.description,
   };
 }
@@ -60,19 +62,23 @@ export function getToolsForCategory(category: string): ToolSummary[] {
   return categoryEntry.tools.map(mapTool);
 }
 
-export function getTool(category: string, toolId: string): FullToolDefinition {
-  const tool = getRegistryTool(category, toolId);
+export function getTool(category: string, toolId: string): FullToolDefinition | null {
+  try {
+    const tool = getRegistryTool(category, toolId);
 
-  return {
-    id: tool.id,
-    name: tool.name,
-    category: tool.category,
-    description: tool.description,
-    path: tool.path,
-    schemas: {
-      inputSchema: tool.schemas.inputSchema,
-      outputSchema: tool.schemas.outputSchema,
-    },
-    calculate: tool.calculate,
-  };
+    return {
+      id: tool.id,
+      name: tool.name,
+      category: tool.category,
+      description: tool.description,
+      path: `/tools/${tool.category}/${tool.id}`,
+      schemas: {
+        inputSchema: tool.schemas.inputSchema,
+        outputSchema: tool.schemas.outputSchema,
+      },
+      calculate: tool.calculate,
+    };
+  } catch (error) {
+    return null;
+  }
 }
