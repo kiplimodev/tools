@@ -1,28 +1,14 @@
-import {
-  ZodBoolean,
-  ZodDefault,
-  ZodEffects,
-  ZodEnum,
-  ZodLiteral,
-  ZodNativeEnum,
-  ZodNullable,
-  ZodNumber,
-  ZodObject,
-  ZodOptional,
-  ZodString,
-  ZodTypeAny,
-  ZodUnion,
-} from "zod";
+import { z, ZodType, ZodTypeAny } from "zod";
 
 type FieldType = "string" | "number" | "enum" | "boolean";
 
 function unwrapSchema(schema: ZodTypeAny): ZodTypeAny {
-  if (schema instanceof ZodOptional || schema instanceof ZodNullable || schema instanceof ZodDefault) {
-    return unwrapSchema(schema._def.innerType);
+  if (schema instanceof z.ZodOptional || schema instanceof z.ZodNullable || schema instanceof z.ZodDefault) {
+    return unwrapSchema(schema._def.innerType as ZodTypeAny);
   }
 
-  if (schema instanceof ZodEffects) {
-    return unwrapSchema(schema._def.schema);
+  if (schema instanceof z.ZodEffects) {
+    return unwrapSchema(schema._def.schema as ZodTypeAny);
   }
 
   return schema;
@@ -31,27 +17,27 @@ function unwrapSchema(schema: ZodTypeAny): ZodTypeAny {
 export function getFieldType(schema: ZodTypeAny): FieldType {
   const baseSchema = unwrapSchema(schema);
 
-  if (baseSchema instanceof ZodNumber) {
+  if (baseSchema instanceof z.ZodNumber) {
     return "number";
   }
 
-  if (baseSchema instanceof ZodBoolean) {
+  if (baseSchema instanceof z.ZodBoolean) {
     return "boolean";
   }
 
-  if (baseSchema instanceof ZodEnum || baseSchema instanceof ZodNativeEnum) {
+  if (baseSchema instanceof z.ZodEnum || baseSchema instanceof z.ZodNativeEnum) {
     return "enum";
   }
 
-  if (baseSchema instanceof ZodUnion) {
+  if (baseSchema instanceof z.ZodUnion) {
     const options = baseSchema.options;
-    const isStringUnion = options.every((opt) => opt instanceof ZodLiteral && typeof opt.value === "string");
+    const isStringUnion = options.every((opt) => opt instanceof z.ZodLiteral && typeof opt.value === "string");
     if (isStringUnion) {
       return "enum";
     }
   }
 
-  if (baseSchema instanceof ZodString) {
+  if (baseSchema instanceof z.ZodString) {
     return "string";
   }
 
@@ -61,18 +47,18 @@ export function getFieldType(schema: ZodTypeAny): FieldType {
 export function getEnumOptions(schema: ZodTypeAny): string[] {
   const baseSchema = unwrapSchema(schema);
 
-  if (baseSchema instanceof ZodEnum) {
+  if (baseSchema instanceof z.ZodEnum) {
     return [...baseSchema.options];
   }
 
-  if (baseSchema instanceof ZodNativeEnum) {
+  if (baseSchema instanceof z.ZodNativeEnum) {
     return Object.values(baseSchema.enum as Record<string, string>);
   }
 
-  if (baseSchema instanceof ZodUnion) {
+  if (baseSchema instanceof z.ZodUnion) {
     const literals = baseSchema.options.filter(
-      (opt) => opt instanceof ZodLiteral && typeof opt.value === "string"
-    ) as ZodLiteral<string>[];
+      (opt) => opt instanceof z.ZodLiteral && typeof opt.value === "string"
+    ) as z.ZodLiteral<string>[];
 
     if (literals.length) {
       return literals.map((lit) => lit.value);
@@ -82,15 +68,15 @@ export function getEnumOptions(schema: ZodTypeAny): string[] {
   return [];
 }
 
-export function getShapeFromSchema(schema: ZodTypeAny): Record<string, ZodTypeAny> | null {
+export function getShapeFromSchema(schema: ZodTypeAny): Record<string, ZodType<any>> | null {
   const baseSchema = unwrapSchema(schema);
 
-  if (baseSchema instanceof ZodObject) {
+  if (baseSchema instanceof z.ZodObject) {
     return baseSchema.shape;
   }
 
-  if (baseSchema instanceof ZodEffects) {
-    return getShapeFromSchema(baseSchema._def.schema);
+  if (baseSchema instanceof z.ZodEffects) {
+    return getShapeFromSchema(baseSchema._def.schema as ZodTypeAny);
   }
 
   return null;
