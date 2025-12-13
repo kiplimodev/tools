@@ -28,7 +28,6 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
               category={cat}
               tools={tools}
               activePath={pathname}
-              icon={cat.icon}
               onNavigate={onNavigate}
             />
           );

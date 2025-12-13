@@ -195,6 +195,19 @@ export function WrenchIcon(props: IconProps) {
   );
 }
 
+export const icons = {
+  run: RunIcon,
+  flame: FlameIcon,
+  activity: ActivityIcon,
+  footprints: FootprintsIcon,
+  apple: AppleIcon,
+  clipboard: ClipboardIcon,
+  dumbbell: DumbbellIcon,
+  chart: ChartIcon,
+  wrench: WrenchIcon,
+  person: PersonIcon,
+};
+
 export const CategoryIcons = {
   running: RunIcon,
   calories: FlameIcon,

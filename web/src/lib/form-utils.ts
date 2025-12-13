@@ -1,28 +1,32 @@
-import { getFieldType, getShapeFromSchema } from "./zod-utils";
-import { ZodObject, ZodRawShape, ZodTypeAny } from "zod";
+import { FieldMeta } from "./zod-utils";
 
-export function parseFormValues<T extends ZodRawShape>(schema: ZodObject<T>, values: Record<string, string | boolean>) {
-  const shape = (schema.shape as Record<string, ZodTypeAny>) || getShapeFromSchema(schema);
+export function parseFormValues(fields: FieldMeta[], values: Record<string, string | boolean>) {
   const parsedInput: Record<string, unknown> = {};
 
-  if (!shape) {
-    throw new Error("Invalid schema shape for AutoForm.");
-  }
+  for (const field of fields) {
+    const rawValue = values[field.name];
 
-  for (const key of Object.keys(shape)) {
-    const fieldSchema = shape[key];
-    const rawValue = values[key];
-    const fieldType = getFieldType(fieldSchema);
+    if ((rawValue === "" || rawValue === undefined) && field.optional) {
+      parsedInput[field.name] = undefined;
+      continue;
+    }
 
-    if (fieldType === "number") {
+    if (field.type === "number") {
       const numeric = rawValue === "" ? NaN : Number(rawValue);
-      parsedInput[key] = numeric;
-    } else if (fieldType === "boolean") {
-      parsedInput[key] = Boolean(rawValue);
+      if (Number.isNaN(numeric)) {
+        throw new Error(`Please enter a valid number for ${field.label}.`);
+      }
+      parsedInput[field.name] = numeric;
+    } else if (field.type === "boolean") {
+      if (typeof rawValue === "string") {
+        parsedInput[field.name] = rawValue === "true";
+      } else {
+        parsedInput[field.name] = Boolean(rawValue);
+      }
     } else {
-      parsedInput[key] = rawValue;
+      parsedInput[field.name] = rawValue;
     }
   }
 
-  return schema.parse(parsedInput);
+  return parsedInput;
 }

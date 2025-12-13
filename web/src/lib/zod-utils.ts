@@ -1,83 +1,79 @@
-import { z, ZodType, ZodTypeAny } from "zod";
+import { z, ZodEnum, ZodObject, ZodTypeAny } from "zod";
 
-type FieldType = "string" | "number" | "enum" | "boolean";
+export interface FieldMeta {
+  name: string;
+  label: string;
+  type: "string" | "number" | "boolean" | "enum";
+  enumValues?: string[];
+  optional?: boolean;
+}
 
-function unwrapSchema(schema: ZodTypeAny): ZodTypeAny {
-  if (schema instanceof z.ZodOptional || schema instanceof z.ZodNullable || schema instanceof z.ZodDefault) {
-    return unwrapSchema(schema._def.innerType as ZodTypeAny);
+export function unwrapZodType(schema: ZodTypeAny): ZodTypeAny {
+  if (
+    schema instanceof z.ZodOptional ||
+    schema instanceof z.ZodNullable ||
+    schema instanceof z.ZodDefault
+  ) {
+    return unwrapZodType(schema._def.innerType as ZodTypeAny);
   }
 
   if (schema instanceof z.ZodEffects) {
-    return unwrapSchema(schema._def.schema as ZodTypeAny);
+    return unwrapZodType(schema._def.schema as ZodTypeAny);
+  }
+
+  if (
+    schema instanceof z.ZodObject ||
+    schema instanceof z.ZodArray ||
+    schema instanceof z.ZodUnion ||
+    schema instanceof z.ZodIntersection
+  ) {
+    throw new Error("Unsupported field type in AutoForm");
   }
 
   return schema;
 }
 
-export function getFieldType(schema: ZodTypeAny): FieldType {
-  const baseSchema = unwrapSchema(schema);
-
-  if (baseSchema instanceof z.ZodNumber) {
-    return "number";
-  }
-
-  if (baseSchema instanceof z.ZodBoolean) {
-    return "boolean";
-  }
-
-  if (baseSchema instanceof z.ZodEnum || baseSchema instanceof z.ZodNativeEnum) {
-    return "enum";
-  }
-
-  if (baseSchema instanceof z.ZodUnion) {
-    const options = baseSchema.options;
-    const isStringUnion = options.every((opt) => opt instanceof z.ZodLiteral && typeof opt.value === "string");
-    if (isStringUnion) {
-      return "enum";
-    }
-  }
-
-  if (baseSchema instanceof z.ZodString) {
-    return "string";
-  }
-
-  return "string";
+function isOptionalSchema(schema: ZodTypeAny): boolean {
+  return (
+    schema instanceof z.ZodOptional ||
+    schema instanceof z.ZodNullable ||
+    schema instanceof z.ZodDefault ||
+    Boolean((schema as any).isOptional?.())
+  );
 }
 
-export function getEnumOptions(schema: ZodTypeAny): string[] {
-  const baseSchema = unwrapSchema(schema);
-
-  if (baseSchema instanceof z.ZodEnum) {
-    return [...baseSchema.options];
-  }
-
-  if (baseSchema instanceof z.ZodNativeEnum) {
-    return Object.values(baseSchema.enum as Record<string, string>);
-  }
-
-  if (baseSchema instanceof z.ZodUnion) {
-    const literals = baseSchema.options.filter(
-      (opt) => opt instanceof z.ZodLiteral && typeof opt.value === "string"
-    ) as z.ZodLiteral<string>[];
-
-    if (literals.length) {
-      return literals.map((lit) => lit.value);
-    }
-  }
-
-  return [];
+function createLabel(key: string): string {
+  const withSpaces = key
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[-_]/g, " ");
+  return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
 }
 
-export function getShapeFromSchema(schema: ZodTypeAny): Record<string, ZodType<any>> | null {
-  const baseSchema = unwrapSchema(schema);
+export function extractFieldMetadata(schema: ZodObject<any>): FieldMeta[] {
+  const shape = schema.shape;
 
-  if (baseSchema instanceof z.ZodObject) {
-    return baseSchema.shape;
-  }
+  return Object.entries(shape).map(([key, value]) => {
+    const unwrapped = unwrapZodType(value);
+    const optional = isOptionalSchema(value);
 
-  if (baseSchema instanceof z.ZodEffects) {
-    return getShapeFromSchema(baseSchema._def.schema as ZodTypeAny);
-  }
+    if (unwrapped instanceof ZodEnum) {
+      return {
+        name: key,
+        label: createLabel(key),
+        type: "enum",
+        enumValues: unwrapped.options,
+        optional,
+      };
+    }
 
-  return null;
+    if (unwrapped instanceof z.ZodBoolean) {
+      return { name: key, label: createLabel(key), type: "boolean", optional };
+    }
+
+    if (unwrapped instanceof z.ZodNumber) {
+      return { name: key, label: createLabel(key), type: "number", optional };
+    }
+
+    return { name: key, label: createLabel(key), type: "string", optional };
+  });
 }

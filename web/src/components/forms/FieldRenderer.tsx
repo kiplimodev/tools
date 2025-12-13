@@ -3,22 +3,19 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { getEnumOptions, getFieldType } from "@/lib/zod-utils";
-import { ZodTypeAny } from "zod";
+import type { FieldMeta } from "@/lib/zod-utils";
 
 interface FieldRendererProps {
-  name: string;
-  schema: ZodTypeAny;
-  value: string | boolean;
-  onChange: (value: string | boolean) => void;
+  field: FieldMeta;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-export function FieldRenderer({ name, schema, value, onChange }: FieldRendererProps) {
-  const fieldType = getFieldType(schema);
-  const label = schema.description ?? name;
+export function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
+  const { name, label, type, enumValues, optional } = field;
 
-  if (fieldType === "enum") {
-    const options = getEnumOptions(schema);
+  if (type === "enum") {
+    const options = enumValues ?? [];
     return (
       <div className="space-y-2">
         <Label htmlFor={name}>{label}</Label>
@@ -34,18 +31,15 @@ export function FieldRenderer({ name, schema, value, onChange }: FieldRendererPr
     );
   }
 
-  if (fieldType === "boolean") {
+  if (type === "boolean") {
     return (
-      <div className="flex items-center gap-2">
-        <input
-          id={name}
-          name={name}
-          type="checkbox"
-          checked={Boolean(value)}
-          onChange={(e) => onChange(e.target.checked)}
-          className="h-4 w-4"
-        />
+      <div className="space-y-2">
         <Label htmlFor={name}>{label}</Label>
+        <Select id={name} name={name} value={value} onChange={(e) => onChange(e.target.value)}>
+          {optional && <option value="">Select an option</option>}
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </Select>
       </div>
     );
   }
@@ -56,7 +50,8 @@ export function FieldRenderer({ name, schema, value, onChange }: FieldRendererPr
       <Input
         id={name}
         name={name}
-        type={fieldType === "number" ? "number" : "text"}
+        type={type === "number" ? "number" : "text"}
+        step={type === "number" ? "any" : undefined}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
