@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { getTool } from "../registry/getTool";
+import { getCalculator } from "../registry/getTool";
 
 describe("running calories calculator", () => {
   test("estimates calories burned using speed-based MET lookup", () => {
-    const calculate = getTool("running-calories-burned-calculator");
+    const calculate = getCalculator("running-calories-burned-calculator");
 
     const result = calculate({
       weightKg: 70,
@@ -16,7 +16,7 @@ describe("running calories calculator", () => {
   });
 
   test("caps MET for very high speeds", () => {
-    const calculate = getTool("running-calories-burned-calculator");
+    const calculate = getCalculator("running-calories-burned-calculator");
 
     const result = calculate({
       weightKg: 70,

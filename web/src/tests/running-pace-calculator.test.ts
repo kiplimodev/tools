@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { getTool } from "../registry/getTool";
+import { getCalculator } from "../registry/getTool";
 
 describe("running pace calculator", () => {
   test("calculates pace and speed for 10 km in 50 minutes", () => {
-    const calculate = getTool("running-pace-calculator");
+    const calculate = getCalculator("running-pace-calculator");
 
     const result = calculate({
       distance: 10,
