@@ -6,6 +6,9 @@ export interface ToolDefinition {
 }
 
 export const tools: ToolDefinition[] = [
+  // ======================
+  // RUNNING
+  // ======================
   {
     id: "running-pace-calculator",
     name: "Running Pace Calculator",
@@ -36,6 +39,16 @@ export const tools: ToolDefinition[] = [
     path: "/tools/running/vdot-calculator",
     calculate: require("../running/vdot-calculator").calculate,
   },
+{
+  id: "vo2max",
+  name: "Running VO2 Max",
+  path: "/tools/running/vo2max",
+  calculate: require("../calculators/running/vo2max").estimateRunningVo2,
+},
+
+  // ======================
+  // CALORIES
+  // ======================
   {
     id: "rowing-calories-calculator",
     name: "Rowing Calories Calculator",
@@ -78,6 +91,10 @@ export const tools: ToolDefinition[] = [
     path: "/tools/calories/steps-to-calories-calculator",
     calculate: require("../calories/steps-to-calories-calculator").calculate,
   },
+
+  // ======================
+  // BODY COMPOSITION
+  // ======================
   {
     id: "body-fat-calculator",
     name: "Body Fat Calculator",
@@ -126,6 +143,10 @@ export const tools: ToolDefinition[] = [
     path: "/tools/body-composition/body-recomposition-calculator",
     calculate: require("../body-composition/body-recomposition-calculator").calculate,
   },
+
+  // ======================
+  // ACTIVITY
+  // ======================
   {
     id: "steps-per-day-calculator",
     name: "Steps Per Day Calculator",
@@ -138,6 +159,10 @@ export const tools: ToolDefinition[] = [
     path: "/tools/activity/move-goal-calculator",
     calculate: require("../activity/move-goal-calculator").calculate,
   },
+
+  // ======================
+  // STRENGTH
+  // ======================
   {
     id: "barbell-calculator",
     name: "Barbell Calculator",
@@ -180,12 +205,10 @@ export const tools: ToolDefinition[] = [
     path: "/tools/strength/rpe-calculator",
     calculate: require("../strength/rpe-calculator").calculate,
   },
-  {
-    id: "one-rep-max-calculator",
-    name: "One Rep Max Calculator",
-    path: "/tools/strength/one-rep-max-calculator",
-    calculate: require("../strength/one-rep-max-calculator").calculate,
-  },
+
+  // ======================
+  // CALISTHENICS
+  // ======================
   {
     id: "push-up-calculator",
     name: "Push-Up Calculator",
@@ -204,6 +227,10 @@ export const tools: ToolDefinition[] = [
     path: "/tools/calisthenics/home-workout-generator",
     calculate: require("../calisthenics/home-workout-generator").calculate,
   },
+
+  // ======================
+  // NUTRITION
+  // ======================
   {
     id: "fat-intake-calculator",
     name: "Fat Intake Calculator",
@@ -246,24 +273,10 @@ export const tools: ToolDefinition[] = [
     path: "/tools/nutrition/tdee-calculator",
     calculate: require("../nutrition/tdee-calculator").calculate,
   },
-  {
-    id: "starbucks-macro-calculator",
-    name: "Starbucks Macro Calculator",
-    path: "/tools/nutrition/starbucks-macro-calculator",
-    calculate: require("../nutrition/starbucks-macro-calculator").calculate,
-  },
-  {
-    id: "carnivore-macro-calculator",
-    name: "Carnivore Macro Calculator",
-    path: "/tools/nutrition/carnivore-macro-calculator",
-    calculate: require("../nutrition/carnivore-macro-calculator").calculate,
-  },
-  {
-    id: "subway-macro-calculator",
-    name: "Subway Macro Calculator",
-    path: "/tools/nutrition/subway-macro-calculator",
-    calculate: require("../nutrition/subway-macro-calculator").calculate,
-  },
+
+  // ======================
+  // PLANNERS / TRACKERS / EQUIPMENT
+  // ======================
   {
     id: "meal-plan-generator",
     name: "Meal Plan Generator",

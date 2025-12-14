@@ -12,14 +12,17 @@ const categorize = (vo2: number): string => {
   return "Below Average";
 };
 
-export function estimateRunningVo2(distanceKm: number, timeMinutes: number): RunningVo2Result {
+export function estimateRunningVo2(
+  distanceKm: number,
+  timeMinutes: number
+): RunningVo2Result {
   const speedKmh = (distanceKm / timeMinutes) * 60;
-  // Using a simplified VO2 estimate from running speed: VO2 ≈ (speed_m_per_min * 0.2) + 3.5
-  const speedMetersPerMin = speedKmh * 1000 * (1 / 60);
-  const vo2max = (speedMetersPerMin * 0.2 + 3.5) * 1.03; // small bump for race effort
+  const speedMetersPerMin = (speedKmh * 1000) / 60;
+  const vo2max = (speedMetersPerMin * 0.2 + 3.5) * 1.03;
+
   return {
-    vo2max: parseFloat(vo2max.toFixed(1)),
-    speedKmh: parseFloat(speedKmh.toFixed(2)),
+    vo2max: Number(vo2max.toFixed(1)),
+    speedKmh: Number(speedKmh.toFixed(2)),
     category: categorize(vo2max),
   };
 }
