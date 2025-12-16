@@ -1,195 +1,353 @@
 
----
+# DENSTAR FITNESS TOOLS
+Deterministic Fitness & Performance Calculators
 
-# **FINAL MAIN README.md (Optimized & Corrected)**
+This repository defines a permanent, scalable, refactor-proof fitness calculator platform.
 
-```markdown
-# Fitness Tools Suite
-
-A comprehensive collection of fitness, nutrition, and performance calculators designed for integration into modern React applications.  
-Each tool is modular, lightweight, and can be used in standalone form or combined within a full fitness dashboard or web application.
+The goal is not rapid experimentation.  
+The goal is correctness, permanence, and world-class scalability from day one.
 
 ---
 
-## Project Overview
+## Mission
 
-This repository contains a large set of independent fitness calculators and utilities.  
-They are structured for easy integration into:
+Build a deterministic fitness calculator platform that:
 
-- React components  
-- Next.js applications  
-- Frontend dashboards  
-- Client-side calculators  
-- API-backed React apps  
-
-The project is organized so that each calculator has its own directory, README, and implementation file(s).
+- Supports 40+ calculators at launch, 100+ long-term
+- Preserves SEO URLs permanently
+- Uses pure, testable domain logic
+- Requires zero architectural changes to support:
+  - Firebase Auth
+  - Firestore
+  - Saved results
+  - Mobile apps
+  - AI agents
+- Prevents refactor spirals
+- Enforces correctness by structure, not discipline
 
 ---
 
-## Repository Structure
+## Non-Goals (Intentional)
+
+This MVP explicitly does not include:
+
+- Firebase wiring
+- User accounts
+- Saved results
+- Charts or graphs
+- Advanced validation libraries
+- Custom calculator UIs
+- AI features
+
+The architecture already supports these.  
+They are out of scope for MVP.
+
+---
+
+## Locked Tech Stack (No Substitutions)
+
+### Frontend
+- Next.js 15 (App Router)
+- React 19
+- TypeScript (strict)
+
+### Styling
+- Tailwind CSS v4
+- No CSS-in-JS
+
+### State
+- URL search params
+- React Server Components
+- No global client state
+
+### Backend (Later, No Refactor Required)
+- Firebase Auth
+- Firestore
+- Firebase Analytics
+- Cloud Functions
+
+### Hosting
+- Vercel
+
+### Testing
+- Vitest
+- Domain logic only
+
+This stack is final for MVP.
+
+---
+
+## Architectural Philosophy (Locked)
+
+Calculators are write-once, deterministic computation engines.  
+All evolution happens around them, never inside them.
+
+This architecture follows patterns used in financial engines, scientific computation, medical calculators, and risk systems.
+
+---
+
+## Calculator Engine Contract (Immutable)
+
+### Calculator v1 — Numeric Deterministic Engines
+
+```ts
+// /src/lib/types/calculator.v1.ts
+export type CalculatorV1<Input> = (input: Input) => number | null;
+````
+
+### Rules
+
+* Returns one number or null
+* number means a valid deterministic result
+* null means the calculation cannot be completed with the given input
+* No throwing
+* No async
+* No side effects
+* No formatting
+* No metadata
+* No Firebase
+* No UI logic
+
+This contract must never change.
+
+---
+
+## Semantic Meaning of null
+
+null means:
+
+“With the given input, this calculation cannot be completed deterministically.”
+
+It does not mean error, warning, partial result, or invalid user.
+
+---
+
+## Final Calculator Structure (Mandatory)
+
+Every calculator must follow this structure exactly:
 
 ```
-
-/tools
-/activity
-/body-composition
-/calisthenics
-/calories
-/equipment
-/nutrition
-/planners
-/running
-/strength
-/trackers
-
+/src/lib/calculators/<category>/<tool>/
+├── index.ts
+├── calculator.ts
+├── types.ts
+└── test.ts
 ```
 
-Each category includes several calculators or generators, such as:
+Rules:
 
-- running-pace-calculator  
-- vdot-calculator  
-- tdee-calculator  
-- body-fat-calculator  
-- 1-rep-max-calculator  
-- push-up-calculator  
-- meal-plan-generator  
+* No missing files
+* No extra files
+* No alternative naming
+* No default exports
 
-More tools will be added over time.
+This structure is final.
 
 ---
 
-## Tool Categories
+## Public API Rule (Critical)
 
-### Running & Cardio Performance
-- Pace calculators  
-- Split calculators  
-- Interval tools  
-- VDOT scoring  
+index.ts is the only allowed import surface.
 
-### Calorie & Energy Expenditure
-- Running calorie burn  
-- Walking energy cost  
-- Swimming and rowing calculations  
-- Steps-to-calories estimators  
-
-### Body Composition
-- Body fat percentage  
-- BMI  
-- Lean body mass  
-- Ideal weight  
-- Waist ratios  
-- Body recomposition modeling  
-
-### Strength & Powerlifting
-- One-rep max  
-- Barbell plate loading  
-- Powerlifting totals  
-- RPE-based estimations  
-- Strength ratios  
-- Training volume calculations  
-
-### Calisthenics
-- Push-up calculator  
-- Pull-up calculator  
-- Home workout generator  
-
-### Nutrition & Diet Tools
-- TDEE  
-- Bulk and lean bulk planning  
-- Creatine dosing  
-- Fasting windows  
-- Macro calculators  
-- Restaurant macro estimates  
-
-### Planners & Generators
-- Meal planning  
-- Workout generation  
-
-### Trackers
-- Weight tracking tools  
-
-### Equipment
-- Dumbbell weight conversions  
-
----
-
-## Tech Stack
-
-This project is designed for use in:
-
-- React (Create React App, Vite, or similar)  
-- Next.js  
-- JavaScript or TypeScript frontends  
-
-Tools can also be adapted for:
-
-- Node.js backends  
-- API endpoints  
-- Serverless functions  
-
-But the primary focus is **React integration**.
-
----
-
-## Usage in React
-
-Each tool can be implemented as:
-
-- A standalone React component  
-- A custom hook (`useCalculator`)  
-- A pure utility function imported into components  
-
-Example patterns will be added as tools are implemented.
-
----
-
-## Installation (Coming Soon)
-
-A package version of this project may be published in the future.
-
+```ts
+export { calculator } from "./calculator";
+export type { Input } from "./types";
 ```
 
-npm install fitness-tools-suite
+UI, tests, Firebase, APIs, and AI agents may only import from index.ts.
+They may never import internal files.
+
+---
+
+## Composition Layer (Sanctioned Evolution Path)
+
+Calculators never grow smarter.
+Composition does.
 
 ```
-
----
-
-## Contributing (Private Repository)
-
-This is a private repository.  
-Any collaborators must be added manually.
-
-All tools should follow these rules:
-
-- One folder per calculator  
-- Each folder contains its own README  
-- Keep code simple, modular, and front-end friendly  
-- Prefer pure functions for calculations  
-- React components should be self-contained  
-
----
-
-## Future Enhancements
-
-- Convert tools into reusable React components  
-- Build a complete fitness calculator UI  
-- Add Storybook for component previews  
-- Add unit tests (Jest + Testing Library)  
-- Optional API layer to support heavier calculations  
-
----
-
-## License
-
-This project is private and currently has no license.  
-A license may be added later if it becomes public.
-
----
-
-## Author
-
-**Kiplimodev** — building scalable fitness tools and performance utilities.
+/src/lib/composition/
+├── running/
+├── calories/
+├── strength/
+├── nutrition/
+└── types.ts
 ```
+
+Composition may:
+
+* Call multiple calculators
+* Return objects
+* Add units, ranges, warnings
+* Adapt results for UI, APIs, and AI
+
+Calculators may never depend on composition.
+
+---
+
+## Dependency Direction (Law)
+
+Allowed:
+
+```
+UI → Composition → Calculators → Types
+Tests → index.ts only
+```
+
+Forbidden:
+
+```
+Calculator → UI
+Calculator → Composition
+Calculator → Firebase
+Calculator → Formatting
+Calculator → Env
+```
+
+Violations are architectural failures.
+
+---
+
+## Routing and SEO (Immutable)
+
+* URLs are the SEO source of truth
+* Folder paths under /src/app/tools/** must never change
+* Calculator logic is not tied to routing
+* Deprecated tools remain accessible or are externally redirected
+
+---
+
+## Official Tool Categories and URL Structure (Locked)
+
+### Running and Cardio Performance
+
+/tools/running/
+
+* running-pace-calculator
+* running-splits-calculator
+* split-calculator
+* interval-calculator
+* vdot-calculator
+
+### Calories Burned and Energy Expenditure
+
+/tools/calories/
+
+* rowing-calories-calculator
+* swimming-calories-calculator
+* treadmill-calorie-calculator
+* walking-calorie-calculator
+* running-calories-burned-calculator
+* bike-calorie-calculator
+* steps-to-calories-calculator
+
+### Body Composition and Health Metrics
+
+/tools/body-composition/
+
+* body-fat-calculator
+* lean-body-mass-calculator
+* bmi-calculator
+* ideal-weight-calculator
+* waist-to-height-ratio-calculator
+* waist-to-hip-ratio-calculator
+* body-measurement-calculator
+* body-recomposition-calculator
+
+### Daily Activity and Move Goals
+
+/tools/activity/
+
+* steps-per-day-calculator
+* move-goal-calculator
+
+### Strength Training and Powerlifting
+
+/tools/strength/
+
+* barbell-calculator
+* plate-weight-calculator
+* powerlifting-calculator
+* 1-rep-max-calculator
+* training-volume-calculator
+* strength-ratio-calculators
+* rpe-calculator
+
+### Calisthenics and Bodyweight
+
+/tools/calisthenics/
+
+* push-up-calculator
+* pull-up-calculator
+* home-workout-generator
+
+### Diet and Nutrition
+
+/tools/nutrition/
+
+* fat-intake-calculator
+* creatine-calculator
+* protein-powder-calculator
+* bulk-calculator
+* lean-bulk-calculator
+* intermittent-fasting-calculator
+* tdee-calculator
+* starbucks-macro-calculator
+* carnivore-macro-calculator
+* subway-macro-calculator
+
+### Meal Planning and Generators
+
+/tools/planners/
+
+* meal-plan-generator
+* workout-generator
+
+### Tracking and Measurement
+
+/tools/trackers/
+
+* weight-tracker
+
+### Equipment and Load Conversion
+
+/tools/equipment/
+
+* dumbbell-weight-calculator
+
+---
+
+## Testing Requirements
+
+Each calculator must:
+
+* Have at least 1–2 Vitest tests
+* Import only from index.ts
+* Validate:
+
+  * valid input returns a number
+  * invalid input returns null
+
+No snapshot tests.
+No UI tests.
+
+---
+
+## MVP Completion Criteria (Final)
+
+The MVP is complete when:
+
+* All listed tools compile
+* All calculators follow identical structure
+* No runtime errors occur in CalculatorLayout
+* All imports go through index.ts
+* URLs remain unchanged
+* Logic is pure and testable
+* Adding a new calculator takes less than 10 minutes
+
+---
+
+## Governance Rule (Final Lock)
+
+Any change that weakens these rules is considered a rewrite, not a refactor, and must be rejected.
 
 ---
