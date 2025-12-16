@@ -2,15 +2,15 @@
 
 import CalculatorLayout from "@/components/CalculatorLayout";
 import {
-  calculateTDEE,
-  type TDEEInput,
-} from "@/lib/calculators/nutrition/tdee-calculator";
+  calculateBulk,
+  type BulkInput,
+} from "@/lib/calculators/nutrition/bulk-calculator";
 
-export default function TDEEPage() {
+export default function BulkCalculatorPage() {
   return (
-    <CalculatorLayout<TDEEInput>
-      title="TDEE Calculator"
-      description="Estimate your Total Daily Energy Expenditure based on your body metrics and activity level."
+    <CalculatorLayout<BulkInput>
+      title="Bulk Calculator"
+      description="Estimate daily calories needed for bulking."
       fields={[
         {
           name: "sex",
@@ -36,11 +36,21 @@ export default function TDEEPage() {
             { label: "Extra active", value: "extra" },
           ],
         },
+        {
+          name: "surplus",
+          label: "Calorie Surplus",
+          type: "select",
+          options: [
+            { label: "Small (+250 kcal)", value: "small" },
+            { label: "Medium (+500 kcal)", value: "medium" },
+            { label: "Large (+750 kcal)", value: "large" },
+          ],
+        },
       ]}
-      calculate={calculateTDEE}
+      calculate={calculateBulk}
       renderResult={(result) => (
         <p>
-          <strong>Estimated TDEE:</strong> {result} kcal / day
+          <strong>Daily bulk calories:</strong> {result} kcal / day
         </p>
       )}
     />
