@@ -1,0 +1,10 @@
+export { getFatIntake } from "./fat-intake";
+export { getCreatineIntake } from "./creatine";
+export { getProteinPowder } from "./protein-powder";
+export { getBulkCalories } from "./bulk";
+export { getLeanBulkCalories } from "./lean-bulk";
+export { getIntermittentFasting } from "./intermittent-fasting";
+export { getTdee } from "./tdee";
+export { getStarbucksMacros } from "./starbucks";
+export { getCarnivoreMacros } from "./carnivore";
+export { getSubwayMacros } from "./subway";
