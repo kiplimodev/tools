@@ -1,3 +1,4 @@
+// src/lib/composition/activity/move-goal.ts
 import { calculator as moveGoalCalculator } from "@/lib/calculators/activity/move-goal-calculator";
 
 type Input = {

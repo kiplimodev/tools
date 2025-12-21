@@ -1,24 +1,34 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getPullUp } from "@/lib/composition/calisthenics";
+import PullUpCalculatorForm from "./PullUpCalculatorForm";
+import { getPullUp } from "@/lib/composition/calisthenics/pull-up";
 
-export const metadata = {
-  title: "Pull-Up Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    reps?: string;
+  }>;
 };
 
-export default function PullUpCalculatorPage() {
-  const result = getPullUp({
-    reps: 15,
-  });
+export default async function PullUpCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+  const reps = params.reps ? Number(params.reps) : undefined;
+
+  const result = reps
+    ? getPullUp({ reps })
+    : null;
 
   return (
     <CalculatorLayout
       title="Pull-Up Calculator"
-      description="Proof that pull-up composition is wired correctly"
+      description="Evaluate pull-up performance based on repetitions"
     >
-      {result ? (
-        <p>Total pull-ups: {result.reps}</p>
-      ) : (
-        <p>Invalid input</p>
+      <PullUpCalculatorForm defaultReps={reps ?? 10} />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Reps score: {result.reps}</p>
+        </div>
       )}
     </CalculatorLayout>
   );

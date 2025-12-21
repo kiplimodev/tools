@@ -1,31 +1,51 @@
+// src/app/tools/calories/treadmill-calorie-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
+import TreadmillCaloriesForm from "./TreadmillCaloriesForm";
 import { getTreadmillCalories } from "@/lib/composition/calories";
 
-export const metadata = {
-  title: "Treadmill Calorie Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    weightKg?: string;
+    speedKmh?: string;
+    durationMinutes?: string;
+  }>;
 };
 
-export default function TreadmillCalorieCalculatorPage() {
-  const result = getTreadmillCalories({
-    weightKg: 80,
-    speedKmh: 8,
-    durationMinutes: 30,
-  });
+export default async function TreadmillCaloriesCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
+  const speedKmh = params.speedKmh ? Number(params.speedKmh) : undefined;
+  const durationMinutes = params.durationMinutes
+    ? Number(params.durationMinutes)
+    : undefined;
+
+  const result =
+    weightKg && speedKmh && durationMinutes
+      ? getTreadmillCalories({
+          weightKg,
+          speedKmh,
+          durationMinutes,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Treadmill Calorie Calculator"
-      description="Proof that treadmill calorie calculation is wired correctly"
+      description="Calculate calories burned on a treadmill"
     >
-      {result ? (
-        <>
+      <TreadmillCaloriesForm
+        defaultWeightKg={weightKg ?? 70}
+        defaultSpeedKmh={speedKmh ?? 8}
+        defaultDurationMinutes={durationMinutes ?? 30}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
           <p>Calories burned: {result.calories}</p>
-          <p>Speed (km/h): {result.speedKmh}</p>
-          <p>Duration (minutes): {result.durationMinutes}</p>
-          <p>Weight (kg): {result.weightKg}</p>
-        </>
-      ) : (
-        <p>Invalid input</p>
+        </div>
       )}
     </CalculatorLayout>
   );

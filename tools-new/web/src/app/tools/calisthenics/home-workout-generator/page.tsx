@@ -1,25 +1,52 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
+import HomeWorkoutGeneratorForm from "./HomeWorkoutGeneratorForm";
 import { getHomeWorkout } from "@/lib/composition/calisthenics";
 
-export const metadata = {
-  title: "Home Workout Generator",
+type PageProps = {
+  searchParams?: Promise<{
+    level?: string;
+    durationMinutes?: string;
+  }>;
 };
 
-export default function HomeWorkoutGeneratorPage() {
-  const result = getHomeWorkout({
-    level: "beginner",
-    durationMinutes: 30,
-  });
+export default async function HomeWorkoutGeneratorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const level =
+    params.level === "beginner" ||
+    params.level === "intermediate" ||
+    params.level === "advanced"
+      ? params.level
+      : undefined;
+
+  const durationMinutes = params.durationMinutes
+    ? Number(params.durationMinutes)
+    : undefined;
+
+  const result =
+    level && durationMinutes
+      ? getHomeWorkout({
+          level,
+          durationMinutes,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Home Workout Generator"
-      description="Proof that home workout composition is wired correctly"
+      description="Generate a simple home workout based on level and duration"
     >
-      {result ? (
-        <p>Number of exercises: {result.exercisesCount}</p>
-      ) : (
-        <p>Invalid input</p>
+      <HomeWorkoutGeneratorForm
+        defaultLevel={level ?? "beginner"}
+        defaultDurationMinutes={durationMinutes ?? 30}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Exercises included: {result.exercisesCount}</p>
+        </div>
       )}
     </CalculatorLayout>
   );

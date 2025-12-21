@@ -1,3 +1,4 @@
+// src/lib/composition/calories/treadmill.ts
 import { calculator } from "@/lib/calculators/calories/treadmill-calorie-calculator";
 
 export type TreadmillCaloriesResult = {
@@ -17,7 +18,6 @@ export function getTreadmillCalories(
   input: Input
 ): TreadmillCaloriesResult | null {
   const calories = calculator(input);
-
   if (calories === null) return null;
 
   return {

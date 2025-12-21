@@ -1,3 +1,4 @@
+// src/lib/composition/running/interval.ts
 import { calculator } from "@/lib/calculators/running/interval-calculator";
 
 type Input = {
@@ -11,6 +12,10 @@ type Result = {
   totalMinutes: number;
 };
 
+/**
+ * Composition adapter for Interval Calculator.
+ * Adds derived units for UI/API usage.
+ */
 export function getIntervalWorkout(input: Input): Result | null {
   const totalSeconds = calculator(input);
 

@@ -1,24 +1,34 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getPushUpScore } from "@/lib/composition/calisthenics";
+import PushUpCalculatorForm from "./PushUpCalculatorForm";
+import { getPushUpScore } from "@/lib/composition/calisthenics/push-up";
 
-export const metadata = {
-  title: "Push-Up Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    reps?: string;
+  }>;
 };
 
-export default function PushUpCalculatorPage() {
-  const result = getPushUpScore({
-    reps: 40,
-  });
+export default async function PushUpCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+  const reps = params.reps ? Number(params.reps) : undefined;
+
+  const result = reps
+    ? getPushUpScore({ reps })
+    : null;
 
   return (
     <CalculatorLayout
       title="Push-Up Calculator"
-      description="Proof that push-up composition is wired correctly"
+      description="Evaluate push-up performance based on repetitions"
     >
-      {result ? (
-        <p>Push-up score: {result.score}</p>
-      ) : (
-        <p>Invalid input</p>
+      <PushUpCalculatorForm defaultReps={reps ?? 30} />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Score: {result.score}</p>
+        </div>
       )}
     </CalculatorLayout>
   );

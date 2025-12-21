@@ -1,3 +1,4 @@
+// src/lib/composition/planners/meal-plan.ts
 import { calculator as mealPlanCalculator } from "@/lib/calculators/planners/meal-plan-generator";
 
 type Input = {

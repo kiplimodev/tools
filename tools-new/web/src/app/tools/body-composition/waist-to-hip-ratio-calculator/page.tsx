@@ -1,25 +1,41 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getWaistToHipRatio } from "@/lib/composition/body-composition";
+import WaistToHipRatioCalculatorForm from "./WaistToHipRatioCalculatorForm";
+import { getWaistToHipRatio } from "@/lib/composition/body-composition/waist-to-hip";
 
-export const metadata = {
-  title: "Waist to Hip Ratio Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    waistCm?: string;
+    hipCm?: string;
+  }>;
 };
 
-export default function WaistToHipRatioCalculatorPage() {
-  const result = getWaistToHipRatio({
-    waistCm: 80,
-    hipCm: 95,
-  });
+export default async function WaistToHipRatioCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const waistCm = params.waistCm ? Number(params.waistCm) : undefined;
+  const hipCm = params.hipCm ? Number(params.hipCm) : undefined;
+
+  const result =
+    waistCm && hipCm
+      ? getWaistToHipRatio({ waistCm, hipCm })
+      : null;
 
   return (
     <CalculatorLayout
-      title="Waist to Hip Ratio Calculator"
-      description="Proof that waist-to-hip ratio composition is wired correctly"
+      title="Waist-to-Hip Ratio Calculator"
+      description="Calculate waist-to-hip ratio for health risk assessment"
     >
-      {result !== null ? (
-        <p>Waist to Hip Ratio: {result.ratio}</p>
-      ) : (
-        <p>Invalid input</p>
+      <WaistToHipRatioCalculatorForm
+        defaultWaistCm={waistCm ?? 85}
+        defaultHipCm={hipCm ?? 100}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Waist-to-hip ratio: {result.ratio.toFixed(2)}</p>
+        </div>
       )}
     </CalculatorLayout>
   );

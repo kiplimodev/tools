@@ -1,25 +1,50 @@
+// src/app/tools/activity/move-goal-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getMoveGoal } from "@/lib/composition/activity";
+import MoveGoalCalculatorForm from "./MoveGoalCalculatorForm";
+import { getMoveGoal } from "@/lib/composition/activity/move-goal";
 
-export const metadata = {
-  title: "Move Goal Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    currentStepsPerDay?: string;
+    increasePercent?: string;
+  }>;
 };
 
-export default function MoveGoalCalculatorPage() {
-  const result = getMoveGoal({
-    currentStepsPerDay: 10000,
-    increasePercent: 25,
-  });
+export default async function MoveGoalCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const currentStepsPerDay = params.currentStepsPerDay
+    ? Number(params.currentStepsPerDay)
+    : undefined;
+
+  const increasePercent = params.increasePercent
+    ? Number(params.increasePercent)
+    : undefined;
+
+  const result =
+    currentStepsPerDay && increasePercent
+      ? getMoveGoal({
+          currentStepsPerDay,
+          increasePercent,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Move Goal Calculator"
-      description="Proof that move goal composition is wired correctly"
+      description="Calculate a new daily step goal based on a percentage increase"
     >
-      {result ? (
-        <p>Target daily steps: {result.targetStepsPerDay}</p>
-      ) : (
-        <p>Invalid input</p>
+      <MoveGoalCalculatorForm
+        defaultCurrentStepsPerDay={currentStepsPerDay ?? 8000}
+        defaultIncreasePercent={increasePercent ?? 10}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Target steps per day: {Math.round(result.targetStepsPerDay)}</p>
+        </div>
       )}
     </CalculatorLayout>
   );

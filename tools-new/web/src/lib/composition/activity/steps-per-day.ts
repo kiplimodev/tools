@@ -1,3 +1,4 @@
+// src/lib/composition/activity/steps-per-day.ts
 import { calculator as stepsCalculator } from "@/lib/calculators/activity/steps-per-day-calculator";
 
 type Input = {

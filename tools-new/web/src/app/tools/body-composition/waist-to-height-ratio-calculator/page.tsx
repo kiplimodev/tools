@@ -1,25 +1,47 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getWaistToHeightRatio } from "@/lib/composition/body-composition";
+import WaistToHeightRatioCalculatorForm from "./WaistToHeightRatioCalculatorForm";
+import { getWaistToHeightRatio } from "@/lib/composition/body-composition/waist-to-height";
 
-export const metadata = {
-  title: "Waist-to-Height Ratio Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    waistCm?: string;
+    heightCm?: string;
+  }>;
 };
 
-export default function WaistToHeightRatioPage() {
-  const result = getWaistToHeightRatio(80, 175); // 80cm waist, 175cm height
+export default async function WaistToHeightRatioCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const waistCm = params.waistCm
+    ? Number(params.waistCm)
+    : undefined;
+
+  const heightCm = params.heightCm
+    ? Number(params.heightCm)
+    : undefined;
+
+  const result =
+    waistCm && heightCm
+      ? getWaistToHeightRatio(waistCm, heightCm)
+      : null;
 
   return (
     <CalculatorLayout
       title="Waist-to-Height Ratio Calculator"
-      description="Proof that waist-to-height composition wiring works"
+      description="Evaluate health risk using waist-to-height ratio"
     >
-      {result ? (
-        <>
+      <WaistToHeightRatioCalculatorForm
+        defaultWaistCm={waistCm ?? 85}
+        defaultHeightCm={heightCm ?? 175}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
           <p>Ratio: {result.ratio.toFixed(2)}</p>
           <p>Category: {result.category}</p>
-        </>
-      ) : (
-        <p>Invalid input</p>
+        </div>
       )}
     </CalculatorLayout>
   );

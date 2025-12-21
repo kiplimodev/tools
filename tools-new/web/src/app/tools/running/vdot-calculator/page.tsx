@@ -1,36 +1,60 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getVdot } from "@/lib/composition/running";
+import VdotCalculatorForm from "./VdotCalculatorForm";
+import { getVdot } from "@/lib/composition/running/vdot";
 
-export const metadata = {
-  title: "VDOT Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    distanceMeters?: string;
+    timeSeconds?: string;
+  }>;
 };
 
-export default function VdotCalculatorPage() {
-  const result = getVdot({
-    distanceMeters: 5000,
-    timeSeconds: 1500, // 25 minutes
-  });
+export default async function VdotCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const distanceMeters = params.distanceMeters
+    ? Number(params.distanceMeters)
+    : undefined;
+
+  const timeSeconds = params.timeSeconds
+    ? Number(params.timeSeconds)
+    : undefined;
+
+  const result =
+    distanceMeters && timeSeconds
+      ? getVdot({ distanceMeters, timeSeconds })
+      : null;
 
   return (
     <CalculatorLayout
       title="VDOT Calculator"
-      description="Proof that VDOT composition is wired correctly"
+      description="Calculate VDOT and training paces from race performance"
     >
-      {result ? (
-        <>
-          <p>VDOT: {result.vdot}</p>
-          <p>Race pace (sec/km): {result.racePaceSecondsPerKm}</p>
+      <VdotCalculatorForm
+        defaultDistanceMeters={distanceMeters ?? 5000}
+        defaultTimeSeconds={timeSeconds ?? 1500}
+      />
 
-          <h3>Training Paces (sec/km)</h3>
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p><strong>VDOT:</strong> {result.vdot.toFixed(2)}</p>
+
           <p>
-            Easy: {result.trainingPaces.easyMin} –{" "}
-            {result.trainingPaces.easyMax}
+            <strong>Race Pace:</strong>{" "}
+            {result.racePaceSecondsPerKm} sec/km
           </p>
-          <p>Threshold: {result.trainingPaces.threshold}</p>
-          <p>Interval: {result.trainingPaces.interval}</p>
-        </>
-      ) : (
-        <p>Invalid input</p>
+
+          <div className="mt-4">
+            <p><strong>Training Paces (sec/km)</strong></p>
+            <ul className="list-disc ml-5">
+              <li>Easy: {result.trainingPaces.easyMin} – {result.trainingPaces.easyMax}</li>
+              <li>Threshold: {result.trainingPaces.threshold}</li>
+              <li>Interval: {result.trainingPaces.interval}</li>
+            </ul>
+          </div>
+        </div>
       )}
     </CalculatorLayout>
   );

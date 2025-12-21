@@ -1,9 +1,19 @@
+// src/lib/composition/calories/swimming.ts
 import { calculator } from "@/lib/calculators/calories/swimming-calories-calculator";
 
-export const getSwimmingCalories = () => {
-  return calculator({
-    weightKg: 70,
-    durationMinutes: 30,
-    met: 8,
-  });
+type Input = {
+  weightKg: number;
+  durationMinutes: number;
+  met: number;
 };
+
+type Result = {
+  calories: number;
+};
+
+export function getSwimmingCalories(input: Input): Result | null {
+  const calories = calculator(input);
+  if (calories === null) return null;
+
+  return { calories };
+}

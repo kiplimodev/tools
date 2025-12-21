@@ -1,3 +1,4 @@
+// src/lib/composition/strength/barbell.ts
 import { calculator as barbellCalculator } from "@/lib/calculators/strength/barbell-calculator";
 
 type Input = {

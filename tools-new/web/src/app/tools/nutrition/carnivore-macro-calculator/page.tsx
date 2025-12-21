@@ -1,25 +1,46 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getCarnivoreMacros } from "@/lib/composition/nutrition";
+import CarnivoreMacroCalculatorForm from "./CarnivoreMacroCalculatorForm";
+import { getCarnivoreMacros } from "@/lib/composition/nutrition/carnivore";
 
-export const metadata = {
-  title: "Carnivore Macro Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    calories?: string;
+    proteinGrams?: string;
+  }>;
 };
 
-export default function CarnivoreMacroCalculatorPage() {
-  const result = getCarnivoreMacros({
-    calories: 2500,
-    proteinGrams: 180,
-  });
+export default async function CarnivoreMacroCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const calories = params.calories ? Number(params.calories) : undefined;
+  const proteinGrams = params.proteinGrams
+    ? Number(params.proteinGrams)
+    : undefined;
+
+  const result =
+    calories && proteinGrams
+      ? getCarnivoreMacros({
+          calories,
+          proteinGrams,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Carnivore Macro Calculator"
-      description="Proof that carnivore macro composition is wired correctly"
+      description="Estimate fat intake on a carnivore diet"
     >
-      {result ? (
-        <p>Required fat intake: {result.fatGrams.toFixed(1)} g</p>
-      ) : (
-        <p>Invalid input</p>
+      <CarnivoreMacroCalculatorForm
+        defaultCalories={calories ?? 2500}
+        defaultProteinGrams={proteinGrams ?? 180}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Estimated Fat Intake: {result.fatGrams.toFixed(1)} g</p>
+        </div>
       )}
     </CalculatorLayout>
   );

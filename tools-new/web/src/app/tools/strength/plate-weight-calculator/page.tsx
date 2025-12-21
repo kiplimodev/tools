@@ -1,25 +1,53 @@
+// src/app/tools/strength/plate-weight-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getPlateWeight } from "@/lib/composition/strength";
+import PlateWeightCalculatorForm from "./PlateWeightCalculatorForm";
+import { getPlateWeight } from "@/lib/composition/strength/plate-weight";
 
-export const metadata = {
-  title: "Plate Weight Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    targetWeightKg?: string;
+    barbellWeightKg?: string;
+  }>;
 };
 
-export default function PlateWeightCalculatorPage() {
-  const result = getPlateWeight({
-    targetWeightKg: 100,
-    barbellWeightKg: 20,
-  });
+export default async function PlateWeightCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const targetWeightKg = params.targetWeightKg
+    ? Number(params.targetWeightKg)
+    : undefined;
+
+  const barbellWeightKg = params.barbellWeightKg
+    ? Number(params.barbellWeightKg)
+    : undefined;
+
+  const result =
+    targetWeightKg && barbellWeightKg
+      ? getPlateWeight({
+          targetWeightKg,
+          barbellWeightKg,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Plate Weight Calculator"
-      description="Proof that plate weight composition is wired correctly"
+      description="Calculate total plate weight required on a barbell"
     >
-      {result ? (
-        <p>Total plate weight required: {result.plateWeightKg} kg</p>
-      ) : (
-        <p>Invalid input</p>
+      <PlateWeightCalculatorForm
+        defaultTargetWeightKg={targetWeightKg ?? 100}
+        defaultBarbellWeightKg={barbellWeightKg ?? 20}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>
+            Total plate weight:{" "}
+            {result.plateWeightKg.toFixed(1)} kg
+          </p>
+        </div>
       )}
     </CalculatorLayout>
   );

@@ -1,26 +1,48 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getTrainingVolume } from "@/lib/composition/strength";
+import TrainingVolumeCalculatorForm from "./TrainingVolumeCalculatorForm";
+import { getTrainingVolume } from "@/lib/composition/strength/training-volume";
 
-export const metadata = {
-  title: "Training Volume Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    weightKg?: string;
+    reps?: string;
+    sets?: string;
+  }>;
 };
 
-export default function TrainingVolumeCalculatorPage() {
-  const result = getTrainingVolume({
-    weightKg: 100,
-    reps: 5,
-    sets: 5,
-  });
+export default async function TrainingVolumeCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
+  const reps = params.reps ? Number(params.reps) : undefined;
+  const sets = params.sets ? Number(params.sets) : undefined;
+
+  const result =
+    weightKg && reps && sets
+      ? getTrainingVolume({
+          weightKg,
+          reps,
+          sets,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Training Volume Calculator"
-      description="Proof that training volume composition is wired correctly"
+      description="Calculate total training volume from weight, reps, and sets"
     >
-      {result ? (
-        <p>Total volume: {result.totalVolumeKg} kg</p>
-      ) : (
-        <p>Invalid input</p>
+      <TrainingVolumeCalculatorForm
+        defaultWeightKg={weightKg ?? 100}
+        defaultReps={reps ?? 5}
+        defaultSets={sets ?? 5}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Total volume: {result.totalVolumeKg.toFixed(1)} kg</p>
+        </div>
       )}
     </CalculatorLayout>
   );

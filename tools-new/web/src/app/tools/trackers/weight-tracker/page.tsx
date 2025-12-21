@@ -1,25 +1,56 @@
+// src/app/tools/trackers/weight-tracker/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
+import WeightTrackerCalculatorForm from "./WeightTrackerCalculatorForm";
 import { getWeightDelta } from "@/lib/composition/trackers";
 
-export const metadata = {
-  title: "Weight Tracker",
+type PageProps = {
+  searchParams?: Promise<{
+    startWeightKg?: string;
+    currentWeightKg?: string;
+  }>;
 };
 
-export default function WeightTrackerPage() {
-  const result = getWeightDelta({
-    startWeightKg: 80,
-    currentWeightKg: 75,
-  });
+export default async function WeightTrackerPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const startWeightKg = params.startWeightKg
+    ? Number(params.startWeightKg)
+    : undefined;
+
+  const currentWeightKg = params.currentWeightKg
+    ? Number(params.currentWeightKg)
+    : undefined;
+
+  const result =
+    startWeightKg !== undefined && currentWeightKg !== undefined
+      ? getWeightDelta({
+          startWeightKg,
+          currentWeightKg,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Weight Tracker"
-      description="Proof that weight tracking composition is wired correctly"
+      description="Track your weight change over time"
     >
-      {result ? (
-        <p>Weight change: {result.deltaKg.toFixed(1)} kg</p>
-      ) : (
-        <p>Invalid input</p>
+      <WeightTrackerCalculatorForm
+        defaultStartWeightKg={startWeightKg ?? 80}
+        defaultCurrentWeightKg={currentWeightKg ?? 75}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>
+            Weight change:{" "}
+            <strong>
+              {result.deltaKg > 0 ? "+" : ""}
+              {result.deltaKg.toFixed(1)} kg
+            </strong>
+          </p>
+        </div>
       )}
     </CalculatorLayout>
   );

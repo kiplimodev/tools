@@ -5,15 +5,6 @@ export type WaistToHeightResult = {
   category: "low" | "healthy" | "high" | "very-high";
 };
 
-/**
- * Composition adapter for Waist-to-Height Ratio.
- *
- * Classification (commonly used thresholds):
- * < 0.40  = low
- * 0.40–0.49 = healthy
- * 0.50–0.59 = high
- * ≥ 0.60  = very high
- */
 export function getWaistToHeightRatio(
   waistCm: number,
   heightCm: number

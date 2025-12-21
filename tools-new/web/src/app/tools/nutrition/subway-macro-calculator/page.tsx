@@ -1,26 +1,52 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getSubwayMacros } from "@/lib/composition/nutrition";
+import SubwayMacroCalculatorForm from "./SubwayMacroCalculatorForm";
+import { getSubwayMacros } from "@/lib/composition/nutrition/subway";
 
-export const metadata = {
-  title: "Subway Macro Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    calories?: string;
+    proteinGrams?: string;
+    fatGrams?: string;
+  }>;
 };
 
-export default function SubwayMacroCalculatorPage() {
-  const result = getSubwayMacros({
-    calories: 700,
-    proteinGrams: 35,
-    fatGrams: 20,
-  });
+export default async function SubwayMacroCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const calories = params.calories ? Number(params.calories) : undefined;
+  const proteinGrams = params.proteinGrams
+    ? Number(params.proteinGrams)
+    : undefined;
+  const fatGrams = params.fatGrams ? Number(params.fatGrams) : undefined;
+
+  const result =
+    calories && proteinGrams && fatGrams
+      ? getSubwayMacros({
+          calories,
+          proteinGrams,
+          fatGrams,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Subway Macro Calculator"
-      description="Proof that Subway macro composition is wired correctly"
+      description="Calculate remaining calories after Subway macros"
     >
-      {result ? (
-        <p>Remaining calories: {result.remainingCalories} kcal</p>
-      ) : (
-        <p>Invalid input</p>
+      <SubwayMacroCalculatorForm
+        defaultCalories={calories ?? 800}
+        defaultProteinGrams={proteinGrams ?? 40}
+        defaultFatGrams={fatGrams ?? 20}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>
+            Remaining Calories: {result.remainingCalories.toFixed(0)}
+          </p>
+        </div>
       )}
     </CalculatorLayout>
   );

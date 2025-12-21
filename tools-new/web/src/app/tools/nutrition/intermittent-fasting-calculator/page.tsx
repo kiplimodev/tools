@@ -1,25 +1,49 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getIntermittentFasting } from "@/lib/composition/nutrition";
+import IntermittentFastingCalculatorForm from "./IntermittentFastingCalculatorForm";
+import { getIntermittentFasting } from "@/lib/composition/nutrition/intermittent-fasting";
 
-export const metadata = {
-  title: "Intermittent Fasting Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    startHour?: string;
+    endHour?: string;
+  }>;
 };
 
-export default function IntermittentFastingCalculatorPage() {
-  const result = getIntermittentFasting({
-    startHour: 20,
-    endHour: 12,
-  });
+export default async function IntermittentFastingCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const startHour = params.startHour
+    ? Number(params.startHour)
+    : undefined;
+
+  const endHour = params.endHour
+    ? Number(params.endHour)
+    : undefined;
+
+  const result =
+    startHour !== undefined && endHour !== undefined
+      ? getIntermittentFasting({
+          startHour,
+          endHour,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Intermittent Fasting Calculator"
-      description="Proof that intermittent fasting composition is wired correctly"
+      description="Calculate fasting duration from eating window"
     >
-      {result ? (
-        <p>Fasting duration: {result.fastingHours} hours</p>
-      ) : (
-        <p>Invalid input</p>
+      <IntermittentFastingCalculatorForm
+        defaultStartHour={startHour ?? 12}
+        defaultEndHour={endHour ?? 20}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Fasting duration: {result.fastingHours} hours</p>
+        </div>
       )}
     </CalculatorLayout>
   );

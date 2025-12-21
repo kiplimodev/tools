@@ -1,25 +1,44 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getFatIntake } from "@/lib/composition/nutrition";
+import FatIntakeCalculatorForm from "./FatIntakeCalculatorForm";
+import { getFatIntake } from "@/lib/composition/nutrition/fat-intake";
 
-export const metadata = {
-  title: "Fat Intake Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    weightKg?: string;
+    goal?: "low" | "moderate" | "high";
+  }>;
 };
 
-export default function FatIntakeCalculatorPage() {
-  const result = getFatIntake({
-    weightKg: 80,
-    goal: "moderate",
-  });
+export default async function FatIntakeCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
+  const goal = params.goal;
+
+  const result =
+    weightKg && goal
+      ? getFatIntake({
+          weightKg,
+          goal,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Fat Intake Calculator"
-      description="Proof that fat intake composition is wired correctly"
+      description="Estimate daily fat intake based on body weight and dietary goal"
     >
-      {result ? (
-        <p>Recommended fat intake: {result.fatGramsPerDay} g/day</p>
-      ) : (
-        <p>Invalid input</p>
+      <FatIntakeCalculatorForm
+        defaultWeightKg={weightKg ?? 70}
+        defaultGoal={goal ?? "moderate"}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Daily fat intake: {result.fatGramsPerDay} g</p>
+        </div>
       )}
     </CalculatorLayout>
   );

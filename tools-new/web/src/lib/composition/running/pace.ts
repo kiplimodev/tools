@@ -1,31 +1,31 @@
-import { calculator as paceCalculator } from "@/lib/calculators/running/running-pace-calculator";
+import { calculator as runningPaceCalculator } from "@/lib/calculators/running/running-pace-calculator";
 
-export type RunningPaceResult = {
-  pacePerKmSeconds: number;
-  pacePerMileSeconds: number;
-  speedKmh: number;
-  speedMph: number;
-};
-
-export function getRunningPace(input: {
+type Input = {
   distanceMeters: number;
   timeSeconds: number;
-}): RunningPaceResult | null {
-  const pacePerKmSeconds = paceCalculator({
-    distanceMeters: input.distanceMeters,
-    timeSeconds: input.timeSeconds,
-  });
+};
 
-  if (pacePerKmSeconds === null) return null;
+export type RunningPaceResult = {
+  paceMinPerKm: number;
+  speedKmPerHour: number;
+};
 
-  const pacePerMileSeconds = pacePerKmSeconds * 1.609344;
-  const speedKmh = 3600 / pacePerKmSeconds;
-  const speedMph = speedKmh / 1.609344;
+/**
+ * Composition wrapper for running pace.
+ * Adapts raw calculator output into UI-safe values.
+ */
+export function getRunningPace(
+  input: Input
+): RunningPaceResult | null {
+  const paceSecondsPerKm = runningPaceCalculator(input);
+
+  if (paceSecondsPerKm === null) return null;
+
+  const paceMinPerKm = paceSecondsPerKm / 60;
+  const speedKmPerHour = 3600 / paceSecondsPerKm;
 
   return {
-    pacePerKmSeconds,
-    pacePerMileSeconds,
-    speedKmh,
-    speedMph,
+    paceMinPerKm,
+    speedKmPerHour,
   };
 }

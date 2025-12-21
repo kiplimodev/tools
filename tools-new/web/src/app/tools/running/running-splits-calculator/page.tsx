@@ -1,26 +1,56 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
+import RunningSplitsCalculatorForm from "./RunningSplitsCalculatorForm";
 import { getRunningSplits } from "@/lib/composition/running";
 
-export const metadata = {
-  title: "Running Splits Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    distanceMeters?: string;
+    timeSeconds?: string;
+    splitMeters?: string;
+  }>;
 };
 
-export default function RunningSplitsCalculatorPage() {
-  const result = getRunningSplits({
-    distanceMeters: 5000,
-    timeSeconds: 1500,
-    splitMeters: 1000,
-  });
+export default async function RunningSplitsCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const distanceMeters = params.distanceMeters
+    ? Number(params.distanceMeters)
+    : undefined;
+
+  const timeSeconds = params.timeSeconds
+    ? Number(params.timeSeconds)
+    : undefined;
+
+  const splitMeters = params.splitMeters
+    ? Number(params.splitMeters)
+    : undefined;
+
+  const result =
+    distanceMeters && timeSeconds && splitMeters
+      ? getRunningSplits({
+          distanceMeters,
+          timeSeconds,
+          splitMeters,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Running Splits Calculator"
-      description="Proof that split calculations are wired correctly"
+      description="Calculate split times from total distance and time"
     >
-      {result ? (
-        <p>Split time (seconds): {result.splitSeconds}</p>
-      ) : (
-        <p>Invalid input</p>
+      <RunningSplitsCalculatorForm
+        defaultDistanceMeters={distanceMeters ?? 5000}
+        defaultTimeSeconds={timeSeconds ?? 1500}
+        defaultSplitMeters={splitMeters ?? 1000}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Split time: {result.splitSeconds.toFixed(1)} seconds</p>
+        </div>
       )}
     </CalculatorLayout>
   );

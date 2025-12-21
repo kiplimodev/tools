@@ -1,25 +1,53 @@
+// src/app/tools/equipment/dumbbell-weight-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
+import DumbbellWeightCalculatorForm from "./DumbbellWeightCalculatorForm";
 import { getDumbbellWeight } from "@/lib/composition/equipment";
 
-export const metadata = {
-  title: "Dumbbell Weight Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    targetWeightKg?: string;
+    handleWeightKg?: string;
+  }>;
 };
 
-export default function DumbbellWeightCalculatorPage() {
-  const result = getDumbbellWeight({
-    targetWeightKg: 40,
-    handleWeightKg: 10,
-  });
+export default async function DumbbellWeightCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const targetWeightKg = params.targetWeightKg
+    ? Number(params.targetWeightKg)
+    : undefined;
+
+  const handleWeightKg = params.handleWeightKg
+    ? Number(params.handleWeightKg)
+    : undefined;
+
+  const result =
+    targetWeightKg !== undefined && handleWeightKg !== undefined
+      ? getDumbbellWeight({
+          targetWeightKg,
+          handleWeightKg,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Dumbbell Weight Calculator"
-      description="Proof that dumbbell weight composition is wired correctly"
+      description="Calculate how much weight to load on each dumbbell"
     >
-      {result ? (
-        <p>Plate weight per dumbbell: {result.plateWeightKg} kg</p>
-      ) : (
-        <p>Invalid input</p>
+      <DumbbellWeightCalculatorForm
+        defaultTargetWeightKg={targetWeightKg ?? 20}
+        defaultHandleWeightKg={handleWeightKg ?? 2}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>
+            Plate weight per dumbbell:{" "}
+            <strong>{result.plateWeightKg.toFixed(1)} kg</strong>
+          </p>
+        </div>
       )}
     </CalculatorLayout>
   );

@@ -1,25 +1,47 @@
+// src/app/tools/calories/running-calories-burned-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getRunningCalories } from "@/lib/composition/calories";
+import RunningCaloriesBurnedCalculatorForm from "./RunningCaloriesBurnedCalculatorForm";
+import { getRunningCalories } from "@/lib/composition/calories/running";
 
-export const metadata = {
-  title: "Running Calories Burned Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    weightKg?: string;
+    durationMinutes?: string;
+  }>;
 };
 
-export default function RunningCaloriesBurnedPage() {
-  const result = getRunningCalories({
-    weightKg: 70,
-    durationMinutes: 30,
-  });
+export default async function RunningCaloriesBurnedCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
+  const durationMinutes = params.durationMinutes
+    ? Number(params.durationMinutes)
+    : undefined;
+
+  const result =
+    weightKg && durationMinutes
+      ? getRunningCalories({
+          weightKg,
+          durationMinutes,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Running Calories Burned Calculator"
-      description="Proof that running calorie calculations are wired correctly"
+      description="Calculate calories burned during running workouts"
     >
-      {result ? (
-        <p>Calories burned: {result.calories}</p>
-      ) : (
-        <p>Invalid input</p>
+      <RunningCaloriesBurnedCalculatorForm
+        defaultWeightKg={weightKg ?? 70}
+        defaultDurationMinutes={durationMinutes ?? 30}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Calories burned: {result.calories}</p>
+        </div>
       )}
     </CalculatorLayout>
   );

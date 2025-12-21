@@ -1,25 +1,52 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getBulkCalories } from "@/lib/composition/nutrition";
+import BulkCalculatorForm from "./BulkCalculatorForm";
+import { getBulkCalories } from "@/lib/composition/nutrition/bulk";
 
-export const metadata = {
-  title: "Bulk Calorie Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    maintenanceCalories?: string;
+    surplusCalories?: string;
+  }>;
 };
 
-export default function BulkCalculatorPage() {
-  const result = getBulkCalories({
-    maintenanceCalories: 2500,
-    surplusCalories: 300,
-  });
+export default async function BulkCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const maintenanceCalories = params.maintenanceCalories
+    ? Number(params.maintenanceCalories)
+    : undefined;
+
+  const surplusCalories = params.surplusCalories
+    ? Number(params.surplusCalories)
+    : undefined;
+
+  const result =
+    maintenanceCalories && surplusCalories
+      ? getBulkCalories({
+          maintenanceCalories,
+          surplusCalories,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Bulk Calorie Calculator"
-      description="Proof that bulk calorie composition is wired correctly"
+      description="Calculate daily calories needed for bulking"
     >
-      {result ? (
-        <p>Total daily calories for bulking: {result.totalCalories} kcal</p>
-      ) : (
-        <p>Invalid input</p>
+      <BulkCalculatorForm
+        defaultMaintenanceCalories={maintenanceCalories ?? 2500}
+        defaultSurplusCalories={surplusCalories ?? 300}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>
+            Total calories per day:{" "}
+            {result.totalCalories}
+          </p>
+        </div>
       )}
     </CalculatorLayout>
   );

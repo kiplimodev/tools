@@ -1,29 +1,58 @@
+// src/app/tools/running/interval-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
-import { getIntervalWorkout } from "@/lib/composition/running";
+import IntervalCalculatorForm from "./IntervalCalculatorForm";
+import { getIntervalWorkout } from "@/lib/composition/running/interval";
 
-export const metadata = {
-  title: "Interval Calculator",
+type PageProps = {
+  searchParams?: Promise<{
+    runSeconds?: string;
+    restSeconds?: string;
+    repeats?: string;
+  }>;
 };
 
-export default function IntervalCalculatorPage() {
-  const result = getIntervalWorkout({
-    runSeconds: 60,
-    restSeconds: 30,
-    repeats: 5,
-  });
+export default async function IntervalCalculatorPage({
+  searchParams,
+}: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const runSeconds = params.runSeconds
+    ? Number(params.runSeconds)
+    : undefined;
+
+  const restSeconds = params.restSeconds
+    ? Number(params.restSeconds)
+    : undefined;
+
+  const repeats = params.repeats
+    ? Number(params.repeats)
+    : undefined;
+
+  const result =
+    runSeconds && restSeconds && repeats
+      ? getIntervalWorkout({
+          runSeconds,
+          restSeconds,
+          repeats,
+        })
+      : null;
 
   return (
     <CalculatorLayout
       title="Interval Calculator"
-      description="Proof that interval calculations are wired correctly"
+      description="Calculate total workout time from interval structure"
     >
-      {result ? (
-        <>
-          <p>Total time (seconds): {result.totalSeconds}</p>
-          <p>Total time (minutes): {result.totalMinutes}</p>
-        </>
-      ) : (
-        <p>Invalid input</p>
+      <IntervalCalculatorForm
+        defaultRunSeconds={runSeconds ?? 60}
+        defaultRestSeconds={restSeconds ?? 60}
+        defaultRepeats={repeats ?? 10}
+      />
+
+      {result && (
+        <div className="mt-6 space-y-2">
+          <p>Total time: {result.totalSeconds} seconds</p>
+          <p>Total time: {result.totalMinutes.toFixed(1)} minutes</p>
+        </div>
       )}
     </CalculatorLayout>
   );
