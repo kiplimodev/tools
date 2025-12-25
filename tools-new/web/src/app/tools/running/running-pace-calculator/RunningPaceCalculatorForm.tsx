@@ -4,6 +4,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import DistanceKmInput from "@/components/inputs/DistanceKmInput";
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
+
 type Props = {
   defaultDistance: number;
   defaultTimeMinutes: number;
@@ -28,23 +31,15 @@ export default function RunningPaceCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Distance (km)</label>
-        <input
-          type="number"
-          value={distance}
-          onChange={(e) => setDistance(Number(e.target.value))}
-        />
-      </div>
+      <DistanceKmInput
+        value={distance}
+        onChange={setDistance}
+      />
 
-      <div>
-        <label>Time (minutes)</label>
-        <input
-          type="number"
-          value={timeMinutes}
-          onChange={(e) => setTimeMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={timeMinutes}
+        onChange={setTimeMinutes}
+      />
 
       <button type="submit">Calculate</button>
     </form>

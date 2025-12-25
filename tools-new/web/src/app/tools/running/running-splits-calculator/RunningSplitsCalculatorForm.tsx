@@ -1,7 +1,10 @@
+// src/app/tools/running/running-splits-calculator/RunningSplitsCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultDistanceMeters: number;
@@ -24,41 +27,35 @@ export default function RunningSplitsCalculatorForm({
     e.preventDefault();
 
     router.push(
-      `/tools/running/running-splits-calculator` +
-        `?distanceMeters=${distanceMeters}` +
-        `&timeSeconds=${timeSeconds}` +
-        `&splitMeters=${splitMeters}`
+      `/tools/running/running-splits-calculator?distanceMeters=${distanceMeters}&timeSeconds=${timeSeconds}&splitMeters=${splitMeters}`
     );
   }
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Total Distance (meters)</label>
-        <input
-          type="number"
-          value={distanceMeters}
-          onChange={(e) => setDistanceMeters(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Total Distance (meters)"
+        value={distanceMeters}
+        onChange={setDistanceMeters}
+        min={1}
+        step={1}
+      />
 
-      <div>
-        <label>Total Time (seconds)</label>
-        <input
-          type="number"
-          value={timeSeconds}
-          onChange={(e) => setTimeSeconds(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Total Time (seconds)"
+        value={timeSeconds}
+        onChange={setTimeSeconds}
+        min={1}
+        step={1}
+      />
 
-      <div>
-        <label>Split Length (meters)</label>
-        <input
-          type="number"
-          value={splitMeters}
-          onChange={(e) => setSplitMeters(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Split Length (meters)"
+        value={splitMeters}
+        onChange={setSplitMeters}
+        min={1}
+        step={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

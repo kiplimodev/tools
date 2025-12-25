@@ -1,4 +1,3 @@
-// src/app/tools/calories/running-calories-burned-calculator/RunningCaloriesBurnedCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";

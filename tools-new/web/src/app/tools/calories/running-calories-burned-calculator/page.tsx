@@ -1,4 +1,3 @@
-// src/app/tools/calories/running-calories-burned-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
 import RunningCaloriesBurnedCalculatorForm from "./RunningCaloriesBurnedCalculatorForm";
 import { getRunningCalories } from "@/lib/composition/calories/running";
@@ -31,7 +30,7 @@ export default async function RunningCaloriesBurnedCalculatorPage({
   return (
     <CalculatorLayout
       title="Running Calories Burned Calculator"
-      description="Calculate calories burned during running workouts"
+      description="Estimate calories burned while running"
     >
       <RunningCaloriesBurnedCalculatorForm
         defaultWeightKg={weightKg ?? 70}

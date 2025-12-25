@@ -1,8 +1,12 @@
-// src/app/tools/calories/swimming-calories-calculator/SwimmingCaloriesForm.tsx
+// tools-new/web/src/app/tools/calories/swimming-calories-calculator/SwimmingCaloriesCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -10,7 +14,7 @@ type Props = {
   defaultMet: number;
 };
 
-export default function SwimmingCaloriesForm({
+export default function SwimmingCaloriesCalculatorForm({
   defaultWeightKg,
   defaultDurationMinutes,
   defaultMet,
@@ -33,32 +37,20 @@ export default function SwimmingCaloriesForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
 
-      <div>
-        <label>Duration (minutes)</label>
-        <input
-          type="number"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={durationMinutes}
+        onChange={setDurationMinutes}
+      />
 
-      <div>
-        <label>MET value</label>
-        <input
-          type="number"
-          value={met}
-          onChange={(e) => setMet(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="MET value"
+        value={met}
+        onChange={setMet}
+        step={0.1}
+        min={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

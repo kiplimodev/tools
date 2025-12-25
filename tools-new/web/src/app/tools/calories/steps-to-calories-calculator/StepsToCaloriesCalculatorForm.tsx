@@ -1,4 +1,3 @@
-// src/app/tools/calories/steps-to-calories-calculator/StepsToCaloriesCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";

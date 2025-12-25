@@ -1,7 +1,7 @@
-// src/app/tools/calories/treadmill-calorie-calculator/page.tsx
+// tools-new/web/src/app/tools/calories/treadmill-calorie-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
 import TreadmillCaloriesForm from "./TreadmillCaloriesForm";
-import { getTreadmillCalories } from "@/lib/composition/calories";
+import { getTreadmillCalories } from "@/lib/composition/calories/treadmill";
 
 type PageProps = {
   searchParams?: Promise<{
@@ -34,7 +34,7 @@ export default async function TreadmillCaloriesCalculatorPage({
   return (
     <CalculatorLayout
       title="Treadmill Calorie Calculator"
-      description="Calculate calories burned on a treadmill"
+      description="Estimate calories burned on a treadmill"
     >
       <TreadmillCaloriesForm
         defaultWeightKg={weightKg ?? 70}

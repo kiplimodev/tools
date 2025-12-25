@@ -1,8 +1,10 @@
-// src/app/tools/running/interval-calculator/IntervalCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
+import RepsInput from "@/components/inputs/RepsInput";
 
 type Props = {
   defaultRunSeconds: number;
@@ -31,32 +33,24 @@ export default function IntervalCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Run Interval (seconds)</label>
-        <input
-          type="number"
-          value={runSeconds}
-          onChange={(e) => setRunSeconds(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Run Interval (seconds)"
+        value={runSeconds}
+        onChange={setRunSeconds}
+        min={1}
+      />
 
-      <div>
-        <label>Rest Interval (seconds)</label>
-        <input
-          type="number"
-          value={restSeconds}
-          onChange={(e) => setRestSeconds(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Rest Interval (seconds)"
+        value={restSeconds}
+        onChange={setRestSeconds}
+        min={0}
+      />
 
-      <div>
-        <label>Repetitions</label>
-        <input
-          type="number"
-          value={repeats}
-          onChange={(e) => setRepeats(Number(e.target.value))}
-        />
-      </div>
+      <RepsInput
+        value={repeats}
+        onChange={setRepeats}
+      />
 
       <button type="submit">Calculate</button>
     </form>

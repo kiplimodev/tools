@@ -10,7 +10,7 @@ type PageProps = {
   }>;
 };
 
-export default async function WalkingCalorieCalculatorPage({
+export default async function WalkingCaloriesCalculatorPage({
   searchParams,
 }: PageProps) {
   const params = (await searchParams) ?? {};
@@ -33,7 +33,7 @@ export default async function WalkingCalorieCalculatorPage({
   return (
     <CalculatorLayout
       title="Walking Calorie Calculator"
-      description="Calculate calories burned while walking"
+      description="Estimate calories burned while walking"
     >
       <WalkingCaloriesForm
         defaultWeightKg={weightKg ?? 70}

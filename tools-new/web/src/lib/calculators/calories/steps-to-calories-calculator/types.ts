@@ -1,6 +1,7 @@
-// src/lib/calculators/calories/steps-to-calories-calculator/types.ts
-
 export type Input = {
+  /** Total steps taken */
   steps: number;
+
+  /** Body weight in kilograms */
   weightKg: number;
 };

@@ -1,20 +1,14 @@
-// src/lib/composition/calories/steps.ts
-
 import { calculator } from "@/lib/calculators/calories/steps-to-calories-calculator";
+import type { Input } from "@/lib/calculators/calories/steps-to-calories-calculator";
 
-type Input = {
-  steps: number;
-  weightKg: number;
+type Result = {
+  calories: number;
 };
 
-export function getStepsCalories(input: Input) {
+export function getStepsCalories(input: Input): Result | null {
   const calories = calculator(input);
 
-  if (calories === null) {
-    return null;
-  }
+  if (calories === null) return null;
 
-  return {
-    calories,
-  };
+  return { calories };
 }

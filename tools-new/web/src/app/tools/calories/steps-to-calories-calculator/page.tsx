@@ -1,4 +1,3 @@
-// src/app/tools/calories/steps-to-calories-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
 import StepsToCaloriesCalculatorForm from "./StepsToCaloriesCalculatorForm";
 import { getStepsCalories } from "@/lib/composition/calories/steps";
