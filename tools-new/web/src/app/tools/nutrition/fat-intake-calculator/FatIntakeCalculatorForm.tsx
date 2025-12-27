@@ -1,7 +1,10 @@
+// src/app/tools/nutrition/fat-intake-calculator/FatIntakeCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -27,18 +30,14 @@ export default function FatIntakeCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
 
       <div>
-        <label>Fat Intake Goal</label>
+        <label className="block text-sm font-medium">
+          Fat Intake Goal
+        </label>
         <select
+          className="w-full rounded border px-2 py-1"
           value={goal}
           onChange={(e) =>
             setGoal(e.target.value as "low" | "moderate" | "high")

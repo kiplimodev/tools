@@ -1,8 +1,9 @@
-// src/app/tools/trackers/weight-tracker/WeightTrackerCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
 
 type Props = {
   defaultStartWeightKg: number;
@@ -16,8 +17,9 @@ export default function WeightTrackerCalculatorForm({
   const router = useRouter();
 
   const [startWeightKg, setStartWeightKg] = useState(defaultStartWeightKg);
-  const [currentWeightKg, setCurrentWeightKg] =
-    useState(defaultCurrentWeightKg);
+  const [currentWeightKg, setCurrentWeightKg] = useState(
+    defaultCurrentWeightKg
+  );
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,23 +31,15 @@ export default function WeightTrackerCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Starting Weight (kg)</label>
-        <input
-          type="number"
-          value={startWeightKg}
-          onChange={(e) => setStartWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={startWeightKg}
+        onChange={setStartWeightKg}
+      />
 
-      <div>
-        <label>Current Weight (kg)</label>
-        <input
-          type="number"
-          value={currentWeightKg}
-          onChange={(e) => setCurrentWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={currentWeightKg}
+        onChange={setCurrentWeightKg}
+      />
 
       <button type="submit">Track Weight</button>
     </form>

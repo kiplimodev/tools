@@ -1,8 +1,9 @@
-// src/app/tools/activity/steps-per-day-calculator/StepsPerDayCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultActiveCalories: number;
@@ -30,24 +31,21 @@ export default function StepsPerDayCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Active Calories (kcal)</label>
-        <input
-          type="number"
-          value={activeCalories}
-          onChange={(e) => setActiveCalories(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Active Calories (kcal)"
+        value={activeCalories}
+        onChange={setActiveCalories}
+        min={0}
+        step={1}
+      />
 
-      <div>
-        <label>Calories per Step</label>
-        <input
-          type="number"
-          step="0.001"
-          value={caloriesPerStep}
-          onChange={(e) => setCaloriesPerStep(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Calories per Step"
+        value={caloriesPerStep}
+        onChange={setCaloriesPerStep}
+        min={0}
+        step={0.001}
+      />
 
       <button type="submit">Calculate</button>
     </form>

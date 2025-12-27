@@ -4,6 +4,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import NumberInput from "@/components/inputs/NumberInput";
+
 type Props = {
   defaultTargetWeightKg: number;
   defaultBarbellWeightKg: number;
@@ -32,27 +34,21 @@ export default function PlateWeightCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Target Weight (kg)</label>
-        <input
-          type="number"
-          value={targetWeightKg}
-          onChange={(e) =>
-            setTargetWeightKg(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Target Weight (kg)"
+        value={targetWeightKg}
+        onChange={setTargetWeightKg}
+        min={0}
+        step={0.5}
+      />
 
-      <div>
-        <label>Barbell Weight (kg)</label>
-        <input
-          type="number"
-          value={barbellWeightKg}
-          onChange={(e) =>
-            setBarbellWeightKg(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Barbell Weight (kg)"
+        value={barbellWeightKg}
+        onChange={setBarbellWeightKg}
+        min={0}
+        step={0.5}
+      />
 
       <button type="submit">Calculate</button>
     </form>

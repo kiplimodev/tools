@@ -4,6 +4,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import NumberInput from "@/components/inputs/NumberInput";
+
 type Props = {
   defaultSquatKg: number;
   defaultBenchKg: number;
@@ -31,32 +33,29 @@ export default function PowerliftingCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Squat (kg)</label>
-        <input
-          type="number"
-          value={squatKg}
-          onChange={(e) => setSquatKg(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Squat (kg)"
+        value={squatKg}
+        onChange={setSquatKg}
+        min={0}
+        step={2.5}
+      />
 
-      <div>
-        <label>Bench Press (kg)</label>
-        <input
-          type="number"
-          value={benchKg}
-          onChange={(e) => setBenchKg(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Bench Press (kg)"
+        value={benchKg}
+        onChange={setBenchKg}
+        min={0}
+        step={2.5}
+      />
 
-      <div>
-        <label>Deadlift (kg)</label>
-        <input
-          type="number"
-          value={deadliftKg}
-          onChange={(e) => setDeadliftKg(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Deadlift (kg)"
+        value={deadliftKg}
+        onChange={setDeadliftKg}
+        min={0}
+        step={2.5}
+      />
 
       <button type="submit">Calculate</button>
     </form>

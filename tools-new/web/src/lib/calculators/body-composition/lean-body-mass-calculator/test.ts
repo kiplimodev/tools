@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { calculator } from "./index";
 
-describe("lean-body-mass-calculator", () => {
+describe("lean body mass calculator", () => {
   it("returns lean body mass for valid input", () => {
     const result = calculator({
       weightKg: 80,
@@ -13,8 +13,8 @@ describe("lean-body-mass-calculator", () => {
 
   it("returns null for invalid input", () => {
     const result = calculator({
-      weightKg: 80,
-      bodyFatPercentage: 120,
+      weightKg: 0,
+      bodyFatPercentage: 20,
     });
 
     expect(result).toBeNull();

@@ -1,6 +1,6 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
 import LeanBodyMassCalculatorForm from "./LeanBodyMassCalculatorForm";
-import { getLeanBodyMass } from "@/lib/composition/body-composition/lean-body-mass";
+import { getLeanBodyMass } from "@/lib/composition/body-composition";
 
 type PageProps = {
   searchParams?: Promise<{
@@ -33,17 +33,17 @@ export default async function LeanBodyMassCalculatorPage({
   return (
     <CalculatorLayout
       title="Lean Body Mass Calculator"
-      description="Calculate lean body mass from body weight and body fat percentage"
+      description="Calculate your lean body mass based on weight and body fat percentage"
     >
       <LeanBodyMassCalculatorForm
-        defaultWeightKg={weightKg ?? 81}
-        defaultBodyFatPercentage={bodyFatPercentage ?? 21.5}
+        defaultWeightKg={weightKg ?? 80}
+        defaultBodyFatPercentage={bodyFatPercentage ?? 20}
       />
 
       {result && (
         <div className="mt-6 space-y-2">
           <p>
-            Lean body mass:{" "}
+            Lean Body Mass:{" "}
             {result.leanBodyMassKg.toFixed(1)} kg
           </p>
         </div>

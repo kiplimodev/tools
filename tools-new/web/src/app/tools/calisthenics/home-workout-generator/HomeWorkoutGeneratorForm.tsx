@@ -1,7 +1,10 @@
+// src/app/tools/calisthenics/home-workout-generator/HomeWorkoutGeneratorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
 
 type Props = {
   defaultLevel: "beginner" | "intermediate" | "advanced";
@@ -14,7 +17,10 @@ export default function HomeWorkoutGeneratorForm({
 }: Props) {
   const router = useRouter();
 
-  const [level, setLevel] = useState(defaultLevel);
+  const [level, setLevel] = useState<
+    "beginner" | "intermediate" | "advanced"
+  >(defaultLevel);
+
   const [durationMinutes, setDurationMinutes] = useState(
     defaultDurationMinutes
   );
@@ -30,11 +36,16 @@ export default function HomeWorkoutGeneratorForm({
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
       <div>
-        <label>Fitness Level</label>
+        <label className="block text-sm font-medium">
+          Fitness Level
+        </label>
         <select
+          className="w-full rounded border px-2 py-1"
           value={level}
           onChange={(e) =>
-            setLevel(e.target.value as "beginner" | "intermediate" | "advanced")
+            setLevel(
+              e.target.value as "beginner" | "intermediate" | "advanced"
+            )
           }
         >
           <option value="beginner">Beginner</option>
@@ -43,14 +54,10 @@ export default function HomeWorkoutGeneratorForm({
         </select>
       </div>
 
-      <div>
-        <label>Workout Duration (minutes)</label>
-        <input
-          type="number"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={durationMinutes}
+        onChange={setDurationMinutes}
+      />
 
       <button type="submit">Generate Workout</button>
     </form>

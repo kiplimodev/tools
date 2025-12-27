@@ -1,7 +1,11 @@
+// src/app/tools/body-composition/waist-to-height-ratio-calculator/WaistToHeightRatioCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
+import HeightCmInput from "@/components/inputs/HeightCmInput";
 
 type Props = {
   defaultWaistCm: number;
@@ -27,23 +31,14 @@ export default function WaistToHeightRatioCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Waist Circumference (cm)</label>
-        <input
-          type="number"
-          value={waistCm}
-          onChange={(e) => setWaistCm(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Waist circumference (cm)"
+        value={waistCm}
+        onChange={setWaistCm}
+        min={1}
+      />
 
-      <div>
-        <label>Height (cm)</label>
-        <input
-          type="number"
-          value={heightCm}
-          onChange={(e) => setHeightCm(Number(e.target.value))}
-        />
-      </div>
+      <HeightCmInput value={heightCm} onChange={setHeightCm} />
 
       <button type="submit">Calculate</button>
     </form>

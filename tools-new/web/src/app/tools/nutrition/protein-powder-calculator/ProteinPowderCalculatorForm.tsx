@@ -1,7 +1,10 @@
+// src/app/tools/nutrition/protein-powder-calculator/ProteinPowderCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultProteinTargetGrams: number;
@@ -31,27 +34,21 @@ export default function ProteinPowderCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Protein Target (grams)</label>
-        <input
-          type="number"
-          value={proteinTargetGrams}
-          onChange={(e) =>
-            setProteinTargetGrams(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Protein Target (grams)"
+        value={proteinTargetGrams}
+        onChange={setProteinTargetGrams}
+        min={0}
+        step={1}
+      />
 
-      <div>
-        <label>Protein per Scoop (grams)</label>
-        <input
-          type="number"
-          value={proteinPerScoopGrams}
-          onChange={(e) =>
-            setProteinPerScoopGrams(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Protein per Scoop (grams)"
+        value={proteinPerScoopGrams}
+        onChange={setProteinPerScoopGrams}
+        min={1}
+        step={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

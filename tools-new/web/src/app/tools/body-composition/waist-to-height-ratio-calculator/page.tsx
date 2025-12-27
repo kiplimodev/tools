@@ -14,31 +14,29 @@ export default async function WaistToHeightRatioCalculatorPage({
 }: PageProps) {
   const params = (await searchParams) ?? {};
 
-  const waistCm = params.waistCm
-    ? Number(params.waistCm)
-    : undefined;
-
-  const heightCm = params.heightCm
-    ? Number(params.heightCm)
-    : undefined;
+  const waistCm = params.waistCm ? Number(params.waistCm) : NaN;
+  const heightCm = params.heightCm ? Number(params.heightCm) : NaN;
 
   const result =
-    waistCm && heightCm
-      ? getWaistToHeightRatio(waistCm, heightCm)
+    Number.isFinite(waistCm) && Number.isFinite(heightCm)
+      ? getWaistToHeightRatio({
+          waistCm,
+          heightCm,
+        })
       : null;
 
   return (
     <CalculatorLayout
       title="Waist-to-Height Ratio Calculator"
-      description="Evaluate health risk using waist-to-height ratio"
+      description="Assess health risk using waist-to-height ratio"
     >
       <WaistToHeightRatioCalculatorForm
-        defaultWaistCm={waistCm ?? 85}
-        defaultHeightCm={heightCm ?? 175}
+        defaultWaistCm={Number.isFinite(waistCm) ? waistCm : 85}
+        defaultHeightCm={Number.isFinite(heightCm) ? heightCm : 175}
       />
 
       {result && (
-        <div className="mt-6 space-y-2">
+        <div className="mt-6 space-y-1">
           <p>Ratio: {result.ratio.toFixed(2)}</p>
           <p>Category: {result.category}</p>
         </div>

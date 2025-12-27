@@ -4,6 +4,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+
 type Props = {
   defaultTargetWeightKg: number;
   defaultHandleWeightKg: number;
@@ -15,9 +17,12 @@ export default function DumbbellWeightCalculatorForm({
 }: Props) {
   const router = useRouter();
 
-  const [targetWeightKg, setTargetWeightKg] = useState(defaultTargetWeightKg);
-  const [handleWeightKg, setHandleWeightKg] =
-    useState(defaultHandleWeightKg);
+  const [targetWeightKg, setTargetWeightKg] = useState(
+    defaultTargetWeightKg
+  );
+  const [handleWeightKg, setHandleWeightKg] = useState(
+    defaultHandleWeightKg
+  );
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,23 +34,15 @@ export default function DumbbellWeightCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Target Dumbbell Weight (kg)</label>
-        <input
-          type="number"
-          value={targetWeightKg}
-          onChange={(e) => setTargetWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={targetWeightKg}
+        onChange={setTargetWeightKg}
+      />
 
-      <div>
-        <label>Handle Weight (kg)</label>
-        <input
-          type="number"
-          value={handleWeightKg}
-          onChange={(e) => setHandleWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={handleWeightKg}
+        onChange={setHandleWeightKg}
+      />
 
       <button type="submit">Calculate</button>
     </form>

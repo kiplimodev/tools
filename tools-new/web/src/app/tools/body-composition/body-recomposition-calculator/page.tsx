@@ -1,12 +1,13 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import BodyRecompositionCalculatorForm from "./BodyRecompositionCalculatorForm";
+import BodyRecompositionForm from "./BodyRecompositionCalculatorForm";
 import { getBodyRecomposition } from "@/lib/composition/body-composition/body-recomposition";
 
 type PageProps = {
   searchParams?: Promise<{
-    weightKg?: string;
-    bodyFatPercent?: string;
-    targetBodyFatPercent?: string;
+    startWeight?: string;
+    startBodyFat?: string;
+    endWeight?: string;
+    endBodyFat?: string;
   }>;
 };
 
@@ -15,39 +16,56 @@ export default async function BodyRecompositionCalculatorPage({
 }: PageProps) {
   const params = (await searchParams) ?? {};
 
-  const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
-  const bodyFatPercent = params.bodyFatPercent
-    ? Number(params.bodyFatPercent)
+  const startWeight = params.startWeight
+    ? Number(params.startWeight)
     : undefined;
-  const targetBodyFatPercent = params.targetBodyFatPercent
-    ? Number(params.targetBodyFatPercent)
+
+  const startBodyFat = params.startBodyFat
+    ? Number(params.startBodyFat)
+    : undefined;
+
+  const endWeight = params.endWeight
+    ? Number(params.endWeight)
+    : undefined;
+
+  const endBodyFat = params.endBodyFat
+    ? Number(params.endBodyFat)
     : undefined;
 
   const result =
-    weightKg && bodyFatPercent && targetBodyFatPercent
+    startWeight &&
+    startBodyFat &&
+    endWeight &&
+    endBodyFat
       ? getBodyRecomposition({
-          weightKg,
-          bodyFatPercent,
-          targetBodyFatPercent,
+          startingWeightKg: startWeight,
+          startingBodyFatPercent: startBodyFat,
+          endingWeightKg: endWeight,
+          endingBodyFatPercent: endBodyFat,
         })
       : null;
 
   return (
     <CalculatorLayout
       title="Body Recomposition Calculator"
-      description="Estimate target weight based on body fat reduction while preserving lean mass"
+      description="Estimate fat loss and muscle gain between two body composition measurements"
     >
-      <BodyRecompositionCalculatorForm
-        defaultWeightKg={weightKg ?? 80}
-        defaultBodyFatPercent={bodyFatPercent ?? 25}
-        defaultTargetBodyFatPercent={targetBodyFatPercent ?? 15}
+      <BodyRecompositionForm
+        defaultStartWeight={startWeight ?? 80}
+        defaultStartBodyFat={startBodyFat ?? 25}
+        defaultEndWeight={endWeight ?? 78}
+        defaultEndBodyFat={endBodyFat ?? 22}
       />
 
       {result && (
         <div className="mt-6 space-y-2">
-          <p>Target weight: {result.targetWeightKg.toFixed(1)} kg</p>
           <p>
-            Weight change: {result.weightChangeKg.toFixed(1)} kg
+            Lean mass change:{" "}
+            {result.leanMassChangeKg.toFixed(2)} kg
+          </p>
+          <p>
+            Fat mass change:{" "}
+            {result.fatMassChangeKg.toFixed(2)} kg
           </p>
         </div>
       )}

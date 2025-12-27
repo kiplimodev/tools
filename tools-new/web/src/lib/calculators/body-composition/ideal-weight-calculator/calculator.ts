@@ -2,22 +2,16 @@ import type { CalculatorV1 } from "@/lib/types/calculator.v1";
 import type { Input } from "./types";
 
 /**
- * Calculates ideal body weight using the Devine formula.
- *
- * Male: 50 kg + 2.3 kg per inch over 5 ft
- * Female: 45.5 kg + 2.3 kg per inch over 5 ft
+ * Devine Formula
+ * Male: 50 + 0.9 × (heightCm − 152)
+ * Female: 45.5 + 0.9 × (heightCm − 152)
  */
-export const calculator: CalculatorV1<Input> = (input) => {
-  const { heightCm, sex } = input;
-
+export const calculator: CalculatorV1<Input> = ({
+  heightCm,
+  sex,
+}) => {
   if (heightCm <= 0) return null;
 
-  const heightInches = heightCm / 2.54;
-  const inchesOverFiveFeet = heightInches - 60;
-
-  if (inchesOverFiveFeet < 0) return null;
-
   const base = sex === "male" ? 50 : 45.5;
-
-  return base + 2.3 * inchesOverFiveFeet;
+  return base + 0.9 * (heightCm - 152);
 };

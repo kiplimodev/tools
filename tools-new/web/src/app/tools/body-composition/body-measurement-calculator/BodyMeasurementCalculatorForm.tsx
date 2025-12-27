@@ -1,7 +1,10 @@
+// src/app/tools/body-composition/body-measurement-calculator/BodyMeasurementCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultWaistCm: number;
@@ -30,32 +33,26 @@ export default function BodyMeasurementCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Waist (cm)</label>
-        <input
-          type="number"
-          value={waistCm}
-          onChange={(e) => setWaistCm(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Waist circumference (cm)"
+        value={waistCm}
+        onChange={setWaistCm}
+        min={1}
+      />
 
-      <div>
-        <label>Hip (cm)</label>
-        <input
-          type="number"
-          value={hipCm}
-          onChange={(e) => setHipCm(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Hip circumference (cm)"
+        value={hipCm}
+        onChange={setHipCm}
+        min={1}
+      />
 
-      <div>
-        <label>Chest (cm)</label>
-        <input
-          type="number"
-          value={chestCm}
-          onChange={(e) => setChestCm(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Chest circumference (cm)"
+        value={chestCm}
+        onChange={setChestCm}
+        min={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

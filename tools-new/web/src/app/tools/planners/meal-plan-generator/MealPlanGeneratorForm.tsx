@@ -1,7 +1,10 @@
+// src/app/tools/planners/meal-plan-generator/MealPlanGeneratorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultCalories: number;
@@ -30,32 +33,29 @@ export default function MealPlanGeneratorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Daily Calories</label>
-        <input
-          type="number"
-          value={calories}
-          onChange={(e) => setCalories(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Daily Calories"
+        value={calories}
+        onChange={setCalories}
+        min={0}
+        step={1}
+      />
 
-      <div>
-        <label>Protein (g)</label>
-        <input
-          type="number"
-          value={proteinGrams}
-          onChange={(e) => setProteinGrams(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Protein (g)"
+        value={proteinGrams}
+        onChange={setProteinGrams}
+        min={0}
+        step={1}
+      />
 
-      <div>
-        <label>Meals per Day</label>
-        <input
-          type="number"
-          value={mealsPerDay}
-          onChange={(e) => setMealsPerDay(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Meals per Day"
+        value={mealsPerDay}
+        onChange={setMealsPerDay}
+        min={1}
+        step={1}
+      />
 
       <button type="submit">Generate Plan</button>
     </form>

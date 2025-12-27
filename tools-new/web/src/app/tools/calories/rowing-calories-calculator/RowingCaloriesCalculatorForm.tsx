@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
+import NumberInput from "@/components/inputs/NumberInput";
+
 type Props = {
   defaultWeightKg: number;
   defaultDurationMinutes: number;
@@ -30,32 +34,20 @@ export default function RowingCaloriesCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
 
-      <div>
-        <label>Duration (minutes)</label>
-        <input
-          type="number"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={durationMinutes}
+        onChange={setDurationMinutes}
+      />
 
-      <div>
-        <label>METs</label>
-        <input
-          type="number"
-          value={mets}
-          onChange={(e) => setMets(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="METs"
+        value={mets}
+        onChange={setMets}
+        min={1}
+        step={0.1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

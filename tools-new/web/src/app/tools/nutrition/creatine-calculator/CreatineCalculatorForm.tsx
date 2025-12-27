@@ -1,7 +1,10 @@
+// src/app/tools/nutrition/creatine-calculator/CreatineCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -29,18 +32,14 @@ export default function CreatineCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
 
       <div>
-        <label>Creatine Protocol</label>
+        <label className="block text-sm font-medium">
+          Creatine Protocol
+        </label>
         <select
+          className="w-full rounded border px-2 py-1"
           value={protocol}
           onChange={(e) =>
             setProtocol(e.target.value as "loading" | "maintenance")

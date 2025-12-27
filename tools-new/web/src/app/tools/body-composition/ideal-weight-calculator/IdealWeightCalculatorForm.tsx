@@ -1,7 +1,11 @@
+// src/app/tools/body-composition/ideal-weight-calculator/IdealWeightCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import HeightCmInput from "@/components/inputs/HeightCmInput";
+import SexInput from "@/components/inputs/SexInput";
 
 type Props = {
   defaultHeightCm: number;
@@ -27,25 +31,8 @@ export default function IdealWeightCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Height (cm)</label>
-        <input
-          type="number"
-          value={heightCm}
-          onChange={(e) => setHeightCm(Number(e.target.value))}
-        />
-      </div>
-
-      <div>
-        <label>Sex</label>
-        <select
-          value={sex}
-          onChange={(e) => setSex(e.target.value as "male" | "female")}
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
+      <HeightCmInput value={heightCm} onChange={setHeightCm} />
+      <SexInput value={sex} onChange={setSex} />
 
       <button type="submit">Calculate</button>
     </form>

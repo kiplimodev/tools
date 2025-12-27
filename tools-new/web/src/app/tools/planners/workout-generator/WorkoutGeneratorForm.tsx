@@ -1,12 +1,14 @@
-// src/app/tools/planners/workout-generator/WorkoutGeneratorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+type Goal = "strength" | "hypertrophy" | "endurance";
+type Level = "beginner" | "intermediate" | "advanced";
+
 type Props = {
-  defaultGoal: "strength" | "hypertrophy" | "endurance";
-  defaultLevel: "beginner" | "intermediate" | "advanced";
+  defaultGoal: Goal;
+  defaultLevel: Level;
 };
 
 export default function WorkoutGeneratorForm({
@@ -15,8 +17,8 @@ export default function WorkoutGeneratorForm({
 }: Props) {
   const router = useRouter();
 
-  const [goal, setGoal] = useState(defaultGoal);
-  const [level, setLevel] = useState(defaultLevel);
+  const [goal, setGoal] = useState<Goal>(defaultGoal);
+  const [level, setLevel] = useState<Level>(defaultLevel);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,7 +34,7 @@ export default function WorkoutGeneratorForm({
         <label>Training Goal</label>
         <select
           value={goal}
-          onChange={(e) => setGoal(e.target.value as Props["defaultGoal"])}
+          onChange={(e) => setGoal(e.target.value as Goal)}
         >
           <option value="strength">Strength</option>
           <option value="hypertrophy">Hypertrophy</option>
@@ -44,7 +46,7 @@ export default function WorkoutGeneratorForm({
         <label>Experience Level</label>
         <select
           value={level}
-          onChange={(e) => setLevel(e.target.value as Props["defaultLevel"])}
+          onChange={(e) => setLevel(e.target.value as Level)}
         >
           <option value="beginner">Beginner</option>
           <option value="intermediate">Intermediate</option>

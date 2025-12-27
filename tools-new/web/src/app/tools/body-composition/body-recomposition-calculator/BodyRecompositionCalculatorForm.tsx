@@ -3,63 +3,64 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import NumberInput from "@/components/inputs/NumberInput";
+
 type Props = {
-  defaultWeightKg: number;
-  defaultBodyFatPercent: number;
-  defaultTargetBodyFatPercent: number;
+  defaultStartWeight: number;
+  defaultStartBodyFat: number;
+  defaultEndWeight: number;
+  defaultEndBodyFat: number;
 };
 
 export default function BodyRecompositionCalculatorForm({
-  defaultWeightKg,
-  defaultBodyFatPercent,
-  defaultTargetBodyFatPercent,
+  defaultStartWeight,
+  defaultStartBodyFat,
+  defaultEndWeight,
+  defaultEndBodyFat,
 }: Props) {
   const router = useRouter();
 
-  const [weightKg, setWeightKg] = useState(defaultWeightKg);
-  const [bodyFatPercent, setBodyFatPercent] = useState(defaultBodyFatPercent);
-  const [targetBodyFatPercent, setTargetBodyFatPercent] = useState(
-    defaultTargetBodyFatPercent
-  );
+  const [startWeight, setStartWeight] = useState(defaultStartWeight);
+  const [startBodyFat, setStartBodyFat] = useState(defaultStartBodyFat);
+  const [endWeight, setEndWeight] = useState(defaultEndWeight);
+  const [endBodyFat, setEndBodyFat] = useState(defaultEndBodyFat);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     router.push(
-      `/tools/body-composition/body-recomposition-calculator?weightKg=${weightKg}&bodyFatPercent=${bodyFatPercent}&targetBodyFatPercent=${targetBodyFatPercent}`
+      `/tools/body-composition/body-recomposition-calculator?startWeight=${startWeight}&startBodyFat=${startBodyFat}&endWeight=${endWeight}&endBodyFat=${endBodyFat}`
     );
   }
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Current Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={startWeight}
+        onChange={setStartWeight}
+      />
 
-      <div>
-        <label>Current Body Fat (%)</label>
-        <input
-          type="number"
-          value={bodyFatPercent}
-          onChange={(e) => setBodyFatPercent(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Starting body fat (%)"
+        value={startBodyFat}
+        onChange={setStartBodyFat}
+        step={0.1}
+        min={0}
+      />
 
-      <div>
-        <label>Target Body Fat (%)</label>
-        <input
-          type="number"
-          value={targetBodyFatPercent}
-          onChange={(e) =>
-            setTargetBodyFatPercent(Number(e.target.value))
-          }
-        />
-      </div>
+      <WeightKgInput
+        value={endWeight}
+        onChange={setEndWeight}
+      />
+
+      <NumberInput
+        label="Ending body fat (%)"
+        value={endBodyFat}
+        onChange={setEndBodyFat}
+        step={0.1}
+        min={0}
+      />
 
       <button type="submit">Calculate</button>
     </form>

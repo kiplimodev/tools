@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
+import NumberInput from "@/components/inputs/NumberInput";
+
 type Props = {
   defaultWeightKg: number;
   defaultDurationMinutes: number;
@@ -31,33 +35,23 @@ export default function WalkingCaloriesForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={weightKg}
+        onChange={setWeightKg}
+      />
 
-      <div>
-        <label>Duration (minutes)</label>
-        <input
-          type="number"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={durationMinutes}
+        onChange={setDurationMinutes}
+      />
 
-      <div>
-        <label>MET value</label>
-        <input
-          type="number"
-          step="0.1"
-          value={met}
-          onChange={(e) => setMet(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="MET value"
+        value={met}
+        onChange={setMet}
+        step={0.1}
+        min={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

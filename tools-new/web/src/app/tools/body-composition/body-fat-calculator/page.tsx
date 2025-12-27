@@ -1,31 +1,35 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
 import BodyFatCalculatorForm from "./BodyFatCalculatorForm";
 import { getBodyFat } from "@/lib/composition/body-composition/body-fat";
+import { getBmi } from "@/lib/composition/body-composition/bmi";
 
 type PageProps = {
   searchParams?: Promise<{
     weightKg?: string;
     heightCm?: string;
     age?: string;
-    sex?: "male" | "female";
+    sex?: string;
   }>;
 };
 
-export default async function BodyFatCalculatorPage({
-  searchParams,
-}: PageProps) {
+export default async function BodyFatCalculatorPage({ searchParams }: PageProps) {
   const params = (await searchParams) ?? {};
 
   const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
   const heightCm = params.heightCm ? Number(params.heightCm) : undefined;
   const age = params.age ? Number(params.age) : undefined;
-  const sex = params.sex === "female" ? "female" : "male";
+  const sex =
+    params.sex === "male" || params.sex === "female"
+      ? params.sex
+      : undefined;
+
+  const bmiResult =
+    weightKg && heightCm ? getBmi({ weightKg, heightCm }) : null;
 
   const result =
-    weightKg && heightCm && age && sex
+    bmiResult && age && sex
       ? getBodyFat({
-          weightKg,
-          heightCm,
+          bmi: bmiResult.bmi,
           age,
           sex,
         })
@@ -33,14 +37,14 @@ export default async function BodyFatCalculatorPage({
 
   return (
     <CalculatorLayout
-      title="Body Fat Calculator"
-      description="Estimate body fat percentage based on weight, height, age, and sex"
+      title="Body Fat Percentage Calculator"
+      description="Estimate body fat percentage using BMI, age, and sex"
     >
       <BodyFatCalculatorForm
         defaultWeightKg={weightKg ?? 70}
         defaultHeightCm={heightCm ?? 175}
         defaultAge={age ?? 30}
-        defaultSex={sex}
+        defaultSex={sex ?? "male"}
       />
 
       {result && (

@@ -1,8 +1,11 @@
-// tools-new/web/src/app/tools/calories/treadmill-calorie-calculator/TreadmillCaloriesForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import NumberInput from "@/components/inputs/NumberInput";
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -33,32 +36,23 @@ export default function TreadmillCaloriesForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={weightKg}
+        onChange={setWeightKg}
+      />
 
-      <div>
-        <label>Speed (km/h)</label>
-        <input
-          type="number"
-          value={speedKmh}
-          onChange={(e) => setSpeedKmh(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Speed (km/h)"
+        value={speedKmh}
+        onChange={setSpeedKmh}
+        min={0}
+        step={0.1}
+      />
 
-      <div>
-        <label>Duration (minutes)</label>
-        <input
-          type="number"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={durationMinutes}
+        onChange={setDurationMinutes}
+      />
 
       <button type="submit">Calculate</button>
     </form>

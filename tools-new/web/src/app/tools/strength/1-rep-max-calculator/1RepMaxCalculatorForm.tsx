@@ -4,6 +4,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import NumberInput from "@/components/inputs/NumberInput";
+import RepsInput from "@/components/inputs/RepsInput";
+
 type Props = {
   defaultWeightKg: number;
   defaultReps: number;
@@ -28,23 +31,18 @@ export default function RepMaxCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Weight Lifted (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Weight Lifted (kg)"
+        value={weightKg}
+        onChange={setWeightKg}
+        min={0}
+        step={2.5}
+      />
 
-      <div>
-        <label>Repetitions</label>
-        <input
-          type="number"
-          value={reps}
-          onChange={(e) => setReps(Number(e.target.value))}
-        />
-      </div>
+      <RepsInput
+        value={reps}
+        onChange={setReps}
+      />
 
       <button type="submit">Calculate</button>
     </form>

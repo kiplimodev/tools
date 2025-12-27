@@ -2,16 +2,13 @@ import type { CalculatorV1 } from "@/lib/types/calculator.v1";
 import type { Input } from "./types";
 
 /**
- * Calculates waist-to-hip ratio.
+ * Waist-to-Hip Ratio Calculator
  *
  * Formula:
- * ratio = waist / hip
+ * ratio = waistCm / hipCm
  */
-export const calculator: CalculatorV1<Input> = (input) => {
-  const { waistCm, hipCm } = input;
-
-  if (waistCm <= 0) return null;
-  if (hipCm <= 0) return null;
+export const calculator: CalculatorV1<Input> = ({ waistCm, hipCm }) => {
+  if (waistCm <= 0 || hipCm <= 0) return null;
 
   return waistCm / hipCm;
 };

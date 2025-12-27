@@ -1,5 +1,5 @@
 import CalculatorLayout from "@/components/CalculatorLayout";
-import WaistToHipRatioCalculatorForm from "./WaistToHipRatioCalculatorForm";
+import WaistToHipRatioForm from "./WaistToHipRatioCalculatorForm";
 import { getWaistToHipRatio } from "@/lib/composition/body-composition/waist-to-hip";
 
 type PageProps = {
@@ -25,16 +25,17 @@ export default async function WaistToHipRatioCalculatorPage({
   return (
     <CalculatorLayout
       title="Waist-to-Hip Ratio Calculator"
-      description="Calculate waist-to-hip ratio for health risk assessment"
+      description="Assess health risk using waist-to-hip ratio"
     >
-      <WaistToHipRatioCalculatorForm
-        defaultWaistCm={waistCm ?? 85}
+      <WaistToHipRatioForm
+        defaultWaistCm={waistCm ?? 80}
         defaultHipCm={hipCm ?? 100}
       />
 
       {result && (
         <div className="mt-6 space-y-2">
-          <p>Waist-to-hip ratio: {result.ratio.toFixed(2)}</p>
+          <p>Ratio: {result.ratio.toFixed(2)}</p>
+          <p>Category: {result.category}</p>
         </div>
       )}
     </CalculatorLayout>

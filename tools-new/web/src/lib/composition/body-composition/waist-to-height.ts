@@ -1,4 +1,5 @@
 import { calculator } from "@/lib/calculators/body-composition/waist-to-height-ratio-calculator";
+import type { Input } from "@/lib/calculators/body-composition/waist-to-height-ratio-calculator";
 
 export type WaistToHeightResult = {
   ratio: number;
@@ -6,10 +7,9 @@ export type WaistToHeightResult = {
 };
 
 export function getWaistToHeightRatio(
-  waistCm: number,
-  heightCm: number
+  input: Input
 ): WaistToHeightResult | null {
-  const ratio = calculator({ waistCm, heightCm });
+  const ratio = calculator(input);
 
   if (ratio === null) return null;
 

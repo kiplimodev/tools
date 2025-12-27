@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import TimeMinutesInput from "@/components/inputs/TimeMinutesInput";
+
 type Props = {
   defaultWeightKg: number;
   defaultDurationMinutes: number;
@@ -29,23 +32,15 @@ export default function RunningCaloriesBurnedCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput
+        value={weightKg}
+        onChange={setWeightKg}
+      />
 
-      <div>
-        <label>Duration (minutes)</label>
-        <input
-          type="number"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-        />
-      </div>
+      <TimeMinutesInput
+        value={durationMinutes}
+        onChange={setDurationMinutes}
+      />
 
       <button type="submit">Calculate</button>
     </form>

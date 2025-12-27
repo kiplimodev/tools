@@ -1,7 +1,10 @@
+// src/app/tools/strength/strength-ratio-calculator/StrengthRatioCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultLiftA: number;
@@ -27,23 +30,21 @@ export default function StrengthRatioCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Primary Lift (kg)</label>
-        <input
-          type="number"
-          value={liftA}
-          onChange={(e) => setLiftA(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Primary Lift (kg)"
+        value={liftA}
+        onChange={setLiftA}
+        min={0}
+        step={2.5}
+      />
 
-      <div>
-        <label>Secondary Lift (kg)</label>
-        <input
-          type="number"
-          value={liftB}
-          onChange={(e) => setLiftB(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Secondary Lift (kg)"
+        value={liftB}
+        onChange={setLiftB}
+        min={0}
+        step={2.5}
+      />
 
       <button type="submit">Calculate</button>
     </form>

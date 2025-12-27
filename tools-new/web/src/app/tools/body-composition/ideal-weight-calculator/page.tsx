@@ -14,18 +14,15 @@ export default async function IdealWeightCalculatorPage({
 }: PageProps) {
   const params = (await searchParams) ?? {};
 
-  const heightCm = params.heightCm
-    ? Number(params.heightCm)
-    : undefined;
-
-  const sex =
-    params.sex === "male" || params.sex === "female"
-      ? params.sex
-      : undefined;
+  const heightCm = params.heightCm ? Number(params.heightCm) : undefined;
+  const sex = params.sex === "female" ? "female" : "male";
 
   const result =
-    heightCm && sex
-      ? getIdealWeight({ heightCm, sex })
+    heightCm
+      ? getIdealWeight({
+          heightCm,
+          sex,
+        })
       : null;
 
   return (
@@ -35,12 +32,14 @@ export default async function IdealWeightCalculatorPage({
     >
       <IdealWeightCalculatorForm
         defaultHeightCm={heightCm ?? 175}
-        defaultSex={sex ?? "male"}
+        defaultSex={sex}
       />
 
       {result && (
         <div className="mt-6 space-y-2">
-          <p>Ideal weight: {result.idealWeightKg.toFixed(1)} kg</p>
+          <p>
+            Ideal weight: {result.idealWeightKg.toFixed(1)} kg
+          </p>
         </div>
       )}
     </CalculatorLayout>

@@ -1,7 +1,12 @@
+// src/app/tools/strength/training-volume-calculator/TrainingVolumeCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
+import RepsInput from "@/components/inputs/RepsInput";
+import SetsInput from "@/components/inputs/SetsInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -30,32 +35,23 @@ export default function TrainingVolumeCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Weight (kg)"
+        value={weightKg}
+        onChange={setWeightKg}
+        min={0}
+        step={2.5}
+      />
 
-      <div>
-        <label>Reps</label>
-        <input
-          type="number"
-          value={reps}
-          onChange={(e) => setReps(Number(e.target.value))}
-        />
-      </div>
+      <RepsInput
+        value={reps}
+        onChange={setReps}
+      />
 
-      <div>
-        <label>Sets</label>
-        <input
-          type="number"
-          value={sets}
-          onChange={(e) => setSets(Number(e.target.value))}
-        />
-      </div>
+      <SetsInput
+        value={sets}
+        onChange={setSets}
+      />
 
       <button type="submit">Calculate</button>
     </form>

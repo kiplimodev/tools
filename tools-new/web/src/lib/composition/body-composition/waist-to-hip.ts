@@ -1,22 +1,21 @@
-// src/lib/composition/body-composition/waist-to-hip.ts
 import { calculator } from "@/lib/calculators/body-composition/waist-to-hip-ratio-calculator";
+import type { Input } from "@/lib/calculators/body-composition/waist-to-hip-ratio-calculator";
 
-export type WaistToHipResult = {
+type Result = {
   ratio: number;
+  category: "low" | "moderate" | "high";
 };
 
-/**
- * Composition adapter for waist-to-hip ratio.
- */
-export function getWaistToHipRatio(input: {
-  waistCm: number;
-  hipCm: number;
-}): WaistToHipResult | null {
-  const result = calculator(input);
+export function getWaistToHipRatio(input: Input): Result | null {
+  const ratio = calculator(input);
 
-  if (result === null) return null;
+  if (ratio === null) return null;
 
-  return {
-    ratio: result,
-  };
+  let category: Result["category"];
+
+  if (ratio < 0.85) category = "low";
+  else if (ratio < 0.9) category = "moderate";
+  else category = "high";
+
+  return { ratio, category };
 }

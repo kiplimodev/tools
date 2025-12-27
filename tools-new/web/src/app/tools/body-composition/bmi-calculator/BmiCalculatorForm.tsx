@@ -1,7 +1,11 @@
+// tools-new/web/src/app/tools/body-composition/bmi-calculator/BmiCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import HeightCmInput from "@/components/inputs/HeightCmInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -27,23 +31,8 @@ export default function BmiCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
-
-      <div>
-        <label>Height (cm)</label>
-        <input
-          type="number"
-          value={heightCm}
-          onChange={(e) => setHeightCm(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
+      <HeightCmInput value={heightCm} onChange={setHeightCm} />
 
       <button type="submit">Calculate</button>
     </form>

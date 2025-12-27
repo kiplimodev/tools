@@ -1,7 +1,10 @@
+// src/app/tools/nutrition/carnivore-macro-calculator/CarnivoreMacroCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultCalories: number;
@@ -27,23 +30,21 @@ export default function CarnivoreMacroCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Calories</label>
-        <input
-          type="number"
-          value={calories}
-          onChange={(e) => setCalories(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Calories"
+        value={calories}
+        onChange={setCalories}
+        min={0}
+        step={1}
+      />
 
-      <div>
-        <label>Protein (g)</label>
-        <input
-          type="number"
-          value={proteinGrams}
-          onChange={(e) => setProteinGrams(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Protein (g)"
+        value={proteinGrams}
+        onChange={setProteinGrams}
+        min={0}
+        step={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

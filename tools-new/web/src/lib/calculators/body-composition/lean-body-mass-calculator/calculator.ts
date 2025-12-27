@@ -2,7 +2,7 @@ import type { CalculatorV1 } from "@/lib/types/calculator.v1";
 import type { Input } from "./types";
 
 /**
- * Calculates lean body mass from total weight and body fat percentage.
+ * Lean Body Mass calculator
  *
  * Formula:
  * LBM = weight × (1 − bodyFat%)
@@ -10,10 +10,16 @@ import type { Input } from "./types";
 export const calculator: CalculatorV1<Input> = (input) => {
   const { weightKg, bodyFatPercentage } = input;
 
-  if (weightKg <= 0) return null;
-  if (bodyFatPercentage < 0 || bodyFatPercentage > 100) return null;
+  if (
+    weightKg <= 0 ||
+    bodyFatPercentage <= 0 ||
+    bodyFatPercentage >= 100
+  ) {
+    return null;
+  }
 
-  const fatFraction = bodyFatPercentage / 100;
+  const leanBodyMass =
+    weightKg * (1 - bodyFatPercentage / 100);
 
-  return weightKg * (1 - fatFraction);
+  return leanBodyMass;
 };

@@ -1,7 +1,11 @@
+// src/app/tools/strength/rpe-calculator/RpeCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
+import RepsInput from "@/components/inputs/RepsInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -30,33 +34,27 @@ export default function RpeCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Weight (kg)"
+        value={weightKg}
+        onChange={setWeightKg}
+        min={0}
+        step={2.5}
+      />
 
-      <div>
-        <label>Reps</label>
-        <input
-          type="number"
-          value={reps}
-          onChange={(e) => setReps(Number(e.target.value))}
-        />
-      </div>
+      <RepsInput
+        value={reps}
+        onChange={setReps}
+      />
 
-      <div>
-        <label>RPE</label>
-        <input
-          type="number"
-          step="0.5"
-          value={rpe}
-          onChange={(e) => setRpe(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="RPE"
+        value={rpe}
+        onChange={setRpe}
+        min={1}
+        max={10}
+        step={0.5}
+      />
 
       <button type="submit">Calculate</button>
     </form>

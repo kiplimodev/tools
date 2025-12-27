@@ -1,7 +1,11 @@
+// src/app/tools/calories/steps-to-calories-calculator/StepsToCaloriesCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
+import WeightKgInput from "@/components/inputs/WeightKgInput";
 
 type Props = {
   defaultSteps: number;
@@ -27,23 +31,15 @@ export default function StepsToCaloriesCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Steps</label>
-        <input
-          type="number"
-          value={steps}
-          onChange={(e) => setSteps(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Steps"
+        value={steps}
+        onChange={setSteps}
+        min={1}
+        step={1}
+      />
 
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
 
       <button type="submit">Calculate</button>
     </form>

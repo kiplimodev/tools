@@ -4,6 +4,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import NumberInput from "@/components/inputs/NumberInput";
+
 type Props = {
   defaultCurrentStepsPerDay: number;
   defaultIncreasePercent: number;
@@ -32,23 +34,21 @@ export default function MoveGoalCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Current Steps per Day</label>
-        <input
-          type="number"
-          value={currentStepsPerDay}
-          onChange={(e) => setCurrentStepsPerDay(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Current Steps per Day"
+        value={currentStepsPerDay}
+        onChange={setCurrentStepsPerDay}
+        min={0}
+        step={100}
+      />
 
-      <div>
-        <label>Increase Percentage (%)</label>
-        <input
-          type="number"
-          value={increasePercent}
-          onChange={(e) => setIncreasePercent(Number(e.target.value))}
-        />
-      </div>
+      <NumberInput
+        label="Increase Percentage (%)"
+        value={increasePercent}
+        onChange={setIncreasePercent}
+        min={0}
+        step={1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

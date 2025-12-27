@@ -31,17 +31,17 @@ export default async function BodyMeasurementCalculatorPage({
   return (
     <CalculatorLayout
       title="Body Measurement Calculator"
-      description="Evaluate body proportions using waist, hip, and chest measurements"
+      description="Calculate a composite body measurement score"
     >
       <BodyMeasurementCalculatorForm
-        defaultWaistCm={waistCm ?? 85}
-        defaultHipCm={hipCm ?? 100}
+        defaultWaistCm={waistCm ?? 80}
+        defaultHipCm={hipCm ?? 95}
         defaultChestCm={chestCm ?? 100}
       />
 
       {result && (
         <div className="mt-6 space-y-2">
-          <p>Measurement score: {result.measurementScore.toFixed(2)}</p>
+          <p>Measurement score: {result.measurementScore}</p>
         </div>
       )}
     </CalculatorLayout>

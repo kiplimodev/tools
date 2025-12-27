@@ -1,3 +1,4 @@
+// tools-new/web/src/app/tools/body-composition/bmi-calculator/page.tsx
 import CalculatorLayout from "@/components/CalculatorLayout";
 import BmiCalculatorForm from "./BmiCalculatorForm";
 import { getBmi } from "@/lib/composition/body-composition/bmi";
@@ -9,18 +10,11 @@ type PageProps = {
   }>;
 };
 
-export default async function BmiCalculatorPage({
-  searchParams,
-}: PageProps) {
+export default async function BmiCalculatorPage({ searchParams }: PageProps) {
   const params = (await searchParams) ?? {};
 
-  const weightKg = params.weightKg
-    ? Number(params.weightKg)
-    : undefined;
-
-  const heightCm = params.heightCm
-    ? Number(params.heightCm)
-    : undefined;
+  const weightKg = params.weightKg ? Number(params.weightKg) : undefined;
+  const heightCm = params.heightCm ? Number(params.heightCm) : undefined;
 
   const result =
     weightKg && heightCm
@@ -30,10 +24,10 @@ export default async function BmiCalculatorPage({
   return (
     <CalculatorLayout
       title="BMI Calculator"
-      description="Calculate body mass index from height and weight"
+      description="Calculate your Body Mass Index (BMI)"
     >
       <BmiCalculatorForm
-        defaultWeightKg={weightKg ?? 81}
+        defaultWeightKg={weightKg ?? 70}
         defaultHeightCm={heightCm ?? 175}
       />
 

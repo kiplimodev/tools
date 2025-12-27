@@ -1,12 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { calculator } from "./index";
 
-describe("body-recomposition-calculator", () => {
-  it("returns target weight for valid input", () => {
+describe("body recomposition calculator", () => {
+  it("returns lean mass gain", () => {
     const result = calculator({
-      weightKg: 80,
-      bodyFatPercent: 25,
-      targetBodyFatPercent: 15,
+      startingWeightKg: 80,
+      startingBodyFatPercent: 25,
+      endingWeightKg: 82,
+      endingBodyFatPercent: 23,
     });
 
     expect(result).toBeGreaterThan(0);
@@ -14,9 +15,10 @@ describe("body-recomposition-calculator", () => {
 
   it("returns null for invalid input", () => {
     const result = calculator({
-      weightKg: 0,
-      bodyFatPercent: 25,
-      targetBodyFatPercent: 15,
+      startingWeightKg: 0,
+      startingBodyFatPercent: 25,
+      endingWeightKg: 82,
+      endingBodyFatPercent: 23,
     });
 
     expect(result).toBeNull();

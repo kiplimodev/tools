@@ -1,7 +1,10 @@
+// src/app/tools/nutrition/bulk-calculator/BulkCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultMaintenanceCalories: number;
@@ -31,27 +34,21 @@ export default function BulkCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Maintenance Calories</label>
-        <input
-          type="number"
-          value={maintenanceCalories}
-          onChange={(e) =>
-            setMaintenanceCalories(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Maintenance Calories"
+        value={maintenanceCalories}
+        onChange={setMaintenanceCalories}
+        min={0}
+        step={10}
+      />
 
-      <div>
-        <label>Calorie Surplus</label>
-        <input
-          type="number"
-          value={surplusCalories}
-          onChange={(e) =>
-            setSurplusCalories(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Calorie Surplus"
+        value={surplusCalories}
+        onChange={setSurplusCalories}
+        min={0}
+        step={10}
+      />
 
       <button type="submit">Calculate</button>
     </form>

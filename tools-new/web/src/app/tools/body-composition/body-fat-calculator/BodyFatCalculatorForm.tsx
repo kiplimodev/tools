@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import HeightCmInput from "@/components/inputs/HeightCmInput";
+import AgeInput from "@/components/inputs/AgeInput";
+import SexInput from "@/components/inputs/SexInput";
+
 type Props = {
   defaultWeightKg: number;
   defaultHeightCm: number;
@@ -33,43 +38,10 @@ export default function BodyFatCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
-
-      <div>
-        <label>Height (cm)</label>
-        <input
-          type="number"
-          value={heightCm}
-          onChange={(e) => setHeightCm(Number(e.target.value))}
-        />
-      </div>
-
-      <div>
-        <label>Age</label>
-        <input
-          type="number"
-          value={age}
-          onChange={(e) => setAge(Number(e.target.value))}
-        />
-      </div>
-
-      <div>
-        <label>Sex</label>
-        <select
-          value={sex}
-          onChange={(e) => setSex(e.target.value as "male" | "female")}
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
+      <HeightCmInput value={heightCm} onChange={setHeightCm} />
+      <AgeInput value={age} onChange={setAge} />
+      <SexInput value={sex} onChange={setSex} />
 
       <button type="submit">Calculate</button>
     </form>

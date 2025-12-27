@@ -1,7 +1,11 @@
+// src/app/tools/body-composition/lean-body-mass-calculator/LeanBodyMassCalculatorForm.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import WeightKgInput from "@/components/inputs/WeightKgInput";
+import NumberInput from "@/components/inputs/NumberInput";
 
 type Props = {
   defaultWeightKg: number;
@@ -29,26 +33,16 @@ export default function LeanBodyMassCalculatorForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 max-w-sm">
-      <div>
-        <label>Body Weight (kg)</label>
-        <input
-          type="number"
-          value={weightKg}
-          onChange={(e) => setWeightKg(Number(e.target.value))}
-        />
-      </div>
+      <WeightKgInput value={weightKg} onChange={setWeightKg} />
 
-      <div>
-        <label>Body Fat Percentage (%)</label>
-        <input
-          type="number"
-          step="0.1"
-          value={bodyFatPercentage}
-          onChange={(e) =>
-            setBodyFatPercentage(Number(e.target.value))
-          }
-        />
-      </div>
+      <NumberInput
+        label="Body Fat Percentage (%)"
+        value={bodyFatPercentage}
+        onChange={setBodyFatPercentage}
+        min={1}
+        max={70}
+        step={0.1}
+      />
 
       <button type="submit">Calculate</button>
     </form>

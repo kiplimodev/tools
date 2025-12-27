@@ -2,24 +2,37 @@ import type { CalculatorV1 } from "@/lib/types/calculator.v1";
 import type { Input } from "./types";
 
 /**
- * Calculates target body weight required to reach a desired body fat percentage,
- * assuming lean mass is preserved.
+ * Body recomposition calculator
  *
- * Formula:
- * Lean Mass = weight * (1 - bodyFat%)
- * Target Weight = leanMass / (1 - targetBodyFat%)
+ * Returns lean mass change in kg
+ * (positive = muscle gain, negative = muscle loss)
  */
 export const calculator: CalculatorV1<Input> = (input) => {
-  const { weightKg, bodyFatPercent, targetBodyFatPercent } = input;
+  const {
+    startingWeightKg,
+    startingBodyFatPercent,
+    endingWeightKg,
+    endingBodyFatPercent,
+  } = input;
 
-  if (weightKg <= 0) return null;
-  if (bodyFatPercent <= 0 || bodyFatPercent >= 100) return null;
-  if (targetBodyFatPercent <= 0 || targetBodyFatPercent >= 100) return null;
+  if (
+    startingWeightKg <= 0 ||
+    endingWeightKg <= 0 ||
+    startingBodyFatPercent <= 0 ||
+    endingBodyFatPercent <= 0 ||
+    startingBodyFatPercent >= 100 ||
+    endingBodyFatPercent >= 100
+  ) {
+    return null;
+  }
 
-  const leanMassKg = weightKg * (1 - bodyFatPercent / 100);
-  const targetWeightKg = leanMassKg / (1 - targetBodyFatPercent / 100);
+  const startFatKg =
+    startingWeightKg * (startingBodyFatPercent / 100);
+  const endFatKg =
+    endingWeightKg * (endingBodyFatPercent / 100);
 
-  if (!Number.isFinite(targetWeightKg) || targetWeightKg <= 0) return null;
+  const startLeanKg = startingWeightKg - startFatKg;
+  const endLeanKg = endingWeightKg - endFatKg;
 
-  return targetWeightKg;
+  return endLeanKg - startLeanKg;
 };

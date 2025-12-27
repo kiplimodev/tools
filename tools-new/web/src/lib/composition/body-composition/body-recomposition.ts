@@ -1,28 +1,25 @@
-// src/lib/composition/body-composition/body-recomposition.ts
-import { calculator as bodyRecompositionCalculator } from "@/lib/calculators/body-composition/body-recomposition-calculator";
-
-type Input = {
-  weightKg: number;
-  bodyFatPercent: number;
-  targetBodyFatPercent: number;
-};
+import { calculator } from "@/lib/calculators/body-composition/body-recomposition-calculator";
+import type { Input } from "@/lib/calculators/body-composition/body-recomposition-calculator";
 
 type Result = {
-  targetWeightKg: number;
-  weightChangeKg: number;
+  leanMassChangeKg: number;
+  fatMassChangeKg: number;
 };
 
-/**
- * Composition wrapper for body recomposition.
- * Preserves lean mass and adapts output for UI usage.
- */
 export function getBodyRecomposition(input: Input): Result | null {
-  const targetWeightKg = bodyRecompositionCalculator(input);
+  const leanChange = calculator(input);
+  if (leanChange === null) return null;
 
-  if (targetWeightKg === null) return null;
+  const startFat =
+    input.startingWeightKg *
+    (input.startingBodyFatPercent / 100);
+
+  const endFat =
+    input.endingWeightKg *
+    (input.endingBodyFatPercent / 100);
 
   return {
-    targetWeightKg,
-    weightChangeKg: targetWeightKg - input.weightKg,
+    leanMassChangeKg: leanChange,
+    fatMassChangeKg: endFat - startFat,
   };
 }
