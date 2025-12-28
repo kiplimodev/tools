@@ -1,5 +1,4 @@
-// src/components/CalculatorLayout.tsx
-import React from "react";
+import { ReactNode } from "react";
 
 export default function CalculatorLayout({
   title,
@@ -8,13 +7,18 @@ export default function CalculatorLayout({
 }: {
   title: string;
   description?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
-    <main style={{ padding: "24px" }}>
-      <h1>{title}</h1>
-      {description && <p>{description}</p>}
-      <section>{children}</section>
-    </main>
+    <div className="space-y-6">
+      <header>
+        <h1 className="text-3xl font-semibold">{title}</h1>
+        {description && (
+          <p className="text-zinc-600">{description}</p>
+        )}
+      </header>
+
+      <section className="space-y-6">{children}</section>
+    </div>
   );
 }
