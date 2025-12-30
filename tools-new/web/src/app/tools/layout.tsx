@@ -6,13 +6,17 @@ export default function ToolsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen">
-      <aside>
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
+      <aside className="w-72 border-r bg-white overflow-y-auto">
         <Sidebar />
       </aside>
 
-      <main className="flex-1 p-6">
-        {children}
+      {/* Main content */}
+      <main className="flex-1 overflow-y-auto">
+        <div className="mx-auto max-w-5xl p-10">
+          {children}
+        </div>
       </main>
     </div>
   );

@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import SidebarToolLink from "./SidebarToolLink";
 
 export default function SidebarCategory({
@@ -10,29 +7,25 @@ export default function SidebarCategory({
   category: string;
   tools: { id: string; name: string }[];
 }) {
-  const [open, setOpen] = useState(false);
+  if (tools.length === 0) return null;
 
   return (
-    <div className="mb-3">
-      <button
-        onClick={() => setOpen(!open)}
-        className="font-medium capitalize"
-      >
+    <div>
+      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
         {category.replace("-", " ")}
-      </button>
+      </h3>
 
-      {open && (
-        <div className="ml-4 mt-2 space-y-1">
-          {tools.map((tool) => (
+      <ul className="space-y-1">
+        {tools.map((tool) => (
+          <li key={tool.id}>
             <SidebarToolLink
-              key={tool.id}
               category={category}
               toolid={tool.id}
               name={tool.name}
             />
-          ))}
-        </div>
-      )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

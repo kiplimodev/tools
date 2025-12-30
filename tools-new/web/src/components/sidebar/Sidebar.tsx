@@ -5,20 +5,20 @@ export default function Sidebar() {
   const categories = getCategories();
 
   return (
-    <div className="w-64 p-4 border-r">
-      <h3 className="font-semibold mb-4">Fitness Tools</h3>
+    <div className="h-full px-6 py-8">
+      <h2 className="mb-6 text-xs font-semibold tracking-widest text-gray-500 uppercase">
+        Fitness Tools
+      </h2>
 
-      {categories.map((category) => {
-        const tools = getToolsByCategory(category);
-
-        return (
+      <nav className="space-y-6">
+        {categories.map((category) => (
           <SidebarCategory
             key={category}
             category={category}
-            tools={tools}
+            tools={getToolsByCategory(category)}
           />
-        );
-      })}
+        ))}
+      </nav>
     </div>
   );
 }

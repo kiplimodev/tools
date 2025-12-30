@@ -10,13 +10,11 @@ export default function SidebarToolLink({
   name: string;
 }) {
   return (
-    <div>
-      <Link
-        href={`/tools/${category}/${toolid}`}
-        className="text-sm text-blue-600 hover:underline"
-      >
-        {name}
-      </Link>
-    </div>
+    <Link
+      href={`/tools/${category}/${toolid}`}
+      className="block rounded-md px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+    >
+      {name}
+    </Link>
   );
 }
