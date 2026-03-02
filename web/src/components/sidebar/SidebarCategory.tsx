@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import SidebarToolLink from "./SidebarToolLink";
+import type { ToolMeta } from "@/lib/registry-client";
 
 export default function SidebarCategory({
   category,
   tools,
 }: {
   category: string;
-  tools: { id: string; name: string }[];
+  tools: ToolMeta[];
 }) {
   const [open, setOpen] = useState(false);
 
@@ -25,10 +26,10 @@ export default function SidebarCategory({
         <div style={{ marginLeft: "10px", marginTop: "5px" }}>
           {tools.map((t) => (
             <SidebarToolLink
-              key={t.id}
-              name={t.name}
-              category={category}
-              toolid={t.id}
+              key={t.slug}
+              name={t.title}
+              category={t.category}
+              toolid={t.slug}
             />
           ))}
         </div>

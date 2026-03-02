@@ -1,8 +1,21 @@
-import { calculateBmi } from "@/registry/tools/bmi";
+import type { Metadata } from "next";
+import { calculator as calculateBmi } from "@/lib/calculators/body-composition/bmi-calculator";
 
-export const metadata = {
-  title: "BMI Calculator | Denstar Fitness Tools",
-  description: "Calculate your Body Mass Index (BMI) using height and weight.",
+export const metadata: Metadata = {
+  title: "BMI Calculator | Denstar Fitness",
+  description: "Calculate your Body Mass Index from weight and height with health classification.",
+  openGraph: {
+    title: "BMI Calculator | Denstar Fitness",
+    description: "Calculate your Body Mass Index from weight and height with health classification.",
+    url: "https://denstar.fitness/tools/body-composition/bmi-calculator",
+    images: [{ url: "/api/og?tool=bmi-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BMI Calculator | Denstar Fitness",
+    description: "Calculate your Body Mass Index from weight and height with health classification.",
+    images: ["/api/og?tool=bmi-calculator"],
+  },
 };
 
 type ParamValue = string | string[] | undefined;

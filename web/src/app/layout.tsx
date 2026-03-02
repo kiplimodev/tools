@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import "./globals.css";
 
@@ -14,8 +16,23 @@ const geistSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Denstar Fitness Tools",
-  description: "Modern fitness, health, and nutrition calculators built with Next.js 16.",
+  metadataBase: new URL("https://denstar.fitness"),
+  title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
+  description: "Science-backed running, strength, and nutrition calculators with instant results. Built for athletes and coaches.",
+  openGraph: {
+    siteName: "Denstar Fitness",
+    type: "website",
+    url: "https://denstar.fitness",
+    title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
+    description: "Science-backed running, strength, and nutrition calculators with instant results. Built for athletes and coaches.",
+    images: [{ url: "/api/og", width: 1200, height: 630, alt: "Denstar Fitness Tools" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
+    description: "Science-backed running, strength, and nutrition calculators with instant results.",
+    images: ["/api/og"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -33,14 +50,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">Premium fitness tools, ready for race day.</p>
               </div>
               <div className="flex items-center gap-3">
-                <a
-                  href="https://vercel.com/new"
-                  className="hidden items-center gap-2 rounded-full border border-zinc-200 bg-white/70 px-4 py-2 text-sm font-semibold text-zinc-800 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-100 dark:hover:border-zinc-700 md:inline-flex"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  Deploy to Vercel
-                </a>
                 <ThemeToggle />
               </div>
             </div>
@@ -53,11 +62,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-700 shadow-sm ring-1 ring-zinc-200 backdrop-blur dark:bg-zinc-900/70 dark:text-zinc-200 dark:ring-zinc-700">
                 Fast · Accurate · Minimal
               </span>
-              <span>Built with Next.js 16, React 18, TypeScript, and Tailwind CSS.</span>
+              <span>Built with Next.js 16, React 19, TypeScript, and Tailwind CSS.</span>
             </div>
             <p className="text-zinc-400 dark:text-zinc-500">Ready for more tools? Strength, body composition, and cycling are up next.</p>
           </footer>
         </div>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

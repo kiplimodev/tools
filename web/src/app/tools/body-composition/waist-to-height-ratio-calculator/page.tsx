@@ -1,9 +1,21 @@
-import { calculateWaistToHeightRatio } from "@/registry/tools/waistToHeightRatio";
+import type { Metadata } from "next";
+import { calculator as calculateWaistToHeightRatio } from "@/lib/calculators/body-composition/waist-to-height-ratio-calculator";
 
-export const metadata = {
-  title: "Waist to Height Ratio Calculator | Denstar Fitness Tools",
-  description:
-    "Calculate your waist-to-height ratio to assess health and body composition risk.",
+export const metadata: Metadata = {
+  title: "Waist-to-Height Ratio Calculator | Denstar Fitness",
+  description: "Calculate your waist-to-height ratio and assess cardiovascular health risk.",
+  openGraph: {
+    title: "Waist-to-Height Ratio Calculator | Denstar Fitness",
+    description: "Calculate your waist-to-height ratio and assess cardiovascular health risk.",
+    url: "https://denstar.fitness/tools/body-composition/waist-to-height-ratio-calculator",
+    images: [{ url: "/api/og?tool=waist-to-height-ratio-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Waist-to-Height Ratio Calculator | Denstar Fitness",
+    description: "Calculate your waist-to-height ratio and assess cardiovascular health risk.",
+    images: ["/api/og?tool=waist-to-height-ratio-calculator"],
+  },
 };
 
 type ParamValue = string | string[] | undefined;

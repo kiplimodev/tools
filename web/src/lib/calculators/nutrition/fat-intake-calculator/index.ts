@@ -1,1 +1,2 @@
-export * from "./fat-intake";
+export { calculator } from "./calculator";
+export type { Input } from "./types";

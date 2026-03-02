@@ -1,8 +1,21 @@
+import type { Metadata } from "next";
 import { planRunSplits } from "@/lib/calculators/running/splits";
 
-export const metadata = {
-  title: "Split Calculator | Denstar Fitness Tools",
-  description: "Calculate running splits and total time based on distance and pace.",
+export const metadata: Metadata = {
+  title: "Split Calculator | Denstar Fitness",
+  description: "Calculate even or negative splits for any race distance and goal time.",
+  openGraph: {
+    title: "Split Calculator | Denstar Fitness",
+    description: "Calculate even or negative splits for any race distance and goal time.",
+    url: "https://denstar.fitness/tools/running/split-calculator",
+    images: [{ url: "/api/og?tool=split-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Split Calculator | Denstar Fitness",
+    description: "Calculate even or negative splits for any race distance and goal time.",
+    images: ["/api/og?tool=split-calculator"],
+  },
 };
 
 type ParamValue = string | string[] | null | undefined;

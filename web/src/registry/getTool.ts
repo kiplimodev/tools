@@ -1,12 +1,12 @@
-import { getToolDefinitionById } from "@/lib/registry-client";
+import { getTool as getToolMeta } from "./index";
 
-export async function getTool(id: string): Promise<any> {
-  const def = getToolDefinitionById(id);
+export async function getTool(id: string): Promise<unknown> {
+  const meta = getToolMeta(id);
 
-  if (!def) {
+  if (!meta) {
     throw new Error(`Tool '${id}' not found.`);
   }
 
-  const module = await import(def.importPath);
-  return module.default ?? module.calculate;
+  const mod = await import(`@/${meta.category}/${meta.slug}`);
+  return mod.default ?? mod.calculator;
 }

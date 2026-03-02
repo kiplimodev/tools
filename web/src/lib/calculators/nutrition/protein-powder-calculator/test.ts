@@ -1,43 +1,20 @@
-// src/lib/calculators/nutrition/protein-powder-calculator/test.ts
+import { describe, it, expect } from "vitest";
+import { calculator } from "./index";
 
-import test from "node:test";
-import assert from "node:assert/strict";
-import { calculateProteinPowderScoops } from "./protein-powder";
-
-test("calculates scoops when no protein eaten yet", () => {
-  const scoops = calculateProteinPowderScoops({
-    proteinTarget: 150,
-    proteinPerScoop: 25,
+describe("protein-powder-calculator", () => {
+  it("returns correct scoop count for a gap", () => {
+    expect(calculator({ proteinTarget: 150, proteinFromFood: 100, proteinPerScoop: 25 })).toBe(2);
   });
 
-  assert.equal(scoops, 6);
-});
-
-test("calculates remaining scoops after food protein", () => {
-  const scoops = calculateProteinPowderScoops({
-    proteinTarget: 160,
-    proteinFromFood: 80,
-    proteinPerScoop: 32,
+  it("returns 0 when food already meets target", () => {
+    expect(calculator({ proteinTarget: 100, proteinFromFood: 120, proteinPerScoop: 25 })).toBe(0);
   });
 
-  assert.equal(scoops, 3);
-});
-
-test("returns 0 if protein target already met", () => {
-  const scoops = calculateProteinPowderScoops({
-    proteinTarget: 120,
-    proteinFromFood: 130,
-    proteinPerScoop: 24,
+  it("returns null for zero protein target", () => {
+    expect(calculator({ proteinTarget: 0, proteinFromFood: 0, proteinPerScoop: 25 })).toBeNull();
   });
 
-  assert.equal(scoops, 0);
-});
-
-test("returns null for invalid inputs", () => {
-  const scoops = calculateProteinPowderScoops({
-    proteinTarget: 0,
-    proteinPerScoop: 25,
+  it("returns null for zero scoop size", () => {
+    expect(calculator({ proteinTarget: 150, proteinFromFood: 0, proteinPerScoop: 0 })).toBeNull();
   });
-
-  assert.equal(scoops, null);
 });

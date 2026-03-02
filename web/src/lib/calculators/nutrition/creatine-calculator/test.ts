@@ -1,38 +1,22 @@
-import assert from "node:assert/strict";
-import test from "node:test";
-import {
-  calculateCreatine,
-  CreatineInput,
-} from "./creatine-calculator";
+import { describe, it, expect } from "vitest";
+import { calculator } from "./index";
 
-test("maintenance dose", () => {
-  const input: CreatineInput = {
-    weight: 80,
-    protocol: "maintenance",
-  };
-
-  assert.deepEqual(calculateCreatine(input), {
-    dailyDose: 2,
+describe("creatine-calculator", () => {
+  it("returns maintenance dose for valid input", () => {
+    const result = calculator({ weight: 80, protocol: "maintenance" });
+    expect(result).not.toBeNull();
+    expect(result!.dailyDose).toBe(2);
+    expect(result!.loadingDose).toBeNull();
   });
-});
 
-test("loading dose", () => {
-  const input: CreatineInput = {
-    weight: 80,
-    protocol: "loading",
-  };
-
-  assert.deepEqual(calculateCreatine(input), {
-    dailyDose: 2,
-    loadingDose: 24,
+  it("returns loading dose when protocol is loading", () => {
+    const result = calculator({ weight: 80, protocol: "loading" });
+    expect(result).not.toBeNull();
+    expect(result!.dailyDose).toBe(2);
+    expect(result!.loadingDose).toBe(24);
   });
-});
 
-test("invalid weight", () => {
-  const input: CreatineInput = {
-    weight: 0,
-    protocol: "maintenance",
-  };
-
-  assert.equal(calculateCreatine(input), null);
+  it("returns null for zero weight", () => {
+    expect(calculator({ weight: 0, protocol: "maintenance" })).toBeNull();
+  });
 });

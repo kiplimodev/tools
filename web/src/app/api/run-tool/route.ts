@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getTool } from "@registry/getTool";
+import { getTool as getToolMeta } from "@/registry";
 
 export type RunToolRequest = {
   id: string;
@@ -13,23 +13,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request payload" }, { status: 400 });
   }
 
-  let tool;
-  try {
-    tool = getTool(body.id);
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Tool not found" },
-      { status: 404 },
-    );
+  const meta = getToolMeta(body.id);
+  if (!meta) {
+    return NextResponse.json({ error: `Tool '${body.id}' not found` }, { status: 404 });
   }
 
-  try {
-    const result = await Promise.resolve(tool.run(body.inputs ?? {}));
-    return NextResponse.json({ tool: tool.name, result });
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Unable to run tool" },
-      { status: 400 },
-    );
-  }
+  // Static tool execution is not yet implemented.
+  // Each tool has a dedicated page at meta.path that handles computation via URL search params.
+  return NextResponse.json(
+    {
+      error: "Direct tool API not yet implemented. Use the tool page at: " + meta.path,
+      tool: meta.title,
+      path: meta.path,
+    },
+    { status: 501 },
+  );
 }

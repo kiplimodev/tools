@@ -1,105 +1,61 @@
-import fs from "fs";
-import path from "path";
+/**
+ * Registry client — thin re-export of the static registry for use in
+ * Server Components and pages. Uses the canonical static registry so it
+ * works in production (no filesystem scanning).
+ */
+import { registry, getToolsByCategory, getTool, getAllCategories } from "@/registry";
+import type { ToolMeta } from "@/registry";
 
-export interface ToolSummary {
+export type { ToolMeta };
+export { registry, getToolsByCategory, getAllCategories };
+
+export type ToolSummary = {
   id: string;
   name: string;
   path: string;
   category: string;
-}
+};
 
-export interface ToolDefinition {
+export type ToolDefinition = {
   id: string;
   name: string;
   category: string;
   importPath: string;
-  indexPath: string;
+};
+
+function toSummary(meta: ToolMeta): ToolSummary {
+  return {
+    id: meta.slug,
+    name: meta.title,
+    path: meta.path,
+    category: meta.category,
+  };
 }
 
-const SRC_ROOT = path.join(process.cwd(), "src");
-const EXCLUDED_DIRS = new Set(["app", "components", "lib", "registry"]);
-
-function isDirectory(dirPath: string) {
-  try {
-    return fs.statSync(dirPath).isDirectory();
-  } catch {
-    return false;
-  }
-}
-
-function formatName(segment: string) {
-  return segment
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
-export function getCategories(): string[] {
-  return fs
-    .readdirSync(SRC_ROOT)
-    .filter((entry) => !EXCLUDED_DIRS.has(entry))
-    .filter((entry) => isDirectory(path.join(SRC_ROOT, entry)))
-    .sort();
-}
-
-export function getToolsByCategory(category: string): ToolSummary[] {
-  const categoryPath = path.join(SRC_ROOT, category);
-
-  if (!isDirectory(categoryPath)) {
-    return [];
-  }
-
-  return fs
-    .readdirSync(categoryPath)
-    .filter((entry) => isDirectory(path.join(categoryPath, entry)))
-    .map((toolId) => ({
-      id: toolId,
-      name: formatName(toolId),
-      path: `/tools/${category}/${toolId}`,
-      category,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name));
-}
-
-export function getAllTools(): ToolSummary[] {
-  return getCategories().flatMap((category) => getToolsByCategory(category));
+function toDefinition(meta: ToolMeta): ToolDefinition {
+  return {
+    id: meta.slug,
+    name: meta.title,
+    category: meta.category,
+    importPath: `@/${meta.category}/${meta.slug}`,
+  };
 }
 
 export function getToolDefinition(
   category: string,
   toolid: string
 ): ToolDefinition | undefined {
-  const absoluteIndexPath = path.join(SRC_ROOT, category, toolid, "index.ts");
-
-  if (!fs.existsSync(absoluteIndexPath)) {
-    return undefined;
-  }
-
-  return {
-    id: toolid,
-    name: formatName(toolid),
-    category,
-    importPath: `@/${category}/${toolid}`,
-    indexPath: absoluteIndexPath,
-  };
+  const meta = registry.find(
+    (t) => t.category === category && t.slug === toolid
+  );
+  return meta ? toDefinition(meta) : undefined;
 }
 
 export function getToolDefinitionById(id: string): ToolDefinition | undefined {
-  if (id.includes("/")) {
-    const [category, toolid] = id.split("/");
+  const meta = getTool(id);
+  return meta ? toDefinition(meta) : undefined;
+}
 
-    if (category && toolid) {
-      return getToolDefinition(category, toolid);
-    }
-  }
-
-  for (const category of getCategories()) {
-    const def = getToolDefinition(category, id);
-
-    if (def) {
-      return def;
-    }
-  }
-
-  return undefined;
+export function getAllTools(): ToolSummary[] {
+  return registry.map(toSummary);
 }

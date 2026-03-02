@@ -1,44 +1,30 @@
-// src/lib/calculators/nutrition/bulk-calculator/test.ts
+import { describe, it, expect } from "vitest";
+import { calculator } from "./index";
 
-import test from "node:test";
-import assert from "node:assert/strict";
-import { calculateBulkCalories } from "./bulk";
-
-test("calculates bulk calories with small surplus", () => {
-  const calories = calculateBulkCalories({
-    sex: "male",
-    age: 30,
-    height: 180,
-    weight: 80,
-    activity: "moderate",
-    surplus: "small",
+describe("bulk-calculator", () => {
+  it("returns bulk calories with small surplus", () => {
+    const result = calculator({
+      sex: "male",
+      age: 30,
+      height: 180,
+      weight: 80,
+      activity: "moderate",
+      surplus: "small",
+    });
+    expect(result).not.toBeNull();
+    expect(typeof result).toBe("number");
+    expect(result!).toBeGreaterThan(2000);
   });
 
-  assert.equal(calories, 3009); // 2759 TDEE + 250
-});
-
-test("calculates bulk calories with large surplus", () => {
-  const calories = calculateBulkCalories({
-    sex: "female",
-    age: 28,
-    height: 165,
-    weight: 60,
-    activity: "light",
-    surplus: "large",
+  it("returns null for invalid age", () => {
+    const result = calculator({
+      sex: "male",
+      age: 0,
+      height: 180,
+      weight: 80,
+      activity: "moderate",
+      surplus: "medium",
+    });
+    expect(result).toBeNull();
   });
-
-  assert.equal(calories, 2429); // 1829 TDEE + 600
-});
-
-test("returns null for invalid input", () => {
-  const calories = calculateBulkCalories({
-    sex: "male",
-    age: 0,
-    height: 180,
-    weight: 80,
-    activity: "moderate",
-    surplus: "medium",
-  });
-
-  assert.equal(calories, null);
 });

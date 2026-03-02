@@ -1,41 +1,20 @@
-// src/lib/calculators/nutrition/fat-intake-calculator/test.ts
+import { describe, it, expect } from "vitest";
+import { calculator } from "./index";
 
-import test from "node:test";
-import assert from "node:assert/strict";
-import { calculateFatIntake } from "./fat-intake";
-
-test("calculates minimum fat intake", () => {
-  const grams = calculateFatIntake({
-    weight: 80,
-    goal: "minimum",
+describe("fat-intake-calculator", () => {
+  it("returns minimum fat intake for valid input", () => {
+    expect(calculator({ weight: 80, goal: "minimum" })).toBe(48);
   });
 
-  assert.equal(grams, 48);
-});
-
-test("calculates moderate fat intake", () => {
-  const grams = calculateFatIntake({
-    weight: 70,
-    goal: "moderate",
+  it("returns moderate fat intake for valid input", () => {
+    expect(calculator({ weight: 70, goal: "moderate" })).toBe(56);
   });
 
-  assert.equal(grams, 56);
-});
-
-test("calculates high fat intake", () => {
-  const grams = calculateFatIntake({
-    weight: 90,
-    goal: "high",
+  it("returns high fat intake for valid input", () => {
+    expect(calculator({ weight: 90, goal: "high" })).toBe(90);
   });
 
-  assert.equal(grams, 90);
-});
-
-test("returns null for invalid weight", () => {
-  const grams = calculateFatIntake({
-    weight: 0,
-    goal: "moderate",
+  it("returns null for zero weight", () => {
+    expect(calculator({ weight: 0, goal: "moderate" })).toBeNull();
   });
-
-  assert.equal(grams, null);
 });

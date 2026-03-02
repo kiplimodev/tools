@@ -1,43 +1,24 @@
-// src/lib/calculators/nutrition/intermittent-fasting-calculator/test.ts
+import { describe, it, expect } from "vitest";
+import { calculator } from "./index";
 
-import test from "node:test";
-import assert from "node:assert/strict";
-import { calculateIntermittentFasting } from "./intermittent-fasting";
-
-test("calculates 16:8 fasting with 3 meals", () => {
-  const result = calculateIntermittentFasting({
-    protocol: "16:8",
-    dailyCalories: 2400,
-    meals: 3,
+describe("intermittent-fasting-calculator", () => {
+  it("returns correct windows for 16:8 with 3 meals", () => {
+    const result = calculator({ protocol: "16:8", dailyCalories: 2400, meals: 3 });
+    expect(result).not.toBeNull();
+    expect(result!.fastingHours).toBe(16);
+    expect(result!.eatingHours).toBe(8);
+    expect(result!.caloriesPerMeal).toBe(800);
   });
 
-  assert.deepEqual(result, {
-    fastingHours: 16,
-    eatingHours: 8,
-    caloriesPerMeal: 800,
-  });
-});
-
-test("calculates OMAD correctly", () => {
-  const result = calculateIntermittentFasting({
-    protocol: "omad",
-    dailyCalories: 2000,
-    meals: 1,
+  it("returns correct windows for OMAD", () => {
+    const result = calculator({ protocol: "omad", dailyCalories: 2000, meals: 1 });
+    expect(result).not.toBeNull();
+    expect(result!.fastingHours).toBe(23);
+    expect(result!.eatingHours).toBe(1);
+    expect(result!.caloriesPerMeal).toBe(2000);
   });
 
-  assert.deepEqual(result, {
-    fastingHours: 23,
-    eatingHours: 1,
-    caloriesPerMeal: 2000,
+  it("returns null for zero calories", () => {
+    expect(calculator({ protocol: "16:8", dailyCalories: 0, meals: 3 })).toBeNull();
   });
-});
-
-test("returns null for invalid inputs", () => {
-  const result = calculateIntermittentFasting({
-    protocol: "16:8",
-    dailyCalories: 0,
-    meals: 3,
-  });
-
-  assert.equal(result, null);
 });

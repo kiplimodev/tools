@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
 
 export default function ToolsLayout({
@@ -8,7 +9,9 @@ export default function ToolsLayout({
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, padding: "20px" }}>{children}</div>
+      <div style={{ flexGrow: 1, padding: "20px" }}>
+        <Suspense>{children}</Suspense>
+      </div>
     </div>
   );
 }

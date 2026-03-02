@@ -1,48 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import CreatineClientPage from "./_client";
 
-import CalculatorLayout from "@/components/CalculatorLayout";
-import {
-  calculateCreatine,
-  CreatineResult,
-} from "@/lib/calculators/nutrition/creatine-calculator";
+export const metadata: Metadata = {
+  title: "Creatine Calculator | Denstar Fitness",
+  description: "Calculate your daily creatine maintenance dose and loading phase amounts by bodyweight.",
+  openGraph: {
+    title: "Creatine Calculator | Denstar Fitness",
+    description: "Calculate your daily creatine maintenance dose and loading phase amounts by bodyweight.",
+    url: "https://denstar.fitness/tools/nutrition/creatine-calculator",
+    images: [{ url: "/api/og?tool=creatine-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Creatine Calculator | Denstar Fitness",
+    description: "Calculate your daily creatine maintenance dose and loading phase amounts by bodyweight.",
+    images: ["/api/og?tool=creatine-calculator"],
+  },
+};
 
 export default function CreatineCalculatorPage() {
-  return (
-    <CalculatorLayout
-      title="Creatine Calculator"
-      description="Calculate your daily creatine intake based on body weight and protocol."
-      fields={[
-        {
-          name: "weight",
-          label: "Body Weight (kg)",
-          type: "number",
-          required: true,
-        },
-        {
-          name: "protocol",
-          label: "Supplementation Protocol",
-          type: "select",
-          required: true,
-          options: [
-            { label: "Maintenance (recommended)", value: "maintenance" },
-            { label: "Loading phase", value: "loading" },
-          ],
-        },
-      ]}
-      calculate={calculateCreatine}
-      renderResult={(result: CreatineResult) => (
-        <ul className="text-sm space-y-1">
-          <li>
-            <strong>Daily dose:</strong> {result.dailyDose} g
-          </li>
-          {result.loadingDose && (
-            <li>
-              <strong>Loading dose:</strong>{" "}
-              {result.loadingDose} g / day
-            </li>
-          )}
-        </ul>
-      )}
-    />
-  );
+  return <CreatineClientPage />;
 }

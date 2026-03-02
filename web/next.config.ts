@@ -12,12 +12,10 @@ const aliasPaths = {
 const nextConfig: NextConfig = {
   experimental: {
     externalDir: true,
-    turbo: {
-      resolveAlias: aliasPaths,
-    },
   },
   turbopack: {
     root: monorepoRoot,
+    resolveAlias: aliasPaths,
   },
   transpilePackages: [],
   webpack: (config) => {

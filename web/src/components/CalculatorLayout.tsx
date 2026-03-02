@@ -1,26 +1,26 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { FormEvent, ReactNode } from "react";
+import { type FormEvent, type ReactNode } from "react";
 
-export interface FieldDefinition {
+export type FieldDefinition = {
   name: string;
   label: string;
   type: "number" | "select";
   required?: boolean;
   min?: number;
   options?: { label: string; value: string }[];
-}
+};
 
-export interface CalculatorLayoutProps<TInput extends Record<string, any>> {
+export type CalculatorLayoutProps<TInput extends object> = {
   title: string;
   description: string;
   fields: FieldDefinition[];
   calculate: (input: TInput) => number | null;
   renderResult: (result: number) => ReactNode;
-}
+};
 
-export default function CalculatorLayout<TInput extends Record<string, any>>({
+export default function CalculatorLayout<TInput extends object>({
   title,
   description,
   fields,
@@ -33,13 +33,15 @@ export default function CalculatorLayout<TInput extends Record<string, any>>({
   for (const field of fields) {
     const raw = searchParams.get(field.name);
     if (!raw) continue;
-
-    values[field.name as keyof TInput] =
-      field.type === "number" ? Number(raw) : (raw as any);
+    (values as Record<string, unknown>)[field.name] =
+      field.type === "number" ? Number(raw) : raw;
   }
 
-  const result =
-    Object.keys(values).length > 0 ? calculate(values) : null;
+  const hasRequiredValues = fields
+    .filter((f) => f.required !== false)
+    .every((f) => searchParams.get(f.name));
+
+  const result = hasRequiredValues ? calculate(values) : null;
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,29 +60,29 @@ export default function CalculatorLayout<TInput extends Record<string, any>>({
     <div className="space-y-6">
       <header>
         <h1 className="text-3xl font-semibold">{title}</h1>
-        <p className="text-zinc-600">{description}</p>
+        <p className="text-zinc-600 dark:text-zinc-400">{description}</p>
       </header>
 
       <form onSubmit={onSubmit} className="space-y-4">
         {fields.map((f) => (
           <div key={f.name}>
-            <label className="block text-sm font-medium">{f.label}</label>
+            <label className="block text-sm font-medium mb-1">{f.label}</label>
 
             {f.type === "number" ? (
               <input
                 name={f.name}
                 type="number"
                 min={f.min}
-                required={f.required}
+                required={f.required !== false}
                 defaultValue={searchParams.get(f.name) ?? ""}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border border-zinc-200 rounded-lg px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
               />
             ) : (
               <select
                 name={f.name}
-                required={f.required}
+                required={f.required !== false}
                 defaultValue={searchParams.get(f.name) ?? ""}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border border-zinc-200 rounded-lg px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
               >
                 <option value="">Select…</option>
                 {f.options?.map((o) => (
@@ -93,16 +95,20 @@ export default function CalculatorLayout<TInput extends Record<string, any>>({
           </div>
         ))}
 
-        <button className="w-full bg-black text-white py-2 rounded">
+        <button
+          type="submit"
+          className="w-full bg-black text-white py-2 rounded-lg font-medium transition hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+        >
           Calculate
         </button>
       </form>
 
-      {result !== null && (
-        <div className="border rounded p-4">
-          {renderResult(result)}
-        </div>
-      )}
+      <div className="border border-zinc-200 rounded-xl p-4 dark:border-zinc-800 min-h-[60px] flex items-center">
+        {result !== null
+          ? renderResult(result)
+          : <p className="text-zinc-400 dark:text-zinc-500">Enter values above to see your result.</p>
+        }
+      </div>
     </div>
   );
 }

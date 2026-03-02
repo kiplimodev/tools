@@ -1,35 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import FatIntakeClientPage from "./_client";
 
-import CalculatorLayout from "@/components/CalculatorLayout";
-import {
-  calculateFatIntake,
-  type FatIntakeInput,
-} from "@/lib/calculators/nutrition/fat-intake-calculator";
+export const metadata: Metadata = {
+  title: "Fat Intake Calculator | Denstar Fitness",
+  description: "Calculate your optimal daily fat intake in grams based on total calorie targets.",
+  openGraph: {
+    title: "Fat Intake Calculator | Denstar Fitness",
+    description: "Calculate your optimal daily fat intake in grams based on total calorie targets.",
+    url: "https://denstar.fitness/tools/nutrition/fat-intake-calculator",
+    images: [{ url: "/api/og?tool=fat-intake-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fat Intake Calculator | Denstar Fitness",
+    description: "Calculate your optimal daily fat intake in grams based on total calorie targets.",
+    images: ["/api/og?tool=fat-intake-calculator"],
+  },
+};
 
 export default function FatIntakeCalculatorPage() {
-  return (
-    <CalculatorLayout<FatIntakeInput>
-      title="Fat Intake Calculator"
-      description="Estimate daily fat intake based on body weight and goal."
-      fields={[
-        { name: "weight", label: "Body Weight (kg)", type: "number" },
-        {
-          name: "goal",
-          label: "Diet Goal",
-          type: "select",
-          options: [
-            { label: "Low fat", value: "low" },
-            { label: "Moderate fat", value: "moderate" },
-            { label: "High fat", value: "high" },
-          ],
-        },
-      ]}
-      calculate={calculateFatIntake}
-      renderResult={(result) => (
-        <p>
-          <strong>Recommended fat intake:</strong> {result} g / day
-        </p>
-      )}
-    />
-  );
+  return <FatIntakeClientPage />;
 }

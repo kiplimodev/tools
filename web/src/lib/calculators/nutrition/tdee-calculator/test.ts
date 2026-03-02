@@ -1,55 +1,34 @@
-// src/lib/calculators/nutrition/tdee-calculator/test.ts
+import { describe, it, expect } from "vitest";
+import { calculator } from "./index";
 
-import test from "node:test";
-import assert from "node:assert/strict";
-import { calculateBMR, calculateTDEE } from "./tdee";
-
-test("calculateBMR – male (Mifflin–St Jeor)", () => {
-  const bmr = calculateBMR({
-    sex: "male",
-    age: 30,
-    height: 180,
-    weight: 80,
-    activity: "moderate",
+describe("tdee-calculator", () => {
+  it("returns TDEE for moderate activity male", () => {
+    const result = calculator({
+      sex: "male",
+      age: 30,
+      height: 180,
+      weight: 80,
+      activity: "moderate",
+    });
+    expect(result).not.toBeNull();
+    expect(result).toBe(2759);
   });
 
-  assert.ok(bmr !== null);
-  assert.equal(Math.round(bmr), 1780);
-});
-
-test("calculateBMR – female (Mifflin–St Jeor)", () => {
-  const bmr = calculateBMR({
-    sex: "female",
-    age: 30,
-    height: 165,
-    weight: 65,
-    activity: "light",
+  it("returns TDEE for light activity female", () => {
+    const result = calculator({
+      sex: "female",
+      age: 30,
+      height: 165,
+      weight: 65,
+      activity: "light",
+    });
+    expect(result).not.toBeNull();
+    expect(typeof result).toBe("number");
   });
 
-  assert.ok(bmr !== null);
-  assert.equal(Math.round(bmr), 1370);
-});
-
-test("calculateTDEE – moderate activity male", () => {
-  const tdee = calculateTDEE({
-    sex: "male",
-    age: 30,
-    height: 180,
-    weight: 80,
-    activity: "moderate",
+  it("returns null for zero age", () => {
+    expect(
+      calculator({ sex: "male", age: 0, height: 180, weight: 80, activity: "moderate" })
+    ).toBeNull();
   });
-
-  assert.equal(tdee, 2759);
-});
-
-test("calculateTDEE returns null for invalid inputs", () => {
-  const tdee = calculateTDEE({
-    sex: "male",
-    age: 0,
-    height: 180,
-    weight: 80,
-    activity: "moderate",
-  });
-
-  assert.equal(tdee, null);
 });

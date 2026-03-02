@@ -1,38 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import ProteinPowderClientPage from "./_client";
 
-import CalculatorLayout from "@/components/CalculatorLayout";
-import { calculateProteinPowderScoops } from "@/lib/calculators/nutrition/protein-powder-calculator/protein-powder";
+export const metadata: Metadata = {
+  title: "Protein Powder Calculator | Denstar Fitness",
+  description: "Find out how many protein powder scoops you need to hit your daily protein target.",
+  openGraph: {
+    title: "Protein Powder Calculator | Denstar Fitness",
+    description: "Find out how many protein powder scoops you need to hit your daily protein target.",
+    url: "https://denstar.fitness/tools/nutrition/protein-powder-calculator",
+    images: [{ url: "/api/og?tool=protein-powder-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Protein Powder Calculator | Denstar Fitness",
+    description: "Find out how many protein powder scoops you need to hit your daily protein target.",
+    images: ["/api/og?tool=protein-powder-calculator"],
+  },
+};
 
 export default function ProteinPowderCalculatorPage() {
-  return (
-    <CalculatorLayout
-      title="Protein Powder Calculator"
-      description="Calculate how many scoops of protein powder you need to meet your daily protein goal."
-      fields={[
-        {
-          name: "proteinTarget",
-          label: "Daily Protein Target (g)",
-          type: "number",
-          required: true,
-          helper: "Your total protein goal for the day.",
-        },
-        {
-          name: "proteinFromFood",
-          label: "Protein From Food (g)",
-          type: "number",
-          helper: "Optional. Protein you've already eaten today.",
-        },
-        {
-          name: "proteinPerScoop",
-          label: "Protein Per Scoop (g)",
-          type: "number",
-          required: true,
-          helper: "Check the nutrition label on your protein powder.",
-        },
-      ]}
-      calculate={calculateProteinPowderScoops}
-      resultLabel="Protein Powder Needed"
-      resultUnit="scoops"
-    />
-  );
+  return <ProteinPowderClientPage />;
 }

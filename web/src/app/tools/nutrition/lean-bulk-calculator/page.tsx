@@ -1,57 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import LeanBulkClientPage from "./_client";
 
-import CalculatorLayout from "@/components/CalculatorLayout";
-import {
-  calculateLeanBulk,
-  type LeanBulkInput,
-} from "@/lib/calculators/nutrition/lean-bulk-calculator";
+export const metadata: Metadata = {
+  title: "Lean Bulk Calculator | Denstar Fitness",
+  description: "Calculate calories for a lean bulk with capped surplus to minimise fat gain.",
+  openGraph: {
+    title: "Lean Bulk Calculator | Denstar Fitness",
+    description: "Calculate calories for a lean bulk with capped surplus to minimise fat gain.",
+    url: "https://denstar.fitness/tools/nutrition/lean-bulk-calculator",
+    images: [{ url: "/api/og?tool=lean-bulk-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lean Bulk Calculator | Denstar Fitness",
+    description: "Calculate calories for a lean bulk with capped surplus to minimise fat gain.",
+    images: ["/api/og?tool=lean-bulk-calculator"],
+  },
+};
 
 export default function LeanBulkCalculatorPage() {
-  return (
-    <CalculatorLayout<LeanBulkInput>
-      title="Lean Bulk Calculator"
-      description="Calculate calories for a controlled lean bulk."
-      fields={[
-        {
-          name: "sex",
-          label: "Sex",
-          type: "select",
-          options: [
-            { label: "Male", value: "male" },
-            { label: "Female", value: "female" },
-          ],
-        },
-        { name: "age", label: "Age (years)", type: "number" },
-        { name: "height", label: "Height (cm)", type: "number" },
-        { name: "weight", label: "Weight (kg)", type: "number" },
-        {
-          name: "activity",
-          label: "Activity Level",
-          type: "select",
-          options: [
-            { label: "Sedentary", value: "sedentary" },
-            { label: "Light", value: "light" },
-            { label: "Moderate", value: "moderate" },
-            { label: "Very active", value: "very" },
-            { label: "Extra active", value: "extra" },
-          ],
-        },
-        {
-          name: "rate",
-          label: "Lean Bulk Rate",
-          type: "select",
-          options: [
-            { label: "Conservative", value: "conservative" },
-            { label: "Moderate", value: "moderate" },
-          ],
-        },
-      ]}
-      calculate={calculateLeanBulk}
-      renderResult={(result) => (
-        <p>
-          <strong>Lean bulk calories:</strong> {result} kcal / day
-        </p>
-      )}
-    />
-  );
+  return <LeanBulkClientPage />;
 }

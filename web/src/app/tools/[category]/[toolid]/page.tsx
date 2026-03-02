@@ -1,58 +1,60 @@
 import { getToolDefinition } from "@/lib/registry-client";
-import { getTool } from "@/registry/getTool";
-import { ComponentType } from "react";
+import type { Metadata } from "next";
+import { getTool } from "@/registry";
+
+type Params = { category: string; toolid: string };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { toolid } = await params;
+  const meta = getTool(toolid);
+  if (!meta) return { title: "Tool Not Found | Denstar Fitness" };
+  return {
+    title: `${meta.title} | Denstar Fitness`,
+    description: meta.description,
+    openGraph: {
+      title: `${meta.title} | Denstar Fitness`,
+      description: meta.description,
+      url: `https://denstar.fitness${meta.path}`,
+      images: [{ url: `/api/og?tool=${meta.slug}`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${meta.title} | Denstar Fitness`,
+      description: meta.description,
+      images: [`/api/og?tool=${meta.slug}`],
+    },
+  };
+}
 
 export default async function ToolPage({
   params,
 }: {
-  params: Promise<{ category: string; toolid: string }>;
+  params: Promise<Params>;
 }) {
   const { category, toolid } = await params;
-
-  // Lookup tool metadata
   const def = getToolDefinition(category, toolid);
 
   if (!def) {
-    return <div>Tool not found.</div>;
-  }
-
-  // Load the tool from the registry
-  const ToolExport = await getTool(def.id);
-
-  let content: JSX.Element;
-
-  try {
-    if (!ToolExport) {
-      throw new Error("Tool component not found");
-    }
-
-    // CASE 1: Tool is a React component (UI tool)
-    if (typeof ToolExport === "function") {
-      const result = ToolExport({} as any);
-
-      // If calling it returns JSX, render it
-      if (typeof result === "object" && "$$typeof" in result) {
-        content = result as JSX.Element;
-      } else {
-        // Tool returned data (calculator-only tool)
-        throw new Error("This tool does not have a UI yet.");
-      }
-    } else {
-      throw new Error("Invalid tool export");
-    }
-  } catch (error) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : "Please provide the required inputs to run this tool.";
-
-    content = (
-      <div className="rounded border border-amber-200 bg-amber-50 p-4 text-amber-800">
-        <p className="font-semibold">Tool is registered but has no UI.</p>
-        <p className="text-sm">{message}</p>
+    return (
+      <div className="rounded-xl border border-red-200 bg-red-50 p-6 dark:border-red-900 dark:bg-red-950/30">
+        <h1 className="text-xl font-semibold text-red-800 dark:text-red-200">Tool not found</h1>
+        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+          No tool exists at <code className="font-mono">/tools/{category}/{toolid}</code>.
+        </p>
       </div>
     );
   }
 
-  return <div className="p-4">{content}</div>;
+  return (
+    <div className="rounded-xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-amber-950/30">
+      <h1 className="text-xl font-semibold text-amber-800 dark:text-amber-200">{def.name}</h1>
+      <p className="mt-1 text-sm text-amber-600 dark:text-amber-400">
+        This tool is registered but does not have a dedicated page yet.
+      </p>
+    </div>
+  );
 }

@@ -1,29 +1,23 @@
-import CalculatorLayout from "@/components/CalculatorLayout";
+import type { Metadata } from "next";
+import VO2MaxClientPage from "./_client";
+
+export const metadata: Metadata = {
+  title: "VO2 Max Calculator | Denstar Fitness",
+  description: "Estimate your VO2 max and fitness category from a timed running performance.",
+  openGraph: {
+    title: "VO2 Max Calculator | Denstar Fitness",
+    description: "Estimate your VO2 max and fitness category from a timed running performance.",
+    url: "https://denstar.fitness/tools/running/vo2max",
+    images: [{ url: "/api/og", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VO2 Max Calculator | Denstar Fitness",
+    description: "Estimate your VO2 max and fitness category from a timed running performance.",
+    images: ["/api/og"],
+  },
+};
 
 export default function VO2MaxPage() {
-  return (
-    <CalculatorLayout
-      category="Running"
-      title="Running VO2 Max"
-      description="Use distance and time to approximate VO2 max and aerobic readiness."
-      fields={[
-        {
-          name: "distance",
-          label: "Distance (km)",
-          type: "number",
-          min: 0.1,
-          step: 0.1,
-          required: true,
-        },
-        {
-          name: "time",
-          label: "Time (minutes)",
-          type: "number",
-          min: 1,
-          step: 1,
-          required: true,
-        },
-      ]}
-    />
-  );
+  return <VO2MaxClientPage />;
 }

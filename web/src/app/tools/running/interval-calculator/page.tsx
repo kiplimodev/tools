@@ -1,8 +1,21 @@
+import type { Metadata } from "next";
 import { calculateIntervals } from "@/lib/calculators/running/interval";
 
-export const metadata = {
-  title: "Interval Calculator | Denstar Fitness Tools",
-  description: "Build interval workouts using work, rest, and repeats.",
+export const metadata: Metadata = {
+  title: "Interval Calculator | Denstar Fitness",
+  description: "Calculate interval times, rest periods, and total workout duration for structured training.",
+  openGraph: {
+    title: "Interval Calculator | Denstar Fitness",
+    description: "Calculate interval times, rest periods, and total workout duration for structured training.",
+    url: "https://denstar.fitness/tools/running/interval-calculator",
+    images: [{ url: "/api/og?tool=interval-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Interval Calculator | Denstar Fitness",
+    description: "Calculate interval times, rest periods, and total workout duration for structured training.",
+    images: ["/api/og?tool=interval-calculator"],
+  },
 };
 
 type ParamValue = string | string[] | null | undefined;

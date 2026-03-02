@@ -1,8 +1,26 @@
-import { getAllTools, getCategories, getToolsByCategory } from "@/lib/registry-client";
+import type { Metadata } from "next";
+import { getAllCategories, getToolsByCategory } from "@/lib/registry-client";
 import Link from "next/link";
 
+export const metadata: Metadata = {
+  title: "All Fitness Tools | Denstar Fitness",
+  description: "Browse 40+ science-backed calculators for running, strength, nutrition, and body composition.",
+  openGraph: {
+    title: "All Fitness Tools | Denstar Fitness",
+    description: "Browse 40+ science-backed calculators for running, strength, nutrition, and body composition.",
+    url: "https://denstar.fitness/tools",
+    images: [{ url: "/api/og", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "All Fitness Tools | Denstar Fitness",
+    description: "Browse 40+ science-backed calculators for running, strength, nutrition, and body composition.",
+    images: ["/api/og"],
+  },
+};
+
 export default function ToolsIndexPage() {
-  const categories = getCategories();
+  const categories = getAllCategories();
 
   return (
     <div>
@@ -20,11 +38,11 @@ export default function ToolsIndexPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {tools.map((tool) => (
                 <Link
-                  key={tool.id}
+                  key={tool.slug}
                   href={tool.path}
                   className="p-3 bg-white border rounded shadow-sm hover:bg-gray-100"
                 >
-                  {tool.name}
+                  {tool.title}
                 </Link>
               ))}
             </div>

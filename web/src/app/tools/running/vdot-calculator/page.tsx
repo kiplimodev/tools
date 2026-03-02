@@ -1,52 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import VdotClientPage from "./_client";
 
-import CalculatorLayout from "@/components/CalculatorLayout";
-import { calculateVDOT, VdotResult } from "@/lib/calculators/running/vdot";
+export const metadata: Metadata = {
+  title: "VDOT Calculator | Denstar Fitness",
+  description: "Estimate your VDOT score and training pace zones from a recent race time.",
+  openGraph: {
+    title: "VDOT Calculator | Denstar Fitness",
+    description: "Estimate your VDOT score and training pace zones from a recent race time.",
+    url: "https://denstar.fitness/tools/running/vdot-calculator",
+    images: [{ url: "/api/og?tool=vdot-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VDOT Calculator | Denstar Fitness",
+    description: "Estimate your VDOT score and training pace zones from a recent race time.",
+    images: ["/api/og?tool=vdot-calculator"],
+  },
+};
 
-export default function Page() {
-  return (
-    <CalculatorLayout<VdotResult>
-      category="Running"
-      title="VDOT Calculator"
-      description="Estimate your VDOT and equivalent race performances."
-      fields={[
-        {
-          name: "distance",
-          label: "Distance (km)",
-          type: "number",
-          min: 0.1,
-          step: 0.1,
-          required: true,
-        },
-        {
-          name: "time",
-          label: "Time (minutes)",
-          type: "number",
-          min: 1,
-          step: 1,
-          required: true,
-        },
-      ]}
-      compute={({ distance, time }) => {
-        if (!distance || !time) return null;
-        return calculateVDOT(distance, time);
-      }}
-      renderResults={(res) => (
-        <div className="space-y-2 text-sm">
-          <p>
-            <strong>VDOT:</strong> {res.vdot}
-          </p>
-
-          <div>
-            <strong>Predicted Race Times</strong>
-            <ul className="list-disc list-inside mt-1">
-              <li>5K: {res.predictedTimes.fiveK}</li>
-              <li>10K: {res.predictedTimes.tenK}</li>
-              <li>Half Marathon: {res.predictedTimes.halfMarathon}</li>
-            </ul>
-          </div>
-        </div>
-      )}
-    />
-  );
+export default function VdotCalculatorPage() {
+  return <VdotClientPage />;
 }

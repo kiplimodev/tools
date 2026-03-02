@@ -1,9 +1,21 @@
+import type { Metadata } from "next";
 import { planRunSplits } from "@/lib/calculators/running/splits";
 
-export const metadata = {
-  title: "Running Splits Calculator | Denstar Fitness Tools",
-  description:
-    "Plan cumulative running splits based on distance and target pace.",
+export const metadata: Metadata = {
+  title: "Running Splits Calculator | Denstar Fitness",
+  description: "Generate per-kilometre and per-mile split times for your target race pace.",
+  openGraph: {
+    title: "Running Splits Calculator | Denstar Fitness",
+    description: "Generate per-kilometre and per-mile split times for your target race pace.",
+    url: "https://denstar.fitness/tools/running/running-splits-calculator",
+    images: [{ url: "/api/og?tool=running-splits-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Running Splits Calculator | Denstar Fitness",
+    description: "Generate per-kilometre and per-mile split times for your target race pace.",
+    images: ["/api/og?tool=running-splits-calculator"],
+  },
 };
 
 type ParamValue = string | string[] | null | undefined;

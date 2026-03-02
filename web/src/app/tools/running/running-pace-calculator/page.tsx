@@ -1,8 +1,21 @@
+import type { Metadata } from "next";
 import { calculator } from "@/lib/calculators/running/running-pace-calculator";
 
-export const metadata = {
-  title: "Running Pace Calculator | Denstar Fitness Tools",
-  description: "Calculate pace per km, per mile, and running speed.",
+export const metadata: Metadata = {
+  title: "Running Pace Calculator | Denstar Fitness",
+  description: "Calculate your running pace, speed, and finish time for any distance.",
+  openGraph: {
+    title: "Running Pace Calculator | Denstar Fitness",
+    description: "Calculate your running pace, speed, and finish time for any distance.",
+    url: "https://denstar.fitness/tools/running/running-pace-calculator",
+    images: [{ url: "/api/og?tool=running-pace-calculator", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Running Pace Calculator | Denstar Fitness",
+    description: "Calculate your running pace, speed, and finish time for any distance.",
+    images: ["/api/og?tool=running-pace-calculator"],
+  },
 };
 
 type ParamValue = string | string[] | null | undefined;
