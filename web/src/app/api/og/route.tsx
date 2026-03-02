@@ -2,8 +2,6 @@ import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import { getTool } from "@/registry";
 
-export const runtime = "edge";
-
 export function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get("tool") ?? "";
