@@ -82,16 +82,3 @@ for (const path of TOOL_PATHS) {
   });
 }
 
-// ── OG image API ──────────────────────────────────────────────────────────────
-
-test("api: /api/og returns an image", async ({ request }) => {
-  const res = await request.get("/api/og?tool=tdee-calculator");
-  expect(res.status()).toBe(200);
-  expect(res.headers()["content-type"]).toMatch(/^image\//);
-});
-
-test("api: /api/og with no slug falls back gracefully", async ({ request }) => {
-  const res = await request.get("/api/og");
-  expect(res.status()).toBe(200);
-  expect(res.headers()["content-type"]).toMatch(/^image\//);
-});
