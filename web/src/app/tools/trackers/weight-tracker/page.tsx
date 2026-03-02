@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import WeightTrackerClientPage from "./_client";
 
 export const metadata: Metadata = {
   title: "Weight Tracker | Denstar Fitness",
@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function WeightTrackerPage() {
-  return <ComingSoon title="Weight Tracker" />;
+  return <WeightTrackerClientPage />;
 }

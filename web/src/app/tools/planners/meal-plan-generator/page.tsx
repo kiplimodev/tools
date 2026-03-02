@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import MealPlanGeneratorClientPage from "./_client";
 
 export const metadata: Metadata = {
   title: "Meal Plan Generator | Denstar Fitness",
@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function MealPlanGeneratorPage() {
-  return <ComingSoon title="Meal Plan Generator" />;
+  return <MealPlanGeneratorClientPage />;
 }

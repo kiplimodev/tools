@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/ComingSoon";
+import WorkoutGeneratorClientPage from "./_client";
 
 export const metadata: Metadata = {
   title: "Workout Generator | Denstar Fitness",
@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function WorkoutGeneratorPage() {
-  return <ComingSoon title="Workout Generator" />;
+  return <WorkoutGeneratorClientPage />;
 }
