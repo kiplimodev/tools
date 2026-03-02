@@ -7,7 +7,7 @@ type Input = { weightKg: number; timeMinutes: number; intensity: string };
 function calculate(input: Input): number | null {
   if (!input.weightKg || !input.timeMinutes || !input.intensity) return null;
   const met = input.intensity === "light" ? 4.5 : input.intensity === "moderate" ? 7.0 : 8.5;
-  return Math.round((met * 3.5 * input.weightKg * (input.timeMinutes / 60)) / 1);
+  return Math.round((met * 3.5 * input.weightKg * input.timeMinutes) / 200);
 }
 
 export default function RowingCaloriesClientPage() {

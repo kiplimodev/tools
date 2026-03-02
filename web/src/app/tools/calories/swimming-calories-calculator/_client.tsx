@@ -11,7 +11,7 @@ function calculate(input: Input): number | null {
     : input.stroke === "breaststroke" ? 5.3
     : input.stroke === "backstroke" ? 4.8
     : 13.8; // butterfly
-  return Math.round((met * 3.5 * input.weightKg * (input.timeMinutes / 60)) / 1);
+  return Math.round((met * 3.5 * input.weightKg * input.timeMinutes) / 200);
 }
 
 export default function SwimmingCaloriesClientPage() {

@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { calculator } from "@/lib/calculators/running/running-pace-calculator";
 
+function formatPace(secondsPerKm: number): string {
+  const minutes = Math.floor(secondsPerKm / 60);
+  const seconds = Math.round(secondsPerKm % 60);
+  return `${minutes}:${seconds.toString().padStart(2, "0")} /km`;
+}
+
 export const metadata: Metadata = {
   title: "Running Pace Calculator | Denstar Fitness",
   description: "Calculate your running pace, speed, and finish time for any distance.",
@@ -156,10 +162,10 @@ export default async function Page({
 
           <div className="rounded-xl border border-zinc-200/70 bg-white/80 p-4 shadow-inner dark:border-zinc-800 dark:bg-zinc-900/60">
             <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-              Pace (seconds per km)
+              Pace
             </p>
             <p className="text-2xl font-semibold text-zinc-900 dark:text-white">
-              {result !== null ? Math.round(result) : "—"}
+              {result !== null ? formatPace(result) : "—"}
             </p>
           </div>
 

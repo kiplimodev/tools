@@ -6,8 +6,8 @@ type Input = { weightKg: number; timeMinutes: number };
 
 function calculate(input: Input): number | null {
   if (!input.weightKg || !input.timeMinutes) return null;
-  // MET 3.5 for moderate walking (~5 km/h)
-  return Math.round((3.5 * 3.5 * input.weightKg * (input.timeMinutes / 60)) / 1);
+  // MET 3.5 for moderate walking (~5 km/h); standard formula: MET × 3.5 × kg × min / 200
+  return Math.round((3.5 * 3.5 * input.weightKg * input.timeMinutes) / 200);
 }
 
 export default function WalkingCalorieClientPage() {

@@ -8,7 +8,7 @@ function calculate(input: Input): number | null {
   if (!input.weightKg || !input.speedKmh || !input.timeMinutes) return null;
   // MET increases with speed: ~6 at 8km/h, ~8 at 10km/h, ~11 at 13km/h
   const met = input.speedKmh < 8 ? 5.0 : input.speedKmh < 10 ? 7.0 : input.speedKmh < 13 ? 9.0 : 11.5;
-  return Math.round((met * 3.5 * input.weightKg * (input.timeMinutes / 60)) / 1);
+  return Math.round((met * 3.5 * input.weightKg * input.timeMinutes) / 200);
 }
 
 export default function TreadmillCalorieClientPage() {

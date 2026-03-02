@@ -62,7 +62,7 @@ export default function VdotClientPage() {
             className="w-full border border-zinc-200 rounded-lg px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
           />
         </div>
-        <button type="submit" className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
+        <button type="submit" className="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
           Calculate VDOT
         </button>
       </form>

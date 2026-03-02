@@ -89,33 +89,75 @@ export default async function Page({
         </p>
       </div>
 
-      <form method="GET" className="space-y-4">
-        <input name="work" type="number" placeholder="Work (minutes)" defaultValue={work ?? ""} />
-        <input name="rest" type="number" placeholder="Rest (minutes)" defaultValue={rest ?? ""} />
-        <input name="reps" type="number" placeholder="Repeats" defaultValue={reps ?? ""} />
-        <button type="submit">Calculate workout</button>
+      <form method="GET" className="space-y-4 rounded-2xl border border-zinc-200 bg-white/70 p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/60">
+        <div>
+          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">Work interval (minutes)</label>
+          <input
+            name="work"
+            type="number"
+            step="0.5"
+            min="0.5"
+            placeholder="2"
+            defaultValue={work ?? ""}
+            required
+            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">Rest interval (minutes)</label>
+          <input
+            name="rest"
+            type="number"
+            step="0.5"
+            min="0"
+            placeholder="1"
+            defaultValue={rest ?? ""}
+            required
+            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">Repeats</label>
+          <input
+            name="reps"
+            type="number"
+            step="1"
+            min="1"
+            placeholder="8"
+            defaultValue={reps ?? ""}
+            required
+            className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
+        >
+          Calculate workout
+        </button>
       </form>
 
-      <section>
-        <h2 className="text-xl font-semibold">Results</h2>
-
+      <div className="rounded-2xl border border-zinc-200 bg-white/70 p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/60 min-h-[80px]">
         {!result && (
-          <p className="text-zinc-500">
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">
             Enter work, rest, and repeats to calculate your interval workout.
           </p>
         )}
 
         {result && (
-          <div className="space-y-2">
-            <p>Total time: {result.totalMinutes} minutes</p>
-            <ul className="list-disc pl-5">
+          <div className="space-y-3 text-sm">
+            <div className="flex justify-between items-center pb-2 border-b border-zinc-100 dark:border-zinc-800">
+              <span className="text-zinc-500 dark:text-zinc-400">Total workout time</span>
+              <strong className="text-zinc-900 dark:text-zinc-100">{result.totalMinutes} min</strong>
+            </div>
+            <ul className="space-y-1">
               {result.intervals.map((line, i) => (
-                <li key={i}>{line}</li>
+                <li key={i} className="text-zinc-600 dark:text-zinc-400">{line}</li>
               ))}
             </ul>
           </div>
         )}
-      </section>
+      </div>
     </main>
   );
 }
