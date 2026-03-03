@@ -8,13 +8,13 @@ export const metadata: Metadata = {
     title: "VO2 Max Calculator | Denstar Fitness",
     description: "Estimate your VO2 max and fitness category from a timed running performance.",
     url: "https://denstar.fitness/tools/running/vo2max",
-    images: [{ url: "/api/og", width: 1200, height: 630 }],
+    images: [{ url: "/api/og?tool=vo2max", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "VO2 Max Calculator | Denstar Fitness",
     description: "Estimate your VO2 max and fitness category from a timed running performance.",
-    images: ["/api/og"],
+    images: ["/api/og?tool=vo2max"],
   },
 };
 

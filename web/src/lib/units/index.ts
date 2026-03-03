@@ -24,6 +24,10 @@ export const UNIT_CONVERSIONS = {
     metric:   { label: "cm",  step: 0.5,   placeholder: "80",   toSI: 1 },
     imperial: { label: "in",  step: 0.25,  placeholder: "31.5", toSI: 2.54 },
   },
+  speed: {
+    metric:   { label: "km/h", step: 0.5,  placeholder: "9",   toSI: 1 },
+    imperial: { label: "mph",  step: 0.5,  placeholder: "5.6", toSI: 1.60934 },
+  },
 } as const;
 
 export type UnitGroup = keyof typeof UNIT_CONVERSIONS;

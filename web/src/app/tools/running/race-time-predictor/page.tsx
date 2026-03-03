@@ -8,13 +8,13 @@ export const metadata: Metadata = {
     title: "Race Time Predictor | Denstar Fitness",
     description: "Estimate finishing time for a target distance using the Riegel formula.",
     url: "https://denstar.fitness/tools/running/race-time-predictor",
-    images: [{ url: "/api/og", width: 1200, height: 630 }],
+    images: [{ url: "/api/og?tool=race-time-predictor", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Race Time Predictor | Denstar Fitness",
     description: "Estimate finishing time for a target distance using the Riegel formula.",
-    images: ["/api/og"],
+    images: ["/api/og?tool=race-time-predictor"],
   },
 };
 

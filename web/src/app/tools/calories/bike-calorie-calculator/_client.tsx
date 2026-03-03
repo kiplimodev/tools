@@ -17,7 +17,7 @@ export default function BikeCalorieClientPage() {
       description="Estimate calories burned cycling based on speed, duration, and body weight."
       fields={[
         { name: "weightKg", label: "Body weight", type: "number", min: 20, unitGroup: "weight" },
-        { name: "speedKmh", label: "Average speed (km/h)", type: "number", min: 5, placeholder: "20" },
+        { name: "speedKmh", label: "Average speed", type: "number", min: 5, unitGroup: "speed" },
         { name: "timeMinutes", label: "Duration (minutes)", type: "number", min: 1, placeholder: "60" },
       ]}
       calculate={calculate}

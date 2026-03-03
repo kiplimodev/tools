@@ -39,6 +39,20 @@ export const registry: ToolMeta[] = [
     description: "Estimate your VDOT score and training pace zones from a recent race time.",
     path: "/tools/running/vdot-calculator",
   },
+  {
+    slug: "race-time-predictor",
+    category: "running",
+    title: "Race Time Predictor",
+    description: "Predict your finish time for any race distance using a recent performance and the Riegel formula.",
+    path: "/tools/running/race-time-predictor",
+  },
+  {
+    slug: "vo2max",
+    category: "running",
+    title: "VO2 Max Calculator",
+    description: "Estimate your VO2 max and aerobic fitness category from a timed running distance.",
+    path: "/tools/running/vo2max",
+  },
 
   // ======================
   // CALORIES

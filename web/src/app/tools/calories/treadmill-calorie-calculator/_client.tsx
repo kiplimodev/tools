@@ -18,7 +18,7 @@ export default function TreadmillCalorieClientPage() {
       description="Estimate calories burned on the treadmill based on speed, duration, and body weight."
       fields={[
         { name: "weightKg", label: "Body weight", type: "number", min: 20, unitGroup: "weight" },
-        { name: "speedKmh", label: "Speed (km/h)", type: "number", min: 1, step: 0.5, placeholder: "9" },
+        { name: "speedKmh", label: "Speed", type: "number", min: 1, unitGroup: "speed" },
         { name: "timeMinutes", label: "Duration (minutes)", type: "number", min: 1, placeholder: "30" },
       ]}
       calculate={calculate}

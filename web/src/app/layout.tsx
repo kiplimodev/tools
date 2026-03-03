@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </span>
               <span>Built with Next.js 16, React 19, TypeScript, and Tailwind CSS.</span>
             </div>
-            <p className="text-zinc-400 dark:text-zinc-500">Ready for more tools? Strength, body composition, and cycling are up next.</p>
+            <p className="text-zinc-400 dark:text-zinc-500">More tools coming: saved results, AI-powered plans, and device integrations.</p>
           </footer>
         </div>
         <Analytics />

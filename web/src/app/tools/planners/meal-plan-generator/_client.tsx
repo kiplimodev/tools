@@ -55,10 +55,6 @@ function buildPlan(diet: Diet, mealCount: Meals): Meal[] {
   const templates = FOOD_TEMPLATES[diet];
   const selectedIndices: number[] = [];
 
-  // Always include breakfast (0), lunch (2), and dinner (4) if enough meals
-  const mainMealIndices = [0, 2, 4];
-  const snackIndices = [1, 3, 5];
-
   if (mealCount === 3) {
     selectedIndices.push(0, 2, 4);
   } else if (mealCount === 4) {
