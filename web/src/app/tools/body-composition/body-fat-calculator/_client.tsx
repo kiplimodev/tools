@@ -32,10 +32,10 @@ export default function BodyFatClientPage() {
             { label: "Female", value: "female" },
           ],
         },
-        { name: "waistCm", label: "Waist (cm)", type: "number", min: 1 },
-        { name: "neckCm", label: "Neck (cm)", type: "number", min: 1 },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 1 },
-        { name: "hipCm", label: "Hip (cm) — females only", type: "number", min: 1, required: false },
+        { name: "waistCm", label: "Waist", type: "number", min: 1, unitGroup: "shortDistance" },
+        { name: "neckCm", label: "Neck", type: "number", min: 1, unitGroup: "shortDistance" },
+        { name: "heightCm", label: "Height", type: "number", min: 1, unitGroup: "height" },
+        { name: "hipCm", label: "Hip — females only", type: "number", min: 1, required: false, unitGroup: "shortDistance" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

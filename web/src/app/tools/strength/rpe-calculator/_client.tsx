@@ -10,7 +10,7 @@ export default function RpeClientPage() {
       title="RPE Calculator"
       description="Predict your working weight or rep count at any RPE based on your training max."
       fields={[
-        { name: "weightKg", label: "Weight lifted (kg)", type: "number", min: 1 },
+        { name: "weightKg", label: "Weight lifted", type: "number", min: 1, unitGroup: "weight" },
         { name: "reps", label: "Reps performed", type: "number", min: 1 },
         { name: "rpe", label: "RPE (6–10)", type: "number", min: 6, max: 10, step: 0.5 },
       ]}

@@ -29,7 +29,7 @@ export default function IdealWeightClientPage() {
             { label: "Female", value: "female" },
           ],
         },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 1 },
+        { name: "heightCm", label: "Height", type: "number", min: 1, unitGroup: "height" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

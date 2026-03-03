@@ -17,7 +17,7 @@ export default function StepsToCaloriesClientPage() {
       description="Convert your daily step count into estimated calories burned based on body weight."
       fields={[
         { name: "steps", label: "Daily steps", type: "number", min: 1, placeholder: "10000" },
-        { name: "weightKg", label: "Body weight (kg)", type: "number", min: 20, placeholder: "70" },
+        { name: "weightKg", label: "Body weight", type: "number", min: 20, unitGroup: "weight" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

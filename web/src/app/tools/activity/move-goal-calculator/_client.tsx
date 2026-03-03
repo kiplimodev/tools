@@ -35,8 +35,8 @@ export default function MoveGoalClientPage() {
       fields={[
         { name: "sex", label: "Sex", type: "select", options: [{ label: "Male", value: "male" }, { label: "Female", value: "female" }] },
         { name: "age", label: "Age (years)", type: "number", min: 15, max: 100, placeholder: "30" },
-        { name: "weightKg", label: "Weight (kg)", type: "number", min: 20, placeholder: "70" },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 100, placeholder: "175" },
+        { name: "weightKg", label: "Weight", type: "number", min: 20, unitGroup: "weight" },
+        { name: "heightCm", label: "Height", type: "number", min: 100, unitGroup: "height" },
         {
           name: "activityLevel",
           label: "Activity level",

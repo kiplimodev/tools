@@ -104,7 +104,7 @@ export default async function Page({
                 step="0.1"
                 min="0.1"
                 defaultValue={distance ?? ""}
-                className="w-full rounded-lg border px-3 py-2"
+                className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
                 placeholder="10"
                 required
               />
@@ -121,7 +121,7 @@ export default async function Page({
                 step="0.01"
                 min="1"
                 defaultValue={pace ?? ""}
-                className="w-full rounded-lg border px-3 py-2"
+                className="w-full rounded-lg border border-zinc-200/70 bg-white/80 px-3 py-2 text-sm shadow-inner transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-white"
                 placeholder="5.0"
                 required
               />
@@ -131,7 +131,7 @@ export default async function Page({
 
           <button
             type="submit"
-            className="inline-flex w-full justify-center rounded-lg bg-black px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-zinc-800"
+            className="inline-flex w-full justify-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
           >
             Generate splits
           </button>

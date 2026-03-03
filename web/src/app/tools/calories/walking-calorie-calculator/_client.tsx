@@ -16,7 +16,7 @@ export default function WalkingCalorieClientPage() {
       title="Walking Calorie Calculator"
       description="Estimate calories burned walking at a moderate pace based on weight and duration."
       fields={[
-        { name: "weightKg", label: "Body weight (kg)", type: "number", min: 20, placeholder: "70" },
+        { name: "weightKg", label: "Body weight", type: "number", min: 20, unitGroup: "weight" },
         { name: "timeMinutes", label: "Duration (minutes)", type: "number", min: 1, placeholder: "45" },
       ]}
       calculate={calculate}

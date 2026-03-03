@@ -12,7 +12,7 @@ export default function TrainingVolumeClientPage() {
       fields={[
         { name: "sets", label: "Sets", type: "number", min: 1 },
         { name: "reps", label: "Reps per set", type: "number", min: 1 },
-        { name: "weightKg", label: "Weight (kg)", type: "number", min: 0 },
+        { name: "weightKg", label: "Weight", type: "number", min: 0, unitGroup: "weight" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

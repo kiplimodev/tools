@@ -20,8 +20,8 @@ export default function WaistToHeightClientPage() {
       title="Waist-to-Height Ratio Calculator"
       description="Calculate your waist-to-height ratio and assess cardiovascular health risk."
       fields={[
-        { name: "waistCm", label: "Waist (cm)", type: "number", min: 1, step: 0.1, placeholder: "80" },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 1, step: 0.1, placeholder: "175" },
+        { name: "waistCm", label: "Waist", type: "number", min: 1, unitGroup: "shortDistance" },
+        { name: "heightCm", label: "Height", type: "number", min: 1, unitGroup: "height" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

@@ -19,8 +19,8 @@ export default function BodyMeasurementClientPage() {
             { label: "Female", value: "female" },
           ],
         },
-        { name: "weightKg", label: "Body Weight (kg)", type: "number", min: 20, max: 300, placeholder: "80" },
-        { name: "waistCm", label: "Waist Circumference (cm)", type: "number", min: 40, max: 200, placeholder: "85" },
+        { name: "weightKg", label: "Body Weight", type: "number", min: 20, unitGroup: "weight" },
+        { name: "waistCm", label: "Waist Circumference", type: "number", min: 40, unitGroup: "shortDistance" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

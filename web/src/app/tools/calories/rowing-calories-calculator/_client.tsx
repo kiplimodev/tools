@@ -16,7 +16,7 @@ export default function RowingCaloriesClientPage() {
       title="Rowing Calories Calculator"
       description="Estimate calories burned rowing based on weight, duration, and effort level."
       fields={[
-        { name: "weightKg", label: "Body weight (kg)", type: "number", min: 20, placeholder: "70" },
+        { name: "weightKg", label: "Body weight", type: "number", min: 20, unitGroup: "weight" },
         { name: "timeMinutes", label: "Duration (minutes)", type: "number", min: 1, placeholder: "30" },
         {
           name: "intensity",

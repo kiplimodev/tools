@@ -33,9 +33,28 @@ export default function WeightTrackerClientPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEntries(loadEntries());
     setMounted(true);
   }, []);
+
+  function exportCSV() {
+    if (entries.length === 0) return;
+    const header = "Date,Weight (kg),Weight (lbs)";
+    const rows = entries.map((e) =>
+      `${e.date},${e.weightKg.toFixed(2)},${(e.weightKg * 2.20462).toFixed(1)}`
+    );
+    const csv = [header, ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `weight-log-${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 
   function addEntry() {
     const w = parseFloat(weight);
@@ -72,10 +91,15 @@ export default function WeightTrackerClientPage() {
   return (
     <div className="max-w-xl mx-auto">
       <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">Weight Tracker</h1>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+      <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
         Log your daily weight, monitor trends, and track 7- and 14-day moving averages.
-        Data is stored in your browser.
       </p>
+
+      {/* Persistence warning */}
+      <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-800/50 dark:bg-amber-900/20 dark:text-amber-300 mb-6">
+        <strong>Browser storage only.</strong> Data is not synced across devices or browsers.
+        Export your log regularly to avoid data loss.
+      </div>
 
       {/* Log entry */}
       <div className="rounded-2xl border border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-950/60 p-6 shadow-sm space-y-4 mb-4">
@@ -164,7 +188,16 @@ export default function WeightTrackerClientPage() {
         <div className="rounded-2xl border border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-950/60 p-5 shadow-sm">
           <div className="flex justify-between items-center mb-3">
             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Log</p>
-            <span className="text-xs text-zinc-400">{entries.length} entries</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-zinc-400">{entries.length} entries</span>
+              <button
+                onClick={exportCSV}
+                disabled={entries.length === 0}
+                className="text-xs text-emerald-600 hover:text-emerald-500 disabled:opacity-40 transition-colors"
+              >
+                Export CSV
+              </button>
+            </div>
           </div>
           <div className="space-y-1 max-h-72 overflow-y-auto">
             {[...entries].reverse().map((entry) => (

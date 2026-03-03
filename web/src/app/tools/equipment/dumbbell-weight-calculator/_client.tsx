@@ -10,7 +10,7 @@ export default function DumbbellWeightClientPage() {
       title="Dumbbell Weight Calculator"
       description="Calculate total volume lifted with dumbbells across sets and exercises."
       fields={[
-        { name: "targetWeightKg", label: "Target dumbbell weight (kg)", type: "number", min: 0.5, step: 0.5 },
+        { name: "targetWeightKg", label: "Target dumbbell weight", type: "number", min: 0.5, unitGroup: "weight" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

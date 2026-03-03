@@ -20,8 +20,8 @@ export default function TDEEClientPage() {
           ],
         },
         { name: "age", label: "Age (years)", type: "number" },
-        { name: "height", label: "Height (cm)", type: "number" },
-        { name: "weight", label: "Weight (kg)", type: "number" },
+        { name: "height", label: "Height", type: "number", unitGroup: "height" },
+        { name: "weight", label: "Weight", type: "number", unitGroup: "weight" },
         {
           name: "activity",
           label: "Activity Level",

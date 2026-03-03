@@ -10,8 +10,8 @@ export default function BarbellClientPage() {
       title="Barbell Calculator"
       description="Calculate the weight plates needed on each side of a barbell for any target load."
       fields={[
-        { name: "barWeightKg", label: "Bar weight (kg)", type: "number", min: 1, placeholder: "20" },
-        { name: "targetWeightKg", label: "Target total weight (kg)", type: "number", min: 1 },
+        { name: "barWeightKg", label: "Bar weight", type: "number", min: 1, unitGroup: "weight" },
+        { name: "targetWeightKg", label: "Target total weight", type: "number", min: 1, unitGroup: "weight" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

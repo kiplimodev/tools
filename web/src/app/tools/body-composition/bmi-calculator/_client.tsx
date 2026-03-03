@@ -20,8 +20,8 @@ export default function BmiClientPage() {
       title="BMI Calculator"
       description="Calculate your Body Mass Index from weight and height with health classification."
       fields={[
-        { name: "weightKg", label: "Weight (kg)", type: "number", min: 1, step: 0.1, placeholder: "70" },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 1, step: 0.1, placeholder: "175" },
+        { name: "weightKg", label: "Weight", type: "number", min: 1, unitGroup: "weight" },
+        { name: "heightCm", label: "Height", type: "number", min: 1, unitGroup: "height" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

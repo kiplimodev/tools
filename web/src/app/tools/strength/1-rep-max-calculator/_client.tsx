@@ -10,7 +10,7 @@ export default function OneRepMaxClientPage() {
       title="1 Rep Max Calculator"
       description="Estimate your one-rep max using Epley, Brzycki, Lombardi, O'Conner, and Lander formulas."
       fields={[
-        { name: "weightKg", label: "Weight (kg)", type: "number", min: 1 },
+        { name: "weightKg", label: "Weight", type: "number", min: 1, unitGroup: "weight" },
         { name: "reps", label: "Reps performed", type: "number", min: 1 },
       ]}
       calculate={calculator}

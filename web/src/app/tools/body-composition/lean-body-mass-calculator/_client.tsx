@@ -30,8 +30,8 @@ export default function LeanBodyMassClientPage() {
             { label: "Female", value: "female" },
           ],
         },
-        { name: "weightKg", label: "Weight (kg)", type: "number", min: 1 },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 1 },
+        { name: "weightKg", label: "Weight", type: "number", min: 1, unitGroup: "weight" },
+        { name: "heightCm", label: "Height", type: "number", min: 1, unitGroup: "height" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

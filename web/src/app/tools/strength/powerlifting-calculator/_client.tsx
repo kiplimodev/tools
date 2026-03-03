@@ -19,10 +19,10 @@ export default function PowerliftingClientPage() {
             { label: "Female", value: "female" },
           ],
         },
-        { name: "bodyWeightKg", label: "Body weight (kg)", type: "number", min: 1 },
-        { name: "squatKg", label: "Squat (kg)", type: "number", min: 1 },
-        { name: "benchKg", label: "Bench (kg)", type: "number", min: 1 },
-        { name: "deadliftKg", label: "Deadlift (kg)", type: "number", min: 1 },
+        { name: "bodyWeightKg", label: "Body weight", type: "number", min: 1, unitGroup: "weight" },
+        { name: "squatKg", label: "Squat", type: "number", min: 1, unitGroup: "weight" },
+        { name: "benchKg", label: "Bench", type: "number", min: 1, unitGroup: "weight" },
+        { name: "deadliftKg", label: "Deadlift", type: "number", min: 1, unitGroup: "weight" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

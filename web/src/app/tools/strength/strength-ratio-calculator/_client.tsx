@@ -10,10 +10,10 @@ export default function StrengthRatioClientPage() {
       title="Strength Ratio Calculator"
       description="Assess your push, pull, and leg strength ratios relative to your bodyweight."
       fields={[
-        { name: "bodyWeightKg", label: "Body weight (kg)", type: "number", min: 1 },
-        { name: "benchKg", label: "Bench press 1RM (kg)", type: "number", min: 1 },
-        { name: "squatKg", label: "Squat 1RM (kg)", type: "number", min: 1 },
-        { name: "deadliftKg", label: "Deadlift 1RM (kg)", type: "number", min: 1 },
+        { name: "bodyWeightKg", label: "Body weight", type: "number", min: 1, unitGroup: "weight" },
+        { name: "benchKg", label: "Bench press 1RM", type: "number", min: 1, unitGroup: "weight" },
+        { name: "squatKg", label: "Squat 1RM", type: "number", min: 1, unitGroup: "weight" },
+        { name: "deadliftKg", label: "Deadlift 1RM", type: "number", min: 1, unitGroup: "weight" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

@@ -44,8 +44,8 @@ export default function WaistToHipClientPage() {
             { label: "Female", value: "female" },
           ],
         },
-        { name: "waistCm", label: "Waist (cm)", type: "number", min: 1 },
-        { name: "hipCm", label: "Hip (cm)", type: "number", min: 1 },
+        { name: "waistCm", label: "Waist", type: "number", min: 1, unitGroup: "shortDistance" },
+        { name: "hipCm", label: "Hip", type: "number", min: 1, unitGroup: "shortDistance" },
       ]}
       calculate={calculate}
       renderResult={(result) => (

@@ -10,8 +10,8 @@ export default function RunningCaloriesClientPage() {
       title="Running Calories Burned"
       description="Estimate total calories burned running based on weight, distance, and time."
       fields={[
-        { name: "weightKg", label: "Body weight (kg)", type: "number", min: 20, placeholder: "70" },
-        { name: "distanceKm", label: "Distance (km)", type: "number", min: 0.1, step: 0.1, placeholder: "5" },
+        { name: "weightKg", label: "Body weight", type: "number", min: 20, unitGroup: "weight" },
+        { name: "distanceKm", label: "Distance", type: "number", min: 0.1, step: 0.1, unitGroup: "distance" },
         { name: "timeMinutes", label: "Time (minutes)", type: "number", min: 1, placeholder: "30" },
       ]}
       calculate={calculator}

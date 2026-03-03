@@ -21,8 +21,8 @@ export default function BodyRecompositionClientPage() {
       title="Body Recomposition Calculator"
       description="Project changes to fat mass and lean mass over time with a recomposition plan."
       fields={[
-        { name: "currentWeightKg", label: "Current weight (kg)", type: "number", min: 1 },
-        { name: "targetWeightKg", label: "Target weight (kg)", type: "number", min: 1 },
+        { name: "currentWeightKg", label: "Current weight", type: "number", min: 1, unitGroup: "weight" },
+        { name: "targetWeightKg", label: "Target weight", type: "number", min: 1, unitGroup: "weight" },
         { name: "dailyDeficit", label: "Daily caloric deficit (kcal)", type: "number", min: 100, placeholder: "500" },
       ]}
       calculate={calculate}

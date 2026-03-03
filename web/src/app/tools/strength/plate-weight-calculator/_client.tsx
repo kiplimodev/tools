@@ -10,7 +10,7 @@ export default function PlateWeightClientPage() {
       title="Plate Weight Calculator"
       description="Find the exact plate combination needed to load a barbell to your target weight."
       fields={[
-        { name: "targetPerSideKg", label: "Target weight per side (kg)", type: "number", min: 0.5, step: 0.5 },
+        { name: "targetPerSideKg", label: "Target weight per side", type: "number", min: 0.5, unitGroup: "weight" },
       ]}
       calculate={calculator}
       renderResult={(result) => (

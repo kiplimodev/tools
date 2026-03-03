@@ -20,8 +20,8 @@ export default function CarnivoreClientPage() {
           ],
         },
         { name: "age", label: "Age (years)", type: "number", min: 15, max: 100, placeholder: "30" },
-        { name: "weightKg", label: "Weight (kg)", type: "number", min: 20, max: 300, placeholder: "80" },
-        { name: "heightCm", label: "Height (cm)", type: "number", min: 100, max: 250, placeholder: "178" },
+        { name: "weightKg", label: "Weight", type: "number", min: 20, max: 300, unitGroup: "weight" },
+        { name: "heightCm", label: "Height", type: "number", min: 100, max: 250, unitGroup: "height" },
         {
           name: "activityLevel",
           label: "Activity Level",
