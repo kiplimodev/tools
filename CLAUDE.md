@@ -95,21 +95,33 @@ They are out of scope for MVP.
 - **GitHub Actions** — Run type-check + lint + Vitest + Playwright smoke tests on every PR
 - **Vercel** — Automatic deployments on push to `main`. Preview deployments on every PR.
 
-### Backend (Deferred — No Refactor Required)
-⚠️ **Architecture decision pending before any backend work begins:**
+### Backend (Locked — Implement Post-Launch)
 
-**Option A — Firebase (original plan)**
-- Firebase Auth, Firestore, Cloud Functions, Firebase Analytics
-- Pros: Fastest to implement
-- Cons: Firestore is NoSQL — fitness data is naturally relational. Poor fit at scale.
+✅ **Decision locked: Neon + Drizzle + Clerk**
 
-**Option B — Neon + Drizzle (recommended)**
-- Neon (serverless PostgreSQL, Vercel-native, free tier)
-- Drizzle ORM (TypeScript-native, no magic, type-safe SQL)
-- Pros: Proper relational data, better for body metrics/progress tracking, Vercel-native
-- Cons: Slightly more setup than Firebase
+Do not implement until after production deployment is live and verified.
 
-**This decision must be made and locked in CLAUDE.md before any backend work begins. Do not start backend work without resolving this.**
+| Layer | Technology | Reason |
+|---|---|---|
+| Database | **Neon** (serverless PostgreSQL) | Vercel-native, branching for preview deploys, industry-standard SQL |
+| ORM | **Drizzle** | TypeScript-first, SQL-transparent, edge-compatible, no codegen |
+| Auth | **Clerk** | Best DX for Next.js, handles sessions/JWT/OAuth, syncs to Drizzle |
+
+**Why not Firebase:** Firestore is NoSQL — fitness data (weight logs, workout history, saved results) is relational. Querying trends over time is trivial in PostgreSQL and painful in Firestore.
+
+**Why not Prisma:** Drizzle replaced Prisma as the community default for new TypeScript projects in 2024–2025. Lighter, faster, no magic layer.
+
+### Backend Implementation Order (When Ready)
+
+1. Provision Neon database in Vercel marketplace
+2. Install: `npm install drizzle-orm @neondatabase/serverless` and `npm install -D drizzle-kit`
+3. Define schema in `web/src/lib/db/schema.ts` (users, saved_results, weight_entries)
+4. Run `drizzle-kit generate` and `drizzle-kit migrate`
+5. Install Clerk: `npm install @clerk/nextjs`
+6. Add `CLERK_SECRET_KEY` and `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` to Vercel env vars
+7. Wrap `layout.tsx` with `<ClerkProvider>`
+8. Implement saved results API routes under `web/src/app/api/results/`
+9. Implement weight tracker page (remove ComingSoon stub)
 
 ### Package Install Reference
 
