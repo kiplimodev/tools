@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Steps Per Day Calculator | Denstar Fitness",
     description: "Calculate a personalised daily step goal based on your activity level and health targets.",
-    url: "https://denstarfitness.com/tools/activity/steps-per-day-calculator",
+    url: "https://tools.denstarfitness.com/tools/activity/steps-per-day-calculator",
     images: [{ url: "/api/og?tool=steps-per-day-calculator", width: 1200, height: 630 }],
   },
   twitter: {

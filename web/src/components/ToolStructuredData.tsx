@@ -11,7 +11,7 @@ export function ToolStructuredData() {
 
   if (!tool) return null;
 
-  const toolUrl = `https://denstarfitness.com${tool.path}`;
+  const toolUrl = `https://tools.denstarfitness.com${tool.path}`;
   const category =
     tool.category.charAt(0).toUpperCase() +
     tool.category.slice(1).replace(/-/g, " ");
@@ -35,19 +35,19 @@ export function ToolStructuredData() {
           "@type": "ListItem",
           position: 1,
           name: "Home",
-          item: "https://denstarfitness.com",
+          item: "https://tools.denstarfitness.com",
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Tools",
-          item: "https://denstarfitness.com/tools",
+          item: "https://tools.denstarfitness.com/tools",
         },
         {
           "@type": "ListItem",
           position: 3,
           name: category,
-          item: `https://denstarfitness.com/tools/${tool.category}`,
+          item: `https://tools.denstarfitness.com/tools/${tool.category}`,
         },
         {
           "@type": "ListItem",

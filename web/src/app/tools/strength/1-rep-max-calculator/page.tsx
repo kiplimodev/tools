@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "1 Rep Max Calculator | Denstar Fitness",
     description: "Estimate your one-rep max using Epley, Brzycki, Lombardi, O'Conner, and Lander formulas.",
-    url: "https://denstarfitness.com/tools/strength/1-rep-max-calculator",
+    url: "https://tools.denstarfitness.com/tools/strength/1-rep-max-calculator",
     images: [{ url: "/api/og?tool=1-rep-max-calculator", width: 1200, height: 630 }],
   },
   twitter: {

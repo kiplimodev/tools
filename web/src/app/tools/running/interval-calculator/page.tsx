@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Interval Calculator | Denstar Fitness",
     description: "Calculate interval times, rest periods, and total workout duration for structured training.",
-    url: "https://denstarfitness.com/tools/running/interval-calculator",
+    url: "https://tools.denstarfitness.com/tools/running/interval-calculator",
     images: [{ url: "/api/og?tool=interval-calculator", width: 1200, height: 630 }],
   },
   twitter: {

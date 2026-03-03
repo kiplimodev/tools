@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { registry } from "@/registry";
 
-const BASE_URL = "https://denstarfitness.com";
+const BASE_URL = "https://tools.denstarfitness.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolPages = registry.map((tool) => ({

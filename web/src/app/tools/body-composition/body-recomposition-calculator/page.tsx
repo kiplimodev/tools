@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Body Recomposition Calculator | Denstar Fitness",
     description: "Project changes to fat mass and lean mass over time with a recomposition plan.",
-    url: "https://denstarfitness.com/tools/body-composition/body-recomposition-calculator",
+    url: "https://tools.denstarfitness.com/tools/body-composition/body-recomposition-calculator",
     images: [{ url: "/api/og?tool=body-recomposition-calculator", width: 1200, height: 630 }],
   },
   twitter: {

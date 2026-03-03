@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bike Calorie Calculator | Denstar Fitness",
     description: "Estimate calories burned cycling based on weight, duration, and effort level.",
-    url: "https://denstarfitness.com/tools/calories/bike-calorie-calculator",
+    url: "https://tools.denstarfitness.com/tools/calories/bike-calorie-calculator",
     images: [{ url: "/api/og?tool=bike-calorie-calculator", width: 1200, height: 630 }],
   },
   twitter: {

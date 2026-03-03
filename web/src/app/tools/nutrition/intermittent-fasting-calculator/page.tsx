@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Intermittent Fasting Calculator | Denstar Fitness",
     description: "Calculate your eating and fasting windows based on your chosen IF protocol.",
-    url: "https://denstarfitness.com/tools/nutrition/intermittent-fasting-calculator",
+    url: "https://tools.denstarfitness.com/tools/nutrition/intermittent-fasting-calculator",
     images: [{ url: "/api/og?tool=intermittent-fasting-calculator", width: 1200, height: 630 }],
   },
   twitter: {

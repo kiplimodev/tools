@@ -16,13 +16,13 @@ const geistSans = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://denstarfitness.com"),
+  metadataBase: new URL("https://tools.denstarfitness.com"),
   title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
   description: "Science-backed running, strength, and nutrition calculators with instant results. Built for athletes and coaches.",
   openGraph: {
     siteName: "Denstar Fitness",
     type: "website",
-    url: "https://denstarfitness.com",
+    url: "https://tools.denstarfitness.com",
     title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
     description: "Science-backed running, strength, and nutrition calculators with instant results. Built for athletes and coaches.",
     images: [{ url: "/api/og", width: 1200, height: 630, alt: "Denstar Fitness Tools" }],

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Swimming Calories Calculator | Denstar Fitness",
     description: "Estimate calories burned swimming based on stroke, weight, and duration.",
-    url: "https://denstarfitness.com/tools/calories/swimming-calories-calculator",
+    url: "https://tools.denstarfitness.com/tools/calories/swimming-calories-calculator",
     images: [{ url: "/api/og?tool=swimming-calories-calculator", width: 1200, height: 630 }],
   },
   twitter: {

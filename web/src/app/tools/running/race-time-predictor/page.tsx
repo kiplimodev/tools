@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Race Time Predictor | Denstar Fitness",
     description: "Estimate finishing time for a target distance using the Riegel formula.",
-    url: "https://denstarfitness.com/tools/running/race-time-predictor",
+    url: "https://tools.denstarfitness.com/tools/running/race-time-predictor",
     images: [{ url: "/api/og?tool=race-time-predictor", width: 1200, height: 630 }],
   },
   twitter: {

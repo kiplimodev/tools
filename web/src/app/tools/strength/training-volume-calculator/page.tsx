@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Training Volume Calculator | Denstar Fitness",
     description: "Calculate total training volume in sets, reps, and tonnage for any workout.",
-    url: "https://denstarfitness.com/tools/strength/training-volume-calculator",
+    url: "https://tools.denstarfitness.com/tools/strength/training-volume-calculator",
     images: [{ url: "/api/og?tool=training-volume-calculator", width: 1200, height: 630 }],
   },
   twitter: {

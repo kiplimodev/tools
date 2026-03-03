@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Split Calculator | Denstar Fitness",
     description: "Calculate even or negative splits for any race distance and goal time.",
-    url: "https://denstarfitness.com/tools/running/split-calculator",
+    url: "https://tools.denstarfitness.com/tools/running/split-calculator",
     images: [{ url: "/api/og?tool=split-calculator", width: 1200, height: 630 }],
   },
   twitter: {

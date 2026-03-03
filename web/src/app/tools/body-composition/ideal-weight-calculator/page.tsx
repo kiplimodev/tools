@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ideal Weight Calculator | Denstar Fitness",
     description: "Find your ideal weight range using Devine and Robinson formulas.",
-    url: "https://denstarfitness.com/tools/body-composition/ideal-weight-calculator",
+    url: "https://tools.denstarfitness.com/tools/body-composition/ideal-weight-calculator",
     images: [{ url: "/api/og?tool=ideal-weight-calculator", width: 1200, height: 630 }],
   },
   twitter: {

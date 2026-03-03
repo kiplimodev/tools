@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Starbucks Macro Calculator | Denstar Fitness",
     description: "Look up calories, protein, carbs, and fat for popular Starbucks drinks and food items.",
-    url: "https://denstarfitness.com/tools/nutrition/starbucks-macro-calculator",
+    url: "https://tools.denstarfitness.com/tools/nutrition/starbucks-macro-calculator",
     images: [{ url: "/api/og?tool=starbucks-macro-calculator", width: 1200, height: 630 }],
   },
   twitter: {

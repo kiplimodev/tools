@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lean Bulk Calculator | Denstar Fitness",
     description: "Calculate calories for a lean bulk with capped surplus to minimise fat gain.",
-    url: "https://denstarfitness.com/tools/nutrition/lean-bulk-calculator",
+    url: "https://tools.denstarfitness.com/tools/nutrition/lean-bulk-calculator",
     images: [{ url: "/api/og?tool=lean-bulk-calculator", width: 1200, height: 630 }],
   },
   twitter: {

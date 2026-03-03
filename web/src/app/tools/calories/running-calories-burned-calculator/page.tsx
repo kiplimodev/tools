@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Running Calories Burned Calculator | Denstar Fitness",
     description: "Estimate total calories burned running based on weight, distance, and pace.",
-    url: "https://denstarfitness.com/tools/calories/running-calories-burned-calculator",
+    url: "https://tools.denstarfitness.com/tools/calories/running-calories-burned-calculator",
     images: [{ url: "/api/og?tool=running-calories-burned-calculator", width: 1200, height: 630 }],
   },
   twitter: {

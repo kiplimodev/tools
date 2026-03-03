@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Body Measurement Calculator | Denstar Fitness",
     description: "Estimate body composition from girth measurements using established formulas.",
-    url: "https://denstarfitness.com/tools/body-composition/body-measurement-calculator",
+    url: "https://tools.denstarfitness.com/tools/body-composition/body-measurement-calculator",
     images: [{ url: "/api/og?tool=body-measurement-calculator", width: 1200, height: 630 }],
   },
   twitter: {

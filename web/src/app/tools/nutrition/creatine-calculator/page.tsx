@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Creatine Calculator | Denstar Fitness",
     description: "Calculate your daily creatine maintenance dose and loading phase amounts by bodyweight.",
-    url: "https://denstarfitness.com/tools/nutrition/creatine-calculator",
+    url: "https://tools.denstarfitness.com/tools/nutrition/creatine-calculator",
     images: [{ url: "/api/og?tool=creatine-calculator", width: 1200, height: 630 }],
   },
   twitter: {

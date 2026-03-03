@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Strength Ratio Calculator | Denstar Fitness",
     description: "Assess your push, pull, and leg strength ratios relative to your bodyweight.",
-    url: "https://denstarfitness.com/tools/strength/strength-ratio-calculator",
+    url: "https://tools.denstarfitness.com/tools/strength/strength-ratio-calculator",
     images: [{ url: "/api/og?tool=strength-ratio-calculator", width: 1200, height: 630 }],
   },
   twitter: {

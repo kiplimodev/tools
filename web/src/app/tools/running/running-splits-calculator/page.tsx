@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Running Splits Calculator | Denstar Fitness",
     description: "Generate per-kilometre and per-mile split times for your target race pace.",
-    url: "https://denstarfitness.com/tools/running/running-splits-calculator",
+    url: "https://tools.denstarfitness.com/tools/running/running-splits-calculator",
     images: [{ url: "/api/og?tool=running-splits-calculator", width: 1200, height: 630 }],
   },
   twitter: {

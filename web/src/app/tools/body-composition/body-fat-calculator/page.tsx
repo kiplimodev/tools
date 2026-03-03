@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Body Fat Calculator | Denstar Fitness",
     description: "Estimate your body fat percentage using the US Navy tape measurement method.",
-    url: "https://denstarfitness.com/tools/body-composition/body-fat-calculator",
+    url: "https://tools.denstarfitness.com/tools/body-composition/body-fat-calculator",
     images: [{ url: "/api/og?tool=body-fat-calculator", width: 1200, height: 630 }],
   },
   twitter: {

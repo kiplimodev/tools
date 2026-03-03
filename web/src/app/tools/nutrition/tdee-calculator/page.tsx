@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TDEE Calculator | Denstar Fitness",
     description: "Calculate your Total Daily Energy Expenditure using the Mifflin-St Jeor equation.",
-    url: "https://denstarfitness.com/tools/nutrition/tdee-calculator",
+    url: "https://tools.denstarfitness.com/tools/nutrition/tdee-calculator",
     images: [{ url: "/api/og?tool=tdee-calculator", width: 1200, height: 630 }],
   },
   twitter: {

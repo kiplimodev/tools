@@ -94,7 +94,7 @@ export function GET(request: NextRequest) {
             color: "#71717a",
           }}
         >
-          <span>denstarfitness.com</span>
+          <span>tools.denstarfitness.com</span>
           <span>·</span>
           <span>Science-backed fitness calculators</span>
         </div>

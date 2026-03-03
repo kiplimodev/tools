@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "VO2 Max Calculator | Denstar Fitness",
     description: "Estimate your VO2 max and fitness category from a timed running performance.",
-    url: "https://denstarfitness.com/tools/running/vo2max",
+    url: "https://tools.denstarfitness.com/tools/running/vo2max",
     images: [{ url: "/api/og?tool=vo2max", width: 1200, height: 630 }],
   },
   twitter: {

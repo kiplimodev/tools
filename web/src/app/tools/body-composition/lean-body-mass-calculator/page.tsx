@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lean Body Mass Calculator | Denstar Fitness",
     description: "Calculate your lean body mass using the Boer formula from weight and height.",
-    url: "https://denstarfitness.com/tools/body-composition/lean-body-mass-calculator",
+    url: "https://tools.denstarfitness.com/tools/body-composition/lean-body-mass-calculator",
     images: [{ url: "/api/og?tool=lean-body-mass-calculator", width: 1200, height: 630 }],
   },
   twitter: {

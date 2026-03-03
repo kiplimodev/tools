@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Waist-to-Height Ratio Calculator | Denstar Fitness",
     description: "Calculate your waist-to-height ratio and assess cardiovascular health risk.",
-    url: "https://denstarfitness.com/tools/body-composition/waist-to-height-ratio-calculator",
+    url: "https://tools.denstarfitness.com/tools/body-composition/waist-to-height-ratio-calculator",
     images: [{ url: "/api/og?tool=waist-to-height-ratio-calculator", width: 1200, height: 630 }],
   },
   twitter: {

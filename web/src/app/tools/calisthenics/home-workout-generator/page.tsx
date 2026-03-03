@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Home Workout Generator | Denstar Fitness",
     description: "Generate a structured bodyweight workout plan based on your goal and available equipment.",
-    url: "https://denstarfitness.com/tools/calisthenics/home-workout-generator",
+    url: "https://tools.denstarfitness.com/tools/calisthenics/home-workout-generator",
     images: [{ url: "/api/og?tool=home-workout-generator", width: 1200, height: 630 }],
   },
   twitter: {

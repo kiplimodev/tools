@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "VDOT Calculator | Denstar Fitness",
     description: "Estimate your VDOT score and training pace zones from a recent race time.",
-    url: "https://denstarfitness.com/tools/running/vdot-calculator",
+    url: "https://tools.denstarfitness.com/tools/running/vdot-calculator",
     images: [{ url: "/api/og?tool=vdot-calculator", width: 1200, height: 630 }],
   },
   twitter: {

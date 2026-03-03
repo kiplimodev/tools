@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Walking Calorie Calculator | Denstar Fitness",
     description: "Estimate calories burned walking based on your weight, pace, and distance.",
-    url: "https://denstarfitness.com/tools/calories/walking-calorie-calculator",
+    url: "https://tools.denstarfitness.com/tools/calories/walking-calorie-calculator",
     images: [{ url: "/api/og?tool=walking-calorie-calculator", width: 1200, height: 630 }],
   },
   twitter: {
