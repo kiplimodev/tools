@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Move Goal Calculator | Denstar Fitness",
     description: "Estimate a daily active calorie burn target based on your TDEE and activity level.",
-    url: "https://denstar.fitness/tools/activity/move-goal-calculator",
+    url: "https://denstarfitness.com/tools/activity/move-goal-calculator",
     images: [{ url: "/api/og?tool=move-goal-calculator", width: 1200, height: 630 }],
   },
   twitter: {

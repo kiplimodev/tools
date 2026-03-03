@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RPE Calculator | Denstar Fitness",
     description: "Predict your working weight or rep count at any RPE based on your training max.",
-    url: "https://denstar.fitness/tools/strength/rpe-calculator",
+    url: "https://denstarfitness.com/tools/strength/rpe-calculator",
     images: [{ url: "/api/og?tool=rpe-calculator", width: 1200, height: 630 }],
   },
   twitter: {

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Carnivore Macro Calculator | Denstar Fitness",
     description: "Calculate your macro targets on a carnivore diet from your weight and goals.",
-    url: "https://denstar.fitness/tools/nutrition/carnivore-macro-calculator",
+    url: "https://denstarfitness.com/tools/nutrition/carnivore-macro-calculator",
     images: [{ url: "/api/og?tool=carnivore-macro-calculator", width: 1200, height: 630 }],
   },
   twitter: {

@@ -18,7 +18,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${meta.title} | Denstar Fitness`,
       description: meta.description,
-      url: `https://denstar.fitness${meta.path}`,
+      url: `https://denstarfitness.com${meta.path}`,
       images: [{ url: `/api/og?tool=${meta.slug}`, width: 1200, height: 630 }],
     },
     twitter: {

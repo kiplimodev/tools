@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Weight Tracker | Denstar Fitness",
     description: "Track your daily weight, view moving averages, and monitor trends over time.",
-    url: "https://denstar.fitness/tools/trackers/weight-tracker",
+    url: "https://denstarfitness.com/tools/trackers/weight-tracker",
     images: [{ url: "/api/og?tool=weight-tracker", width: 1200, height: 630 }],
   },
   twitter: {

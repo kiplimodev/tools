@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Steps to Calories Calculator | Denstar Fitness",
     description: "Convert daily step count into estimated calories burned based on your weight.",
-    url: "https://denstar.fitness/tools/calories/steps-to-calories-calculator",
+    url: "https://denstarfitness.com/tools/calories/steps-to-calories-calculator",
     images: [{ url: "/api/og?tool=steps-to-calories-calculator", width: 1200, height: 630 }],
   },
   twitter: {

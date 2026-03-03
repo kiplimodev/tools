@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Protein Powder Calculator | Denstar Fitness",
     description: "Find out how many protein powder scoops you need to hit your daily protein target.",
-    url: "https://denstar.fitness/tools/nutrition/protein-powder-calculator",
+    url: "https://denstarfitness.com/tools/nutrition/protein-powder-calculator",
     images: [{ url: "/api/og?tool=protein-powder-calculator", width: 1200, height: 630 }],
   },
   twitter: {

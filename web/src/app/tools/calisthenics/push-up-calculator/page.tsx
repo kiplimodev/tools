@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Push-Up Calculator | Denstar Fitness",
     description: "Calculate push-up volume, relative strength, and weekly progression targets.",
-    url: "https://denstar.fitness/tools/calisthenics/push-up-calculator",
+    url: "https://denstarfitness.com/tools/calisthenics/push-up-calculator",
     images: [{ url: "/api/og?tool=push-up-calculator", width: 1200, height: 630 }],
   },
   twitter: {

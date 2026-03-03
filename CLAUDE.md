@@ -621,7 +621,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     openGraph: {
       title: `${tool.title} | Denstar Fitness`,
       description: tool.description,
-      url: `https://denstar.fitness${tool.path}`,
+      url: `https://denstarfitness.com${tool.path}`,
     },
   };
 }

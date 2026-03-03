@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Running Pace Calculator | Denstar Fitness",
     description: "Calculate your running pace, speed, and finish time for any distance.",
-    url: "https://denstar.fitness/tools/running/running-pace-calculator",
+    url: "https://denstarfitness.com/tools/running/running-pace-calculator",
     images: [{ url: "/api/og?tool=running-pace-calculator", width: 1200, height: 630 }],
   },
   twitter: {

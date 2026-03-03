@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "All Fitness Tools | Denstar Fitness",
     description: "Browse 40+ science-backed calculators for running, strength, nutrition, and body composition.",
-    url: "https://denstar.fitness/tools",
+    url: "https://denstarfitness.com/tools",
     images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: {

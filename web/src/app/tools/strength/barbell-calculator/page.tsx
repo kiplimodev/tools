@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Barbell Calculator | Denstar Fitness",
     description: "Calculate the weight plates needed on each side of a barbell for any target load.",
-    url: "https://denstar.fitness/tools/strength/barbell-calculator",
+    url: "https://denstarfitness.com/tools/strength/barbell-calculator",
     images: [{ url: "/api/og?tool=barbell-calculator", width: 1200, height: 630 }],
   },
   twitter: {

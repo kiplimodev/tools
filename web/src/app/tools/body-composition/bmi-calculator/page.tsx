@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BMI Calculator | Denstar Fitness",
     description: "Calculate your Body Mass Index from weight and height with health classification.",
-    url: "https://denstar.fitness/tools/body-composition/bmi-calculator",
+    url: "https://denstarfitness.com/tools/body-composition/bmi-calculator",
     images: [{ url: "/api/og?tool=bmi-calculator", width: 1200, height: 630 }],
   },
   twitter: {

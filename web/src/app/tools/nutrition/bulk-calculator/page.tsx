@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bulk Calculator | Denstar Fitness",
     description: "Calculate daily calorie intake for a controlled bulk based on TDEE and surplus size.",
-    url: "https://denstar.fitness/tools/nutrition/bulk-calculator",
+    url: "https://denstarfitness.com/tools/nutrition/bulk-calculator",
     images: [{ url: "/api/og?tool=bulk-calculator", width: 1200, height: 630 }],
   },
   twitter: {

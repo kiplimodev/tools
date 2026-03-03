@@ -11,7 +11,7 @@ export function ToolStructuredData() {
 
   if (!tool) return null;
 
-  const toolUrl = `https://denstar.fitness${tool.path}`;
+  const toolUrl = `https://denstarfitness.com${tool.path}`;
   const category =
     tool.category.charAt(0).toUpperCase() +
     tool.category.slice(1).replace(/-/g, " ");
@@ -35,19 +35,19 @@ export function ToolStructuredData() {
           "@type": "ListItem",
           position: 1,
           name: "Home",
-          item: "https://denstar.fitness",
+          item: "https://denstarfitness.com",
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Tools",
-          item: "https://denstar.fitness/tools",
+          item: "https://denstarfitness.com/tools",
         },
         {
           "@type": "ListItem",
           position: 3,
           name: category,
-          item: `https://denstar.fitness/tools/${tool.category}`,
+          item: `https://denstarfitness.com/tools/${tool.category}`,
         },
         {
           "@type": "ListItem",

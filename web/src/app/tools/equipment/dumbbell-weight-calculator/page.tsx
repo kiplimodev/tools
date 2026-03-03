@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dumbbell Weight Calculator | Denstar Fitness",
     description: "Calculate total volume lifted with dumbbells across sets and exercises.",
-    url: "https://denstar.fitness/tools/equipment/dumbbell-weight-calculator",
+    url: "https://denstarfitness.com/tools/equipment/dumbbell-weight-calculator",
     images: [{ url: "/api/og?tool=dumbbell-weight-calculator", width: 1200, height: 630 }],
   },
   twitter: {

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Powerlifting Calculator | Denstar Fitness",
     description: "Calculate your Wilks, DOTS, and IPF GL scores to compare strength across weight classes.",
-    url: "https://denstar.fitness/tools/strength/powerlifting-calculator",
+    url: "https://denstarfitness.com/tools/strength/powerlifting-calculator",
     images: [{ url: "/api/og?tool=powerlifting-calculator", width: 1200, height: 630 }],
   },
   twitter: {
