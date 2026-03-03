@@ -224,11 +224,11 @@ export const registry: ToolMeta[] = [
     path: "/tools/strength/training-volume-calculator",
   },
   {
-    slug: "strength-ratio-calculators",
+    slug: "strength-ratio-calculator",
     category: "strength",
     title: "Strength Ratio Calculator",
     description: "Assess your push, pull, and leg strength ratios relative to your bodyweight.",
-    path: "/tools/strength/strength-ratio-calculators",
+    path: "/tools/strength/strength-ratio-calculator",
   },
   {
     slug: "rpe-calculator",
