@@ -13,7 +13,7 @@ export default function SidebarToolLink({
   toolid: string;
 }) {
   const pathname = usePathname();
-  const href = `/tools/${category}/${toolid}`;
+  const href = `/${category}/${toolid}`;
   const active = pathname === href;
 
   return (

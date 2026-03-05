@@ -40,14 +40,8 @@ export function ToolStructuredData() {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Tools",
-          item: "https://tools.denstarfitness.com/tools",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
           name: category,
-          item: `https://tools.denstarfitness.com/tools/${tool.category}`,
+          item: `https://tools.denstarfitness.com/${tool.category}`,
         },
         {
           "@type": "ListItem",

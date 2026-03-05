@@ -10,19 +10,19 @@ const FEATURED_SLUGS = [
 
 const pillars = [
   {
-    label: "Accuracy",
-    title: "Pure TypeScript formulas",
-    copy: "All calculations live in isolated, testable functions for predictable results.",
+    label: "Science-Backed",
+    title: "Formulas trusted by coaches",
+    copy: "Every calculator uses peer-reviewed equations — Mifflin-St Jeor, VDOT, Epley — so your numbers are always accurate and defensible.",
   },
   {
-    label: "Speed",
-    title: "Instant URL-based state",
-    copy: "Forms sync with URL params so you can bookmark and share calculations effortlessly.",
+    label: "Free & No Signup",
+    title: "Instant results, no account needed",
+    copy: "All 48+ tools are completely free. No email, no registration — just enter your data and get your answer in seconds.",
   },
   {
-    label: "Design",
-    title: "Minimal, premium UI",
-    copy: "Geist type, glassmorphism cards, and motion cues keep the focus on your metrics.",
+    label: "Any Device",
+    title: "Mobile-first, bookmark-friendly",
+    copy: "Optimised for phones, tablets, and desktop. Every result is shareable — your inputs are encoded directly in the URL.",
   },
 ];
 
@@ -59,23 +59,20 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
-              <span className="rounded-full bg-white/70 px-3 py-1 font-medium text-zinc-700 shadow-sm ring-1 ring-zinc-200 backdrop-blur dark:bg-zinc-900/70 dark:text-zinc-100 dark:ring-zinc-700">
-                Next.js 16 · React 19 · Tailwind
-              </span>
               <span className="rounded-full bg-emerald-500/10 px-3 py-1 font-medium text-emerald-700 ring-1 ring-emerald-200 dark:text-emerald-200 dark:ring-emerald-500/40">
                 {registry.length}+ tools
               </span>
             </div>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/tools/running/running-pace-calculator"
+                href="/running/running-pace-calculator"
                 className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
               >
                 Open pace calculator
                 <span aria-hidden>→</span>
               </Link>
               <Link
-                href="/tools"
+                href="/#toolbox"
                 className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-100 dark:hover:border-zinc-700"
               >
                 Browse all tools
@@ -89,9 +86,9 @@ export default function Home() {
             <div className="relative overflow-hidden rounded-2xl border border-white/50 bg-white/70 p-6 shadow-lg backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/70">
               <div className="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
                 <span>Featured tools</span>
-                <Link href="/tools" className="text-xs font-semibold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300">
+                <a href="#toolbox" className="text-xs font-semibold text-emerald-700 hover:text-emerald-600 dark:text-emerald-300">
                   View all →
-                </Link>
+                </a>
               </div>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {featured.map((tool) => (
@@ -121,7 +118,7 @@ export default function Home() {
       </div>
 
       {/* Full toolbox — grouped by category */}
-      <section className="space-y-8">
+      <section id="toolbox" className="space-y-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Toolbox</p>
@@ -130,12 +127,6 @@ export default function Home() {
               {registry.length} tools across {categories.length} categories.
             </p>
           </div>
-          <Link
-            href="/tools"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900/70 dark:text-zinc-100 dark:hover:border-zinc-700"
-          >
-            Browse by category
-          </Link>
         </div>
 
         {categories.map((category) => {

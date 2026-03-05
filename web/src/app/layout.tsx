@@ -83,10 +83,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Running</p>
                   <ul className="mt-3 space-y-2">
                     {[
-                      { label: "Pace Calculator", href: "/tools/running/running-pace-calculator" },
-                      { label: "VDOT Calculator", href: "/tools/running/vdot-calculator" },
-                      { label: "Interval Calculator", href: "/tools/running/interval-calculator" },
-                      { label: "Race Predictor", href: "/tools/running/race-time-predictor" },
+                      { label: "Pace Calculator", href: "/running/running-pace-calculator" },
+                      { label: "VDOT Calculator", href: "/running/vdot-calculator" },
+                      { label: "Interval Calculator", href: "/running/interval-calculator" },
+                      { label: "Race Predictor", href: "/running/race-time-predictor" },
                     ].map((l) => (
                       <li key={l.href}>
                         <a href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
@@ -99,10 +99,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Strength</p>
                   <ul className="mt-3 space-y-2">
                     {[
-                      { label: "1 Rep Max", href: "/tools/strength/1-rep-max-calculator" },
-                      { label: "Powerlifting", href: "/tools/strength/powerlifting-calculator" },
-                      { label: "RPE Calculator", href: "/tools/strength/rpe-calculator" },
-                      { label: "Barbell Calculator", href: "/tools/strength/barbell-calculator" },
+                      { label: "1 Rep Max", href: "/strength/1-rep-max-calculator" },
+                      { label: "Powerlifting", href: "/strength/powerlifting-calculator" },
+                      { label: "RPE Calculator", href: "/strength/rpe-calculator" },
+                      { label: "Barbell Calculator", href: "/strength/barbell-calculator" },
                     ].map((l) => (
                       <li key={l.href}>
                         <a href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
@@ -115,10 +115,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Nutrition</p>
                   <ul className="mt-3 space-y-2">
                     {[
-                      { label: "TDEE Calculator", href: "/tools/nutrition/tdee-calculator" },
-                      { label: "Bulk Calculator", href: "/tools/nutrition/bulk-calculator" },
-                      { label: "Body Fat", href: "/tools/body-composition/body-fat-calculator" },
-                      { label: "BMI Calculator", href: "/tools/body-composition/bmi-calculator" },
+                      { label: "TDEE Calculator", href: "/nutrition/tdee-calculator" },
+                      { label: "Bulk Calculator", href: "/nutrition/bulk-calculator" },
+                      { label: "Body Fat", href: "/body-composition/body-fat-calculator" },
+                      { label: "BMI Calculator", href: "/body-composition/bmi-calculator" },
                     ].map((l) => (
                       <li key={l.href}>
                         <a href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
@@ -126,6 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     ))}
                   </ul>
                 </div>
+
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Denstar Fitness</p>
                   <ul className="mt-3 space-y-2">
@@ -147,7 +148,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
               <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-zinc-200 pt-6 dark:border-zinc-800">
                 <p className="text-xs text-zinc-400 dark:text-zinc-500">© {new Date().getFullYear()} Denstar Fitness. All rights reserved.</p>
-                <a href="/tools" className="text-xs text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300">Browse all tools →</a>
+                <a href="/#toolbox" className="text-xs text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300">Browse all tools →</a>
               </div>
             </div>
           </footer>
