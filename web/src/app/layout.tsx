@@ -57,14 +57,99 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">{children}</main>
 
-          <footer className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 pb-10 text-sm text-zinc-500 sm:px-6 lg:px-8 dark:text-zinc-400">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-700 shadow-sm ring-1 ring-zinc-200 backdrop-blur dark:bg-zinc-900/70 dark:text-zinc-200 dark:ring-zinc-700">
-                Fast · Accurate · Minimal
-              </span>
-              <span>Built with Next.js 16, React 19, TypeScript, and Tailwind CSS.</span>
+          <footer className="mx-auto w-full max-w-6xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
+            <div className="border-t border-zinc-200 pt-10 dark:border-zinc-800">
+              <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
+                {/* Brand */}
+                <div className="col-span-2 sm:col-span-3 lg:col-span-2">
+                  <div className="inline-flex items-center rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-emerald-700 shadow-sm ring-1 ring-emerald-200/60 backdrop-blur dark:bg-zinc-900/70 dark:text-emerald-300 dark:ring-emerald-500/40">
+                    Denstar
+                  </div>
+                  <p className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+                    Precision fitness calculators for athletes and coaches. Fast, accurate, and free.
+                  </p>
+                  <a
+                    href="https://denstarfitness.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                  >
+                    denstarfitness.com →
+                  </a>
+                </div>
+
+                {/* Tools */}
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Running</p>
+                  <ul className="mt-3 space-y-2">
+                    {[
+                      { label: "Pace Calculator", href: "/tools/running/running-pace-calculator" },
+                      { label: "VDOT Calculator", href: "/tools/running/vdot-calculator" },
+                      { label: "Interval Calculator", href: "/tools/running/interval-calculator" },
+                      { label: "Race Predictor", href: "/tools/running/race-time-predictor" },
+                    ].map((l) => (
+                      <li key={l.href}>
+                        <a href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Strength</p>
+                  <ul className="mt-3 space-y-2">
+                    {[
+                      { label: "1 Rep Max", href: "/tools/strength/1-rep-max-calculator" },
+                      { label: "Powerlifting", href: "/tools/strength/powerlifting-calculator" },
+                      { label: "RPE Calculator", href: "/tools/strength/rpe-calculator" },
+                      { label: "Barbell Calculator", href: "/tools/strength/barbell-calculator" },
+                    ].map((l) => (
+                      <li key={l.href}>
+                        <a href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Nutrition</p>
+                  <ul className="mt-3 space-y-2">
+                    {[
+                      { label: "TDEE Calculator", href: "/tools/nutrition/tdee-calculator" },
+                      { label: "Bulk Calculator", href: "/tools/nutrition/bulk-calculator" },
+                      { label: "Body Fat", href: "/tools/body-composition/body-fat-calculator" },
+                      { label: "BMI Calculator", href: "/tools/body-composition/bmi-calculator" },
+                    ].map((l) => (
+                      <li key={l.href}>
+                        <a href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Denstar Fitness</p>
+                  <ul className="mt-3 space-y-2">
+                    {[
+                      { label: "Home", href: "https://denstarfitness.com" },
+                      { label: "Blog", href: "https://denstarfitness.com/blog" },
+                      { label: "Training & Recovery", href: "https://denstarfitness.com/category/training/" },
+                      { label: "Nutrition", href: "https://denstarfitness.com/category/nutrition/" },
+                      { label: "Lifestyle", href: "https://denstarfitness.com/category/lifestyle/" },
+                      { label: "Contact", href: "https://denstarfitness.com/contact" },
+                    ].map((l) => (
+                      <li key={l.href}>
+                        <a href={l.href} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">{l.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+                <p className="text-xs text-zinc-400 dark:text-zinc-500">© {new Date().getFullYear()} Denstar Fitness. All rights reserved.</p>
+                <a href="/tools" className="text-xs text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300">Browse all tools →</a>
+              </div>
             </div>
-            <p className="text-zinc-400 dark:text-zinc-500">More tools coming: saved results, AI-powered plans, and device integrations.</p>
           </footer>
         </div>
         <Analytics />
