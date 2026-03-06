@@ -44,7 +44,7 @@ export default function Home() {
     <div className="space-y-12">
       {/* Hero */}
       <div className="relative overflow-hidden rounded-3xl border border-white/40 bg-white/60 p-8 shadow-glow backdrop-blur dark:border-zinc-800/80 dark:bg-zinc-950/70 sm:p-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-100/60 via-white/40 to-indigo-100/50 opacity-60 blur-2xl dark:from-emerald-500/10 dark:via-zinc-900/60 dark:to-indigo-500/10" aria-hidden />
+        <div className="absolute inset-0 bg-linear-to-br from-emerald-100/60 via-white/40 to-indigo-100/50 opacity-60 blur-2xl dark:from-emerald-500/10 dark:via-zinc-900/60 dark:to-indigo-500/10" aria-hidden />
         <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6 animate-fade-in">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 shadow-sm backdrop-blur dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200">
@@ -52,10 +52,10 @@ export default function Home() {
             </div>
             <div className="space-y-4">
               <h1 className="text-4xl font-semibold leading-tight tracking-tight text-zinc-900 sm:text-5xl dark:text-white">
-                Precision calculators for athletes and coaches.
+                Free TDEE, running pace, and fitness calculators.
               </h1>
               <p className="text-lg text-zinc-600 sm:text-xl dark:text-zinc-300">
-                Science-backed running, strength, and nutrition utilities with instant results, dark mode, and mobile-first layouts.
+                Science-backed TDEE calculator, running pace calculator, body fat calculator, 1 rep max, and 40+ more. Free, instant results — no signup needed.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">

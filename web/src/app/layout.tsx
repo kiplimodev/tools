@@ -17,20 +17,20 @@ const geistSans = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tools.denstarfitness.com"),
-  title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
-  description: "Science-backed running, strength, and nutrition calculators with instant results. Built for athletes and coaches.",
+  title: "Denstar Fitness — Free TDEE, Running Pace & Fitness Calculators",
+  description: "Free TDEE calculator, running pace calculator, body fat calculator, and 40+ more science-backed fitness tools. Instant results, no signup needed.",
   openGraph: {
     siteName: "Denstar Fitness",
     type: "website",
     url: "https://tools.denstarfitness.com",
-    title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
-    description: "Science-backed running, strength, and nutrition calculators with instant results. Built for athletes and coaches.",
+    title: "Denstar Fitness — Free TDEE, Running Pace & Fitness Calculators",
+    description: "Free TDEE calculator, running pace calculator, body fat calculator, and 40+ more science-backed fitness tools. Instant results, no signup needed.",
     images: [{ url: "/api/og", width: 1200, height: 630, alt: "Denstar Fitness Tools" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Denstar Fitness — Precision Calculators for Athletes and Coaches",
-    description: "Science-backed running, strength, and nutrition calculators with instant results.",
+    title: "Denstar Fitness — Free TDEE, Running Pace & Fitness Calculators",
+    description: "Free TDEE calculator, running pace calculator, body fat calculator, and 40+ more. Instant results, no signup needed.",
     images: ["/api/og"],
   },
 };
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="inline-flex items-center rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-emerald-700 shadow-sm ring-1 ring-emerald-200/60 backdrop-blur dark:bg-zinc-900/70 dark:text-emerald-300 dark:ring-emerald-500/40">
                   Denstar
                 </div>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">Premium fitness tools, ready for race day.</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">Free TDEE, running pace &amp; fitness calculators.</p>
               </div>
               <div className="flex items-center gap-3">
                 <ThemeToggle />
