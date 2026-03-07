@@ -14,11 +14,13 @@ const getPreferredTheme = (): Theme => {
 };
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(() => getPreferredTheme());
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
+    const preferred = getPreferredTheme();
+    setTheme(preferred);
+    document.documentElement.classList.toggle("dark", preferred === "dark");
+  }, []);
 
   const handleToggle = () => {
     const next = theme === "dark" ? "light" : "dark";
